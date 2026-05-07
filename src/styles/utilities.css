@@ -1,0 +1,49 @@
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.gw-divider {
+  border: none;
+  border-top: var(--border-width-thin) solid var(--border);
+  margin: var(--space-8) 0;
+}
+
+.gw-skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--focus-ring-color);
+  color: var(--focus-text);
+  font-weight: 700;
+  z-index: 9999;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  text-decoration: none;
+}
+
+.gw-skip-link:focus {
+  top: 0;
+}
+
+.gw-section {
+  padding-block: var(--space-12);
+}
+
+.gw-section + .gw-section {
+  border-top: var(--border-width-thin) solid var(--border);
+}
+
+.gw-surface-raised {
+  background: var(--surface-raised);
+}
+
+.gw-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

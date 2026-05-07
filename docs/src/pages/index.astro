@@ -1,0 +1,32 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Overview" description="Groundwork design system proof of concept">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <p class="gw-caption">Design System v0.2 PoC</p>
+        <h1 class="gw-heading-xl">Groundwork</h1>
+        <p class="gw-body">
+          A foundation library for web applications: two-tier tokens, accessible form patterns, and React APIs that make correct usage the obvious path.
+        </p>
+      </div>
+
+      <div class="gw-grid">
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s">Constraints over choices</h2>
+          <p class="gw-body--sm">A closed token set. If a value is not in the scale, it does not exist.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s">Two layers, one seam</h2>
+          <p class="gw-body--sm">Private primitives hold raw values. Public semantic tokens hold design decisions.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s">Accessibility as architecture</h2>
+          <p class="gw-body--sm">The Field API wires labels, hints, errors, and ARIA before a control reaches the page.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

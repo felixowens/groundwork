@@ -1,0 +1,42 @@
+---
+import '../../../css/groundwork.css';
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Groundwork</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <a href="#main" class="gw-skip-link">Skip to main content</a>
+    <header class="gw-section">
+      <div class="gw-width gw-stack">
+        <p class="gw-caption">Groundwork PoC</p>
+        <nav aria-label="Primary">
+          <ul class="gw-breadcrumb">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/tokens/">Tokens</a></li>
+            <li><a href="/flows/">Flows</a></li>
+            <li><a href="/components/button/">Button</a></li>
+            <li><a href="/components/field/">Field</a></li>
+            <li><a href="/components/error-summary/">Errors</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  astro-island {
+    display: block;
+  }
+</style>

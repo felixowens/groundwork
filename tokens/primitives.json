@@ -1,0 +1,81 @@
+{
+  "primitives": {
+    "neutral": {
+      "0": { "value": "#ffffff" },
+      "50": { "value": "#f5f5f3" },
+      "100": { "value": "#eaeae7" },
+      "200": { "value": "#d4d4d0" },
+      "300": { "value": "#a3a3a0" },
+      "400": { "value": "#8a8a87" },
+      "500": { "value": "#6e6e6b" },
+      "600": { "value": "#5c5c59" },
+      "700": { "value": "#3d3d3b" },
+      "800": { "value": "#1e1e1d" },
+      "900": { "value": "#161616" },
+      "950": { "value": "#111111" }
+    },
+    "blue": {
+      "100": { "value": "#dbeafe" },
+      "200": { "value": "#93c5fd" },
+      "300": { "value": "#5fa8e0" },
+      "400": { "value": "#3b8fd4" },
+      "500": { "value": "#1d70b8" },
+      "600": { "value": "#144e81" }
+    },
+    "red": {
+      "100": { "value": "#fce4e4" },
+      "200": { "value": "#f5b0b0" },
+      "300": { "value": "#e57373" },
+      "400": { "value": "#d32f2f" },
+      "500": { "value": "#b71c1c" },
+      "600": { "value": "#8b1515" }
+    },
+    "green": {
+      "100": { "value": "#e8f5e9" },
+      "200": { "value": "#a5d6a7" },
+      "300": { "value": "#66bb6a" },
+      "400": { "value": "#2e7d32" },
+      "500": { "value": "#00703c" }
+    },
+    "amber": {
+      "100": { "value": "#fff3cd" },
+      "300": { "value": "#ffca28" },
+      "500": { "value": "#856404" }
+    },
+    "yellow": {
+      "400": { "value": "#ffbf47" }
+    },
+    "space": {
+      "1": { "value": "0.25rem" },
+      "2": { "value": "0.5rem" },
+      "3": { "value": "0.75rem" },
+      "4": { "value": "1rem" },
+      "5": { "value": "1.25rem" },
+      "6": { "value": "1.5rem" },
+      "8": { "value": "2rem" },
+      "10": { "value": "2.5rem" },
+      "12": { "value": "3rem" },
+      "16": { "value": "4rem" },
+      "20": { "value": "5rem" }
+    },
+    "text": {
+      "xs": { "value": "0.8125rem" },
+      "sm": { "value": "0.875rem" },
+      "base": { "value": "1rem" },
+      "lg": { "value": "1.25rem" },
+      "xl": { "value": "1.5rem" },
+      "2xl": { "value": "2rem" },
+      "3xl": { "value": "2.5rem" }
+    },
+    "border": {
+      "thin": { "value": "1px" },
+      "medium": { "value": "2px" },
+      "thick": { "value": "3px" },
+      "heavy": { "value": "4px" }
+    },
+    "radius": {
+      "sm": { "value": "3px" },
+      "md": { "value": "6px" }
+    }
+  }
+}

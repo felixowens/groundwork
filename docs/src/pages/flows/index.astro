@@ -1,0 +1,34 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Flows" description="Groundwork full-flow documentation">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Flows</h1>
+        <p>
+          Flows show Groundwork components working together in realistic service journeys. They are deliberately more useful for human review than isolated component examples.
+        </p>
+      </div>
+
+      <div class="gw-grid">
+        <article class="gw-card gw-stack">
+          <p class="gw-caption">Form flow</p>
+          <h2 class="gw-heading-m"><a class="gw-link" href="/flows/contact-details/">Contact details</a></h2>
+          <p class="gw-body--sm">A complete form, validation, review, and confirmation journey using the current PoC components.</p>
+        </article>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">How to review a flow</h2>
+        <ul class="gw-list">
+          <li>Use the happy path and the error path.</li>
+          <li>Navigate with keyboard only.</li>
+          <li>Check whether labels, hints, and errors are announced in the right context.</li>
+          <li>Look for missing components, awkward composition, or visual drift.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
