@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groundwork — Design System v0.2</title>
+<style>
+/* ============================================================
+   GROUNDWORK DESIGN SYSTEM v0.2 — TOKEN FOUNDATION
+   ============================================================
+   Single CSS file. No build step. No framework. No dependencies.
+
+   Architecture:
+   ┌─────────────────────────────────────────────────────┐
+   │  PRIMITIVES (private — prefixed _gw-)               │
+   │  Raw palette, raw scale. Never reference directly.  │
+   ├─────────────────────────────────────────────────────┤
+   │  SEMANTIC TOKENS (public — prefixed --)             │
+   │  Decision-oriented. Components reference these.     │
+   │  Dark mode swaps which primitives they point to.    │
+   └─────────────────────────────────────────────────────┘
+
+   Rules:
+   1. Component CSS ONLY references semantic tokens.
+   2. Semantic tokens ONLY reference primitives.
+   3. Dark mode remaps semantic → primitive, nothing else.
+   4. If you need a new value, add a primitive first,
+      then create a semantic token that references it.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { min-height: 100vh; }
+img, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+a { color: inherit; }
+
+/* ============================================================
+   LAYER 1: PRIMITIVES (private — never use in components)
+   ============================================================ */
+:root {
+  --_gw-neutral-0:    #ffffff;
+  --_gw-neutral-50:   #f5f5f3;
+  --_gw-neutral-100:  #eaeae7;
+  --_gw-neutral-200:  #d4d4d0;
+  --_gw-neutral-300:  #a3a3a0;
+  --_gw-neutral-400:  #8a8a87;
+  --_gw-neutral-500:  #6e6e6b;
+  --_gw-neutral-600:  #5c5c59;
+  --_gw-neutral-700:  #3d3d3b;
+  --_gw-neutral-800:  #1e1e1d;
+  --_gw-neutral-900:  #161616;
+  --_gw-neutral-950:  #111111;
+
+  --_gw-blue-100: #dbeafe;
+  --_gw-blue-200: #93c5fd;
+  --_gw-blue-300: #5fa8e0;
+  --_gw-blue-400: #3b8fd4;
+  --_gw-blue-500: #1d70b8;
+  --_gw-blue-600: #144e81;
+
+  --_gw-red-100: #fce4e4;
+  --_gw-red-200: #f5b0b0;
+  --_gw-red-300: #e57373;
+  --_gw-red-400: #d32f2f;
+  --_gw-red-500: #b71c1c;
+  --_gw-red-600: #8b1515;
+
+  --_gw-green-100: #e8f5e9;
+  --_gw-green-200: #a5d6a7;
+  --_gw-green-300: #66bb6a;
+  --_gw-green-400: #2e7d32;
+  --_gw-green-500: #00703c;
+
+  --_gw-amber-100: #fff3cd;
+  --_gw-amber-300: #ffca28;
+  --_gw-amber-500: #856404;
+
+  --_gw-yellow-400: #ffbf47;
+
+  --_gw-space-1:  0.25rem;
+  --_gw-space-2:  0.5rem;
+  --_gw-space-3:  0.75rem;
+  --_gw-space-4:  1rem;
+  --_gw-space-5:  1.25rem;
+  --_gw-space-6:  1.5rem;
+  --_gw-space-8:  2rem;
+  --_gw-space-10: 2.5rem;
+  --_gw-space-12: 3rem;
+  --_gw-space-16: 4rem;
+  --_gw-space-20: 5rem;
+
+  --_gw-text-xs:   0.8125rem;
+  --_gw-text-sm:   0.875rem;
+  --_gw-text-base: 1rem;
+  --_gw-text-lg:   1.25rem;
+  --_gw-text-xl:   1.5rem;
+  --_gw-text-2xl:  2rem;
+  --_gw-text-3xl:  2.5rem;
+
+  --_gw-border-thin:   1px;
+  --_gw-border-medium: 2px;
+  --_gw-border-thick:  3px;
+  --_gw-border-heavy:  4px;
+
+  --_gw-radius-sm: 3px;
+  --_gw-radius-md: 6px;
+}
+
+/* ============================================================
+   LAYER 2: SEMANTIC TOKENS (public — components use these)
+   ============================================================ */
+:root {
+  --space-1:  var(--_gw-space-1);
+  --space-2:  var(--_gw-space-2);
+  --space-3:  var(--_gw-space-3);
+  --space-4:  var(--_gw-space-4);
+  --space-5:  var(--_gw-space-5);
+  --space-6:  var(--_gw-space-6);
+  --space-8:  var(--_gw-space-8);
+  --space-10: var(--_gw-space-10);
+  --space-12: var(--_gw-space-12);
+  --space-16: var(--_gw-space-16);
+  --space-20: var(--_gw-space-20);
+
+  --font-sans: 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Söhne Mono', 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+
+  --text-caption:    var(--_gw-text-xs);
+  --text-secondary:  var(--_gw-text-sm);
+  --text-body:       var(--_gw-text-base);
+  --text-subheading: var(--_gw-text-lg);
+  --text-heading:    var(--_gw-text-xl);
+  --text-title:      var(--_gw-text-2xl);
+  --text-display:    var(--_gw-text-3xl);
+
+  --leading-tight:  1.25;
+  --leading-normal: 1.6;
+  --measure: 66ch;
+
+  --ink:           var(--_gw-neutral-800);
+  --ink-secondary: var(--_gw-neutral-600);
+  --ink-disabled:  var(--_gw-neutral-400);
+
+  --surface:         var(--_gw-neutral-0);
+  --surface-raised:  var(--_gw-neutral-50);
+  --surface-sunken:  var(--_gw-neutral-100);
+  --surface-overlay: var(--_gw-neutral-0);
+
+  --border:        var(--_gw-neutral-200);
+  --border-strong: var(--_gw-neutral-300);
+
+  --border-width-thin:   var(--_gw-border-thin);
+  --border-width-medium: var(--_gw-border-medium);
+  --border-width-thick:  var(--_gw-border-thick);
+  --border-width-heavy:  var(--_gw-border-heavy);
+
+  --action:           var(--_gw-blue-500);
+  --action-hover:     var(--_gw-blue-600);
+  --action-text:      var(--_gw-neutral-0);
+
+  --destructive:       var(--_gw-red-500);
+  --destructive-hover: var(--_gw-red-600);
+  --destructive-text:  var(--_gw-neutral-0);
+
+  --success:         var(--_gw-green-500);
+  --success-surface: var(--_gw-green-100);
+
+  --warning:         var(--_gw-amber-500);
+  --warning-surface: var(--_gw-amber-100);
+
+  --error:           var(--_gw-red-500);
+  --error-surface:   var(--_gw-red-100);
+
+  --focus-ring-color:  var(--_gw-yellow-400);
+  --focus-ring-width:  var(--_gw-border-thick);
+  --focus-ring-offset: 2px;
+  --focus-text:        var(--_gw-neutral-800);
+
+  --radius-sm: var(--_gw-radius-sm);
+  --radius-md: var(--_gw-radius-md);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration: 150ms;
+}
+
+/* ============================================================
+   DARK MODE — remaps semantic → different primitives
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink:           var(--_gw-neutral-50);
+    --ink-secondary: var(--_gw-neutral-300);
+    --ink-disabled:  var(--_gw-neutral-500);
+
+    --surface:         var(--_gw-neutral-900);
+    --surface-raised:  var(--_gw-neutral-800);
+    --surface-sunken:  var(--_gw-neutral-950);
+    --surface-overlay: var(--_gw-neutral-700);
+
+    --border:        var(--_gw-neutral-700);
+    --border-strong: var(--_gw-neutral-500);
+
+    --action:           var(--_gw-blue-300);
+    --action-hover:     var(--_gw-blue-200);
+    --action-text:      var(--_gw-neutral-900);
+
+    --destructive:       var(--_gw-red-300);
+    --destructive-hover: var(--_gw-red-200);
+    --destructive-text:  var(--_gw-neutral-900);
+
+    --success:         var(--_gw-green-300);
+    --success-surface: var(--_gw-neutral-950);
+
+    --warning:         var(--_gw-amber-300);
+    --warning-surface: var(--_gw-neutral-950);
+
+    --error:           var(--_gw-red-300);
+    --error-surface:   var(--_gw-neutral-950);
+
+    --focus-text: var(--_gw-neutral-900);
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+  }
+}
+
+/* ============================================================
+   GLOBAL
+   ============================================================ */
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.gw-width { max-width: 960px; margin-inline: auto; padding-inline: var(--space-6); }
+.gw-width--narrow { max-width: 680px; }
+.gw-width--wide { max-width: 1200px; }
+
+.gw-stack > * + * { margin-top: var(--space-4); }
+.gw-stack--sm > * + * { margin-top: var(--space-2); }
+.gw-stack--lg > * + * { margin-top: var(--space-8); }
+.gw-stack--xl > * + * { margin-top: var(--space-12); }
+
+.gw-cluster { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.gw-cluster--sm { gap: var(--space-2); }
+
+.gw-prose { max-width: var(--measure); }
+.gw-prose > * + * { margin-top: var(--space-4); }
+.gw-prose > h2 + *, .gw-prose > h3 + * { margin-top: var(--space-2); }
+.gw-prose > * + h2 { margin-top: var(--space-10); }
+.gw-prose > * + h3 { margin-top: var(--space-8); }
+
+.gw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: var(--space-6);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.gw-heading-xl { font-size: var(--text-display); font-weight: 700; line-height: var(--leading-tight); letter-spacing: -0.02em; }
+.gw-heading-l  { font-size: var(--text-title);   font-weight: 700; line-height: var(--leading-tight); letter-spacing: -0.01em; }
+.gw-heading-m  { font-size: var(--text-heading);  font-weight: 600; line-height: var(--leading-tight); }
+.gw-heading-s  { font-size: var(--text-subheading); font-weight: 600; line-height: var(--leading-tight); }
+
+.gw-body       { font-size: var(--text-body); line-height: var(--leading-normal); }
+.gw-body--sm   { font-size: var(--text-secondary); }
+.gw-body--xs   { font-size: var(--text-caption); color: var(--ink-secondary); }
+
+.gw-caption    { font-size: var(--text-caption); color: var(--ink-secondary); letter-spacing: 0.02em; text-transform: uppercase; font-weight: 600; }
+.gw-mono       { font-family: var(--font-mono); font-size: 0.9em; }
+
+.gw-link {
+  color: var(--action);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-width-thin);
+  text-underline-offset: 2px;
+  transition: color var(--duration) var(--ease);
+}
+.gw-link:hover { color: var(--action-hover); text-decoration-thickness: var(--border-width-medium); }
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* --- BUTTON --- */
+.gw-button {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-body); font-weight: 600; line-height: 1;
+  color: var(--action-text); background: var(--action);
+  border: var(--border-width-medium) solid transparent;
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: background var(--duration) var(--ease);
+  text-decoration: none; white-space: nowrap;
+}
+.gw-button:hover { background: var(--action-hover); }
+.gw-button:active { transform: translateY(1px); }
+.gw-button[disabled], .gw-button[aria-disabled="true"] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+.gw-button--secondary { background: transparent; color: var(--action); border-color: var(--action); }
+.gw-button--secondary:hover { background: var(--action); color: var(--action-text); }
+
+.gw-button--destructive { background: var(--destructive); color: var(--destructive-text); }
+.gw-button--destructive:hover { background: var(--destructive-hover); }
+
+.gw-button--ghost { background: transparent; color: var(--ink); border-color: transparent; }
+.gw-button--ghost:hover { background: var(--surface-raised); }
+
+.gw-button-group { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+/* --- FORM FIELD --- */
+.gw-field { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.gw-label { font-size: var(--text-body); font-weight: 600; color: var(--ink); }
+
+.gw-hint { font-size: var(--text-secondary); color: var(--ink-secondary); margin-top: calc(-1 * var(--space-1)); }
+
+.gw-input {
+  padding: var(--space-2) var(--space-3); font-size: var(--text-body);
+  color: var(--ink); background: var(--surface);
+  border: var(--border-width-medium) solid var(--border-strong);
+  border-radius: var(--radius-sm); transition: border-color var(--duration) var(--ease); width: 100%;
+}
+.gw-input:hover { border-color: var(--ink-secondary); }
+.gw-input:focus { border-color: var(--action); outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 0; }
+
+.gw-input--w5  { max-width: 5.5ch;  padding-inline: var(--space-2); }
+.gw-input--w10 { max-width: 11ch; }
+.gw-input--w20 { max-width: 21ch; }
+.gw-input--w30 { max-width: 33ch; }
+.gw-input--two-thirds { max-width: 66%; }
+
+.gw-textarea {
+  padding: var(--space-3); font-size: var(--text-body); color: var(--ink); background: var(--surface);
+  border: var(--border-width-medium) solid var(--border-strong); border-radius: var(--radius-sm);
+  resize: vertical; min-height: 8rem; width: 100%; font-family: var(--font-sans); line-height: var(--leading-normal);
+}
+.gw-textarea:focus { border-color: var(--action); outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 0; }
+
+.gw-select {
+  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
+  font-size: var(--text-body); color: var(--ink); background: var(--surface);
+  border: var(--border-width-medium) solid var(--border-strong); border-radius: var(--radius-sm);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%235c5c5c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right var(--space-3) center; cursor: pointer;
+}
+.gw-select:focus { border-color: var(--action); outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 0; }
+
+.gw-radios, .gw-checkboxes { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.gw-radio-item, .gw-checkbox-item {
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width-medium) solid var(--border); border-radius: var(--radius-sm);
+  cursor: pointer; transition: border-color var(--duration) var(--ease), background var(--duration) var(--ease);
+}
+.gw-radio-item:hover, .gw-checkbox-item:hover { border-color: var(--border-strong); background: var(--surface-raised); }
+.gw-radio-item:has(input:checked), .gw-checkbox-item:has(input:checked) {
+  border-color: var(--action); background: color-mix(in srgb, var(--action) 5%, var(--surface));
+}
+.gw-radio-item input, .gw-checkbox-item input { width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; flex-shrink: 0; accent-color: var(--action); }
+
+/* --- ERROR STATE --- */
+.gw-field--error .gw-input,
+.gw-field--error .gw-textarea,
+.gw-field--error .gw-select { border-color: var(--error); border-left-width: var(--border-width-heavy); }
+
+.gw-error-message {
+  font-size: var(--text-secondary); color: var(--error); font-weight: 600;
+  display: flex; align-items: baseline; gap: var(--space-2);
+}
+.gw-error-message::before { content: "⚠"; font-size: var(--text-caption); }
+
+.gw-error-summary {
+  padding: var(--space-6); border: var(--border-width-thick) solid var(--error);
+  border-radius: var(--radius-md); background: var(--error-surface);
+}
+.gw-error-summary h2 { font-size: var(--text-subheading); font-weight: 700; color: var(--error); }
+.gw-error-summary ul { margin-top: var(--space-3); padding-left: var(--space-6); }
+.gw-error-summary li + li { margin-top: var(--space-2); }
+.gw-error-summary a { color: var(--error); font-weight: 600; }
+
+/* --- BANNER --- */
+.gw-banner {
+  padding: var(--space-4) var(--space-6);
+  border-left: var(--border-width-heavy) solid var(--border-strong);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: var(--surface-raised);
+}
+.gw-banner--success { border-color: var(--success); background: var(--success-surface); }
+.gw-banner--warning { border-color: var(--warning); background: var(--warning-surface); }
+.gw-banner--error   { border-color: var(--error); background: var(--error-surface); }
+
+.gw-banner__title { font-weight: 700; font-size: var(--text-body); }
+.gw-banner__body { margin-top: var(--space-1); font-size: var(--text-secondary); color: var(--ink-secondary); }
+
+/* --- TAG --- */
+.gw-tag {
+  display: inline-flex; align-items: center; padding: var(--space-1) var(--space-3);
+  font-size: var(--text-caption); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em;
+  border-radius: var(--radius-sm); background: var(--surface-sunken); color: var(--ink-secondary); line-height: 1;
+}
+.gw-tag--action  { background: var(--action); color: var(--action-text); }
+.gw-tag--success { background: var(--success); color: var(--_gw-neutral-0); }
+.gw-tag--warning { background: var(--warning-surface); color: var(--warning); }
+.gw-tag--error   { background: var(--error-surface); color: var(--error); }
+
+/* --- SUMMARY LIST --- */
+.gw-summary-list { border-top: var(--border-width-thin) solid var(--border); }
+.gw-summary-list__row {
+  display: grid; grid-template-columns: minmax(120px, 1fr) 2fr auto; gap: var(--space-4);
+  padding: var(--space-4) 0; border-bottom: var(--border-width-thin) solid var(--border); align-items: baseline;
+}
+.gw-summary-list__key { font-weight: 600; color: var(--ink-secondary); font-size: var(--text-secondary); }
+.gw-summary-list__value { color: var(--ink); }
+.gw-summary-list__action a { font-size: var(--text-secondary); color: var(--action); }
+
+/* --- TABLE --- */
+.gw-table { width: 100%; border-collapse: collapse; font-size: var(--text-secondary); }
+.gw-table th {
+  text-align: left; padding: var(--space-3) var(--space-4); font-weight: 600; color: var(--ink-secondary);
+  border-bottom: var(--border-width-medium) solid var(--border-strong);
+  font-size: var(--text-caption); text-transform: uppercase; letter-spacing: 0.04em;
+}
+.gw-table td { padding: var(--space-3) var(--space-4); border-bottom: var(--border-width-thin) solid var(--border); }
+.gw-table tr:hover td { background: var(--surface-raised); }
+.gw-table td.gw-table__numeric, .gw-table th.gw-table__numeric { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* --- CARD --- */
+.gw-card {
+  padding: var(--space-6); border: var(--border-width-thin) solid var(--border);
+  border-radius: var(--radius-md); background: var(--surface);
+}
+.gw-card--raised { box-shadow: var(--shadow-md); border-color: transparent; }
+.gw-card--interactive { cursor: pointer; transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease); }
+.gw-card--interactive:hover { box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+
+/* Nested elevation */
+.gw-card .gw-card,
+.gw-surface-raised .gw-card { background: var(--surface-overlay); }
+
+/* --- TABS --- */
+.gw-tabs { border-bottom: var(--border-width-medium) solid var(--border); display: flex; gap: 0; overflow-x: auto; }
+.gw-tab {
+  padding: var(--space-3) var(--space-5); font-size: var(--text-secondary); font-weight: 600;
+  color: var(--ink-secondary); background: none; border: none;
+  border-bottom: var(--border-width-thick) solid transparent;
+  margin-bottom: calc(-1 * var(--border-width-medium)); cursor: pointer;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease); white-space: nowrap;
+}
+.gw-tab:hover { color: var(--ink); }
+.gw-tab[aria-selected="true"], .gw-tab--active { color: var(--action); border-bottom-color: var(--action); }
+.gw-tab-panel { padding-top: var(--space-6); }
+.gw-tab-panel[hidden] { display: none; }
+
+/* --- BREADCRUMB --- */
+.gw-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--space-2); font-size: var(--text-secondary); color: var(--ink-secondary); }
+.gw-breadcrumb li { display: flex; align-items: center; gap: var(--space-2); list-style: none; }
+.gw-breadcrumb li + li::before { content: "/"; color: var(--border-strong); }
+.gw-breadcrumb a { color: var(--action); text-decoration: none; }
+.gw-breadcrumb a:hover { text-decoration: underline; }
+.gw-breadcrumb [aria-current] { font-weight: 600; color: var(--ink); }
+
+/* --- PAGINATION --- */
+.gw-pagination { display: flex; align-items: center; gap: var(--space-1); }
+.gw-pagination__link, .gw-pagination__current {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 2.25rem; height: 2.25rem; font-size: var(--text-secondary); font-weight: 600;
+  border-radius: var(--radius-sm); text-decoration: none;
+}
+.gw-pagination__link { color: var(--action); }
+.gw-pagination__link:hover { background: var(--surface-raised); }
+.gw-pagination__current { background: var(--action); color: var(--action-text); }
+
+/* --- DETAILS/ACCORDION --- */
+.gw-details { border: var(--border-width-thin) solid var(--border); border-radius: var(--radius-sm); }
+.gw-details + .gw-details { margin-top: calc(-1 * var(--border-width-thin)); }
+.gw-details summary {
+  padding: var(--space-4) var(--space-5); font-weight: 600; cursor: pointer; list-style: none;
+  display: flex; align-items: center; gap: var(--space-3); transition: background var(--duration) var(--ease);
+}
+.gw-details summary:hover { background: var(--surface-raised); }
+.gw-details summary::before {
+  content: ""; width: 0.5rem; height: 0.5rem;
+  border-right: var(--border-width-medium) solid var(--ink-secondary);
+  border-bottom: var(--border-width-medium) solid var(--ink-secondary);
+  transform: rotate(-45deg); transition: transform var(--duration) var(--ease); flex-shrink: 0;
+}
+.gw-details[open] summary::before { transform: rotate(45deg); }
+.gw-details__body { padding: 0 var(--space-5) var(--space-5); }
+
+/* --- DIVIDER --- */
+.gw-divider { border: none; border-top: var(--border-width-thin) solid var(--border); margin: var(--space-8) 0; }
+
+/* --- SKIP LINK --- */
+.gw-skip-link {
+  position: absolute; top: -100%; left: var(--space-4);
+  padding: var(--space-2) var(--space-4); background: var(--focus-ring-color); color: var(--focus-text);
+  font-weight: 700; z-index: 9999; border-radius: 0 0 var(--radius-sm) var(--radius-sm); text-decoration: none;
+}
+.gw-skip-link:focus { top: 0; }
+
+/* --- UTILITY --- */
+.gw-section { padding-block: var(--space-12); }
+.gw-section + .gw-section { border-top: var(--border-width-thin) solid var(--border); }
+.gw-surface-raised { background: var(--surface-raised); }
+.gw-visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
+}
+
+
+/* ============================================================
+   DOCUMENTATION STYLES (not part of the system)
+   ============================================================ */
+.docs-header { padding: var(--space-10) 0 var(--space-12); border-bottom: var(--border-width-thin) solid var(--border); }
+.docs-header__mark { font-family: var(--font-mono); font-size: var(--text-caption); font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--ink-disabled); margin-bottom: var(--space-3); }
+.docs-header__title { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); }
+.docs-header__sub { margin-top: var(--space-4); font-size: var(--text-subheading); color: var(--ink-secondary); max-width: var(--measure); }
+
+.docs-principle { display: grid; grid-template-columns: auto 1fr; gap: var(--space-4); align-items: start; }
+.docs-principle__num {
+  width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center;
+  background: var(--ink); color: var(--surface); font-size: var(--text-caption); font-weight: 800; border-radius: 50%; font-family: var(--font-mono);
+}
+
+.docs-swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-3); }
+.docs-swatch { border-radius: var(--radius-md); overflow: hidden; border: var(--border-width-thin) solid var(--border); }
+.docs-swatch__colour { height: 56px; }
+.docs-swatch__label { padding: var(--space-2) var(--space-3); font-size: var(--text-caption); font-family: var(--font-mono); }
+.docs-swatch__name { font-weight: 600; display: block; }
+.docs-swatch__val { color: var(--ink-secondary); }
+
+.docs-code {
+  background: var(--surface-raised); border: var(--border-width-thin) solid var(--border); border-radius: var(--radius-md);
+  padding: var(--space-5); overflow-x: auto; font-family: var(--font-mono); font-size: var(--text-secondary); line-height: 1.6; white-space: pre;
+}
+
+.docs-demo { padding: var(--space-8); border: var(--border-width-thin) solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+
+.docs-arch {
+  background: var(--surface-sunken); border-radius: var(--radius-md); padding: var(--space-6);
+  font-family: var(--font-mono); font-size: var(--text-secondary); line-height: 1.8; overflow-x: auto; white-space: pre;
+}
+
+.docs-token-table { width: 100%; border-collapse: collapse; font-size: var(--text-secondary); }
+.docs-token-table th { text-align: left; padding: var(--space-2) var(--space-4); font-weight: 600; color: var(--ink-secondary); border-bottom: var(--border-width-medium) solid var(--border-strong); font-size: var(--text-caption); text-transform: uppercase; letter-spacing: 0.04em; }
+.docs-token-table td { padding: var(--space-2) var(--space-4); border-bottom: var(--border-width-thin) solid var(--border); vertical-align: top; }
+.docs-token-table .tok { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--action); white-space: nowrap; }
+.docs-token-table .maps { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--ink-disabled); white-space: nowrap; }
+.docs-token-table .use { color: var(--ink-secondary); }
+
+.docs-change { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-4); align-items: baseline; font-size: var(--text-secondary); }
+.docs-change__label { font-family: var(--font-mono); font-size: var(--text-caption); font-weight: 700; padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); line-height: 1; }
+.docs-change__label--new { background: var(--success-surface); color: var(--success); }
+.docs-change__label--fix { background: var(--warning-surface); color: var(--warning); }
+.docs-change__label--brk { background: var(--error-surface); color: var(--error); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="gw-skip-link">Skip to main content</a>
+
+<main id="main">
+
+  <div class="gw-width">
+    <header class="docs-header">
+      <div class="docs-header__mark">Design System v0.2</div>
+      <h1 class="docs-header__title">Groundwork</h1>
+      <p class="docs-header__sub">A foundation library for web applications. Two-tier token architecture, accessible components, and patterns that make the right thing easy and the wrong thing hard.</p>
+    </header>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <section class="gw-section" id="architecture">
+    <div class="gw-width">
+      <div class="gw-stack--lg">
+        <div class="gw-prose">
+          <h2 class="gw-heading-l">Token architecture</h2>
+          <p>Two layers. Primitives hold raw values. Semantic tokens hold decisions. Components only reference the semantic layer. Dark mode remaps which primitives the semantic tokens point to — components don't change.</p>
+        </div>
+
+        <div class="docs-arch">┌───────────────────────────────────────────────────────┐
+│  PRIMITIVES (private — prefixed --_gw-)               │
+│                                                       │
+│  Palette:   _gw-neutral-0 … _gw-neutral-950           │
+│  Brand:     _gw-blue-100 … _gw-blue-600              │
+│  Status:    _gw-red-*, _gw-green-*, _gw-amber-*      │
+│  Scale:     _gw-space-1 … _gw-space-20               │
+│  Type:      _gw-text-xs … _gw-text-3xl               │
+│  Borders:   _gw-border-thin … _gw-border-heavy       │
+│                                                       │
+│  ⚠ Never reference in component CSS.                  │
+├───────────────────────────────────────────────────────┤
+│  SEMANTIC TOKENS (public)                             │
+│                                                       │
+│  Ink:       --ink, --ink-secondary, --ink-disabled     │
+│  Surface:   --surface, --surface-raised,              │
+│             --surface-sunken, --surface-overlay        │
+│  Border:    --border, --border-strong                 │
+│             --border-width-thin … heavy               │
+│  Action:    --action, --destructive, --success …      │
+│  Focus:     --focus-ring-color, width, offset         │
+│  Type:      --text-body, --text-heading …             │
+│                                                       │
+│  ✓ Components reference ONLY these.                   │
+├───────────────────────────────────────────────────────┤
+│  DARK MODE                                            │
+│                                                       │
+│  Remaps semantic → different primitives.              │
+│  --ink: _gw-neutral-800 → _gw-neutral-50             │
+│  --surface: _gw-neutral-0 → _gw-neutral-900          │
+│  Components don't change.                             │
+└───────────────────────────────────────────────────────┘</div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Changes from v0.1</h3>
+          <div class="docs-change">
+            <span class="docs-change__label docs-change__label--new">NEW</span>
+            <span>Private primitive layer (<code class="gw-mono">--_gw-*</code>) — raw palette, spacing, type, and border scales</span>
+            <span class="docs-change__label docs-change__label--new">NEW</span>
+            <span><code class="gw-mono">--surface-overlay</code> for nested elevation (card-on-card)</span>
+            <span class="docs-change__label docs-change__label--new">NEW</span>
+            <span>Tokenised border widths: <code class="gw-mono">--border-width-thin</code> through <code class="gw-mono">heavy</code></span>
+            <span class="docs-change__label docs-change__label--new">NEW</span>
+            <span>Tokenised focus ring: <code class="gw-mono">--focus-ring-color</code>, <code class="gw-mono">width</code>, <code class="gw-mono">offset</code></span>
+            <span class="docs-change__label docs-change__label--fix">FIX</span>
+            <span><code class="gw-mono">--ink-muted</code> → <code class="gw-mono">--ink-secondary</code> (role, not appearance)</span>
+            <span class="docs-change__label docs-change__label--fix">FIX</span>
+            <span><code class="gw-mono">--ink-faint</code> → <code class="gw-mono">--ink-disabled</code> (unambiguous use case)</span>
+            <span class="docs-change__label docs-change__label--fix">FIX</span>
+            <span>Type tokens: <code class="gw-mono">--text-sm</code> → <code class="gw-mono">--text-secondary</code> (purpose not size)</span>
+            <span class="docs-change__label docs-change__label--fix">FIX</span>
+            <span>Dark mode remaps semantic → primitive (no more hex redeclaration)</span>
+            <span class="docs-change__label docs-change__label--brk">BREAK</span>
+            <span><code class="gw-mono">--ink-muted</code> → <code class="gw-mono">--ink-secondary</code>, <code class="gw-mono">--ink-faint</code> → <code class="gw-mono">--ink-disabled</code></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="gw-section" id="principles">
+    <div class="gw-width gw-width--narrow">
+      <h2 class="gw-heading-l">Principles</h2>
+      <div class="gw-stack--lg" style="margin-top:var(--space-6)">
+        <div class="docs-principle"><span class="docs-principle__num">1</span><div class="gw-stack--sm"><strong class="gw-heading-s">Constraints over choices</strong><p class="gw-body--sm" style="color:var(--ink-secondary)">A closed token set. If it's not in the scale, it doesn't exist.</p></div></div>
+        <div class="docs-principle"><span class="docs-principle__num">2</span><div class="gw-stack--sm"><strong class="gw-heading-s">Two layers, one seam</strong><p class="gw-body--sm" style="color:var(--ink-secondary)">Primitives hold values. Semantic tokens hold decisions. Theming swaps at the seam.</p></div></div>
+        <div class="docs-principle"><span class="docs-principle__num">3</span><div class="gw-stack--sm"><strong class="gw-heading-s">Accessibility as architecture</strong><p class="gw-body--sm" style="color:var(--ink-secondary)">Components look broken without labels. Focus is unmistakable. Colour is never the only signal.</p></div></div>
+        <div class="docs-principle"><span class="docs-principle__num">4</span><div class="gw-stack--sm"><strong class="gw-heading-s">Names describe decisions</strong><p class="gw-body--sm" style="color:var(--ink-secondary)"><code class="gw-mono">--ink-secondary</code> not <code class="gw-mono">--ink-muted</code>. <code class="gw-mono">--text-body</code> not <code class="gw-mono">--text-16</code>. Rename the value without renaming the token.</p></div></div>
+        <div class="docs-principle"><span class="docs-principle__num">5</span><div class="gw-stack--sm"><strong class="gw-heading-s">Documentation is product</strong><p class="gw-body--sm" style="color:var(--ink-secondary)">Every component: when to use, when not to, the reasoning, edge cases.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOKEN REFERENCE -->
+  <section class="gw-section" id="tokens">
+    <div class="gw-width">
+      <div class="gw-stack--lg">
+        <div class="gw-prose">
+          <h2 class="gw-heading-l">Token reference</h2>
+          <p>The complete public API. The "maps to" column shows the light-mode primitive.</p>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Ink</h3>
+          <div style="overflow-x:auto"><table class="docs-token-table"><thead><tr><th>Token</th><th>Maps to</th><th>When to use</th></tr></thead><tbody>
+            <tr><td class="tok">--ink</td><td class="maps">_gw-neutral-800</td><td class="use">Primary text, headings, body</td></tr>
+            <tr><td class="tok">--ink-secondary</td><td class="maps">_gw-neutral-600</td><td class="use">Descriptions, hints, labels</td></tr>
+            <tr><td class="tok">--ink-disabled</td><td class="maps">_gw-neutral-400</td><td class="use">Disabled controls, placeholders</td></tr>
+          </tbody></table></div>
+          <p class="gw-body--sm" style="color:var(--ink-secondary);max-width:var(--measure)"><strong>Decision test:</strong> Main content? → <code class="gw-mono">--ink</code>. Supporting? → <code class="gw-mono">--ink-secondary</code>. Inactive? → <code class="gw-mono">--ink-disabled</code>.</p>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Surface</h3>
+          <div style="overflow-x:auto"><table class="docs-token-table"><thead><tr><th>Token</th><th>Maps to</th><th>When to use</th></tr></thead><tbody>
+            <tr><td class="tok">--surface</td><td class="maps">_gw-neutral-0</td><td class="use">Page background</td></tr>
+            <tr><td class="tok">--surface-raised</td><td class="maps">_gw-neutral-50</td><td class="use">Cards, elevated panels</td></tr>
+            <tr><td class="tok">--surface-sunken</td><td class="maps">_gw-neutral-100</td><td class="use">Code blocks, inset areas</td></tr>
+            <tr><td class="tok">--surface-overlay</td><td class="maps">_gw-neutral-0</td><td class="use">Panels on raised surfaces (card-on-card)</td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Border</h3>
+          <div style="overflow-x:auto"><table class="docs-token-table"><thead><tr><th>Token</th><th>Maps to</th><th>When to use</th></tr></thead><tbody>
+            <tr><td class="tok">--border</td><td class="maps">_gw-neutral-200</td><td class="use">Dividers, card borders</td></tr>
+            <tr><td class="tok">--border-strong</td><td class="maps">_gw-neutral-300</td><td class="use">Input borders, emphasis</td></tr>
+            <tr><td class="tok">--border-width-thin</td><td class="maps">1px</td><td class="use">Dividers, table cells</td></tr>
+            <tr><td class="tok">--border-width-medium</td><td class="maps">2px</td><td class="use">Input/button borders</td></tr>
+            <tr><td class="tok">--border-width-thick</td><td class="maps">3px</td><td class="use">Error summary, focus ring</td></tr>
+            <tr><td class="tok">--border-width-heavy</td><td class="maps">4px</td><td class="use">Banner accent, error left border</td></tr>
+          </tbody></table></div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Focus ring</h3>
+          <div style="overflow-x:auto"><table class="docs-token-table"><thead><tr><th>Token</th><th>Maps to</th><th>When to use</th></tr></thead><tbody>
+            <tr><td class="tok">--focus-ring-color</td><td class="maps">_gw-yellow-400</td><td class="use">Focus outline colour</td></tr>
+            <tr><td class="tok">--focus-ring-width</td><td class="maps">3px</td><td class="use">Focus outline thickness</td></tr>
+            <tr><td class="tok">--focus-ring-offset</td><td class="maps">2px</td><td class="use">Gap between element and ring</td></tr>
+          </tbody></table></div>
+        </div>
+
+        <!-- Colour swatches -->
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Colour</h3>
+          <div>
+            <p class="gw-caption" style="margin-bottom:var(--space-3)">Ink &amp; surface</p>
+            <div class="docs-swatch-grid">
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--ink)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--ink</span><span class="docs-swatch__val">primary</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--ink-secondary)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--ink-secondary</span><span class="docs-swatch__val">supporting</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--ink-disabled)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--ink-disabled</span><span class="docs-swatch__val">inactive</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--surface-raised)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--surface-raised</span><span class="docs-swatch__val">elevated</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--surface-sunken)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--surface-sunken</span><span class="docs-swatch__val">inset</span></div></div>
+            </div>
+          </div>
+          <div>
+            <p class="gw-caption" style="margin-bottom:var(--space-3)">Semantic</p>
+            <div class="docs-swatch-grid">
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--action)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--action</span><span class="docs-swatch__val">primary CTA</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--destructive)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--destructive</span><span class="docs-swatch__val">danger</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--success)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--success</span><span class="docs-swatch__val">positive</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--warning-surface)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--warning</span><span class="docs-swatch__val">caution</span></div></div>
+              <div class="docs-swatch"><div class="docs-swatch__colour" style="background:var(--focus-ring-color)"></div><div class="docs-swatch__label"><span class="docs-swatch__name">--focus-ring-color</span><span class="docs-swatch__val">focus</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spacing -->
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Spacing</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:flex-end">
+            <div style="text-align:center"><div style="width:var(--space-1);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">1</span></div>
+            <div style="text-align:center"><div style="width:var(--space-2);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">2</span></div>
+            <div style="text-align:center"><div style="width:var(--space-3);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">3</span></div>
+            <div style="text-align:center"><div style="width:var(--space-4);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">4</span></div>
+            <div style="text-align:center"><div style="width:var(--space-6);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">6</span></div>
+            <div style="text-align:center"><div style="width:var(--space-8);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">8</span></div>
+            <div style="text-align:center"><div style="width:var(--space-10);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">10</span></div>
+            <div style="text-align:center"><div style="width:var(--space-12);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">12</span></div>
+            <div style="text-align:center"><div style="width:var(--space-16);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">16</span></div>
+            <div style="text-align:center"><div style="width:var(--space-20);height:40px;background:var(--action);border-radius:2px"></div><span class="gw-body--xs" style="font-family:var(--font-mono)">20</span></div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Typography</h3>
+          <p class="gw-body--sm" style="color:var(--ink-secondary);max-width:var(--measure)">Seven sizes, named by purpose. Pick <code class="gw-mono">--text-body</code> because it's body text, not because you want 16px.</p>
+          <div class="docs-demo gw-stack">
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-heading-xl">Display</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-display</code></div>
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-heading-l">Title</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-title</code></div>
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-heading-m">Heading</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-heading</code></div>
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-heading-s">Subheading</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-subheading</code></div>
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-body">Body</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-body</code></div>
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-body--sm">Secondary</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-secondary</code></div>
+            <div style="display:flex;align-items:baseline;gap:var(--space-4)"><span class="gw-caption">Caption</span><code class="gw-mono" style="color:var(--ink-disabled)">--text-caption</code></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="gw-section" id="components">
+    <div class="gw-width">
+      <div class="gw-stack--xl">
+        <h2 class="gw-heading-l">Components</h2>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Button</h3>
+          <p class="gw-body--sm" style="color:var(--ink-secondary);max-width:var(--measure)"><strong>When to use:</strong> For actions. One primary per view. <strong>When not to use:</strong> Navigation — use links. <strong>Rule:</strong> Text describes the action ("Save address", not "Submit").</p>
+          <div class="docs-demo">
+            <div class="gw-button-group">
+              <button class="gw-button">Save and continue</button>
+              <button class="gw-button gw-button--secondary">Save as draft</button>
+              <button class="gw-button gw-button--ghost">Cancel</button>
+            </div>
+            <div class="gw-button-group" style="margin-top:var(--space-4)">
+              <button class="gw-button gw-button--destructive">Delete account</button>
+              <button class="gw-button" disabled>Processing…</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Form fields</h3>
+          <p class="gw-body--sm" style="color:var(--ink-secondary);max-width:var(--measure)"><strong>Pattern:</strong> Every input in <code class="gw-mono">.gw-field</code> with a label. Width hints signal expected input length. A bare input <em>looks wrong</em>.</p>
+          <div class="docs-demo">
+            <div class="gw-stack--lg" style="max-width:500px">
+              <div class="gw-field"><label class="gw-label" for="f1">Full name</label><input class="gw-input" id="f1" type="text" autocomplete="name"></div>
+              <div class="gw-field"><label class="gw-label" for="f2">Postcode</label><span class="gw-hint" id="f2-hint">For example, SW1A 1AA</span><input class="gw-input gw-input--w10" id="f2" type="text" aria-describedby="f2-hint" autocomplete="postal-code"></div>
+              <fieldset class="gw-field" style="border:none"><legend class="gw-label">Contact preference</legend><div class="gw-radios"><label class="gw-radio-item"><input type="radio" name="contact" value="email" checked><span>Email</span></label><label class="gw-radio-item"><input type="radio" name="contact" value="phone"><span>Phone</span></label><label class="gw-radio-item"><input type="radio" name="contact" value="post"><span>Post</span></label></div></fieldset>
+              <fieldset class="gw-field" style="border:none"><legend class="gw-label">Services used</legend><div class="gw-checkboxes"><label class="gw-checkbox-item"><input type="checkbox" name="svc" value="web"><span>Web application</span></label><label class="gw-checkbox-item"><input type="checkbox" name="svc" value="api"><span>REST API</span></label><label class="gw-checkbox-item"><input type="checkbox" name="svc" value="mobile"><span>Mobile app</span></label></div></fieldset>
+              <div class="gw-field"><label class="gw-label" for="f3">Account type</label><select class="gw-select" id="f3" style="max-width:280px"><option value="">Select an option</option><option>Personal</option><option>Business</option><option>Enterprise</option></select></div>
+              <div class="gw-field"><label class="gw-label" for="f4">Notes</label><span class="gw-hint" id="f4-hint">Optional. Max 500 characters.</span><textarea class="gw-textarea" id="f4" aria-describedby="f4-hint" rows="4"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Error handling</h3>
+          <p class="gw-body--sm" style="color:var(--ink-secondary);max-width:var(--measure)"><strong>Pattern:</strong> Errors explain what's wrong AND how to fix it. Summary at page top links to each field. All borders use tokens.</p>
+          <div class="docs-demo gw-stack--lg" style="max-width:500px">
+            <div class="gw-error-summary" role="alert"><h2>There is a problem</h2><ul><li><a href="#err-name">Enter your full name</a></li><li><a href="#err-email">Enter an email address in the correct format, like name@example.com</a></li></ul></div>
+            <div class="gw-field gw-field--error"><label class="gw-label" for="err-name">Full name</label><span class="gw-error-message" id="err-name-msg">Enter your full name</span><input class="gw-input" id="err-name" type="text" aria-describedby="err-name-msg" aria-invalid="true"></div>
+            <div class="gw-field gw-field--error"><label class="gw-label" for="err-email">Email address</label><span class="gw-error-message" id="err-email-msg">Enter an email address in the correct format, like name@example.com</span><input class="gw-input" id="err-email" type="email" value="harry@" aria-describedby="err-email-msg" aria-invalid="true"></div>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Notification banners</h3>
+          <div class="docs-demo gw-stack">
+            <div class="gw-banner gw-banner--success"><p class="gw-banner__title">Address saved</p><p class="gw-banner__body">Your delivery address has been updated.</p></div>
+            <div class="gw-banner gw-banner--warning"><p class="gw-banner__title">Session expires in 5 minutes</p><p class="gw-banner__body">Save your work to avoid losing changes.</p></div>
+            <div class="gw-banner gw-banner--error"><p class="gw-banner__title">Payment failed</p><p class="gw-banner__body">Your card was declined. Try a different payment method.</p></div>
+            <div class="gw-banner"><p class="gw-banner__title">New terms of service</p><p class="gw-banner__body">Review before 1 July 2026.</p></div>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Tags</h3>
+          <div class="docs-demo"><div class="gw-cluster"><span class="gw-tag">Default</span><span class="gw-tag gw-tag--action">Active</span><span class="gw-tag gw-tag--success">Complete</span><span class="gw-tag gw-tag--warning">Pending</span><span class="gw-tag gw-tag--error">Failed</span></div></div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Summary list</h3>
+          <div class="docs-demo">
+            <dl class="gw-summary-list">
+              <div class="gw-summary-list__row"><dt class="gw-summary-list__key">Full name</dt><dd class="gw-summary-list__value">Harry Thompson</dd><dd class="gw-summary-list__action"><a href="#" class="gw-link">Change</a></dd></div>
+              <div class="gw-summary-list__row"><dt class="gw-summary-list__key">Email</dt><dd class="gw-summary-list__value">harry@example.com</dd><dd class="gw-summary-list__action"><a href="#" class="gw-link">Change</a></dd></div>
+              <div class="gw-summary-list__row"><dt class="gw-summary-list__key">Contact</dt><dd class="gw-summary-list__value">Email</dd><dd class="gw-summary-list__action"><a href="#" class="gw-link">Change</a></dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Table</h3>
+          <div class="docs-demo" style="overflow-x:auto">
+            <table class="gw-table"><thead><tr><th>Service</th><th>Status</th><th class="gw-table__numeric">Requests</th><th class="gw-table__numeric">Latency</th></tr></thead><tbody>
+              <tr><td>API Gateway</td><td><span class="gw-tag gw-tag--success">Healthy</span></td><td class="gw-table__numeric">1,247,832</td><td class="gw-table__numeric">42ms</td></tr>
+              <tr><td>Auth Service</td><td><span class="gw-tag gw-tag--success">Healthy</span></td><td class="gw-table__numeric">892,104</td><td class="gw-table__numeric">18ms</td></tr>
+              <tr><td>Image Pipeline</td><td><span class="gw-tag gw-tag--warning">Degraded</span></td><td class="gw-table__numeric">234,891</td><td class="gw-table__numeric">890ms</td></tr>
+              <tr><td>Search Index</td><td><span class="gw-tag gw-tag--error">Down</span></td><td class="gw-table__numeric">0</td><td class="gw-table__numeric">—</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Cards &amp; nested elevation</h3>
+          <p class="gw-body--sm" style="color:var(--ink-secondary);max-width:var(--measure)">Cards on raised surfaces automatically use <code class="gw-mono">--surface-overlay</code>.</p>
+          <div class="docs-demo">
+            <div class="gw-grid">
+              <div class="gw-card gw-stack--sm"><span class="gw-caption">Users</span><span class="gw-heading-l" style="font-variant-numeric:tabular-nums">2,847</span><span class="gw-body--sm" style="color:var(--ink-secondary)">Active this week</span></div>
+              <div class="gw-card gw-stack--sm"><span class="gw-caption">Revenue</span><span class="gw-heading-l" style="font-variant-numeric:tabular-nums">£48,291</span><span class="gw-body--sm" style="color:var(--success)">+12.4%</span></div>
+              <div class="gw-card gw-card--interactive gw-stack--sm"><span class="gw-caption">Deploy</span><span class="gw-heading-s">v3.2.1</span><span class="gw-body--sm" style="color:var(--ink-secondary)">2 hours ago</span></div>
+            </div>
+            <div class="gw-surface-raised" style="margin-top:var(--space-6);padding:var(--space-6);border-radius:var(--radius-md)">
+              <p class="gw-caption" style="margin-bottom:var(--space-3)">Nested: card on raised surface</p>
+              <div class="gw-grid">
+                <div class="gw-card gw-stack--sm"><span class="gw-heading-s">Nested card</span><span class="gw-body--sm" style="color:var(--ink-secondary)">Uses <code class="gw-mono">--surface-overlay</code></span></div>
+                <div class="gw-card gw-stack--sm"><span class="gw-heading-s">Also nested</span><span class="gw-body--sm" style="color:var(--ink-secondary)">Maintains contrast</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Accordion</h3>
+          <div class="docs-demo" style="max-width:500px">
+            <details class="gw-details" open><summary>What counts as a breaking change?</summary><div class="gw-details__body gw-prose"><p>Removing a token, renaming a class, or altering component markup. Visual tweaks within tokens are not breaking.</p></div></details>
+            <details class="gw-details"><summary>Can I add custom tokens?</summary><div class="gw-details__body gw-prose"><p>Yes, in a separate namespace (<code class="gw-mono">--app-*</code>). Core tokens are locked.</p></div></details>
+            <details class="gw-details"><summary>How do I re-theme?</summary><div class="gw-details__body gw-prose"><p>Override the primitives. Replace <code class="gw-mono">--_gw-blue-*</code> with your brand. Semantic tokens inherit automatically.</p></div></details>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Tabs</h3>
+          <div class="docs-demo">
+            <div role="tablist" class="gw-tabs"><button role="tab" class="gw-tab" aria-selected="true">Overview</button><button role="tab" class="gw-tab" aria-selected="false">Config</button><button role="tab" class="gw-tab" aria-selected="false">Logs</button></div>
+            <div role="tabpanel" class="gw-tab-panel"><p class="gw-body--sm" style="color:var(--ink-secondary)">ARIA roles for screen readers. JS toggles panels as enhancement.</p></div>
+          </div>
+        </div>
+
+        <div class="gw-stack">
+          <h3 class="gw-heading-m">Navigation</h3>
+          <div class="docs-demo gw-stack--lg">
+            <div><p class="gw-caption" style="margin-bottom:var(--space-2)">Breadcrumb</p><nav aria-label="Breadcrumb"><ol class="gw-breadcrumb"><li><a href="#">Home</a></li><li><a href="#">Services</a></li><li><a href="#" aria-current="page">Configure deployment</a></li></ol></nav></div>
+            <div><p class="gw-caption" style="margin-bottom:var(--space-2)">Pagination</p><nav aria-label="Pagination" class="gw-pagination"><a href="#" class="gw-pagination__link">← Prev</a><a href="#" class="gw-pagination__link">1</a><span class="gw-pagination__current" aria-current="page">2</span><a href="#" class="gw-pagination__link">3</a><a href="#" class="gw-pagination__link">4</a><a href="#" class="gw-pagination__link">Next →</a></nav></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USAGE -->
+  <section class="gw-section" id="usage">
+    <div class="gw-width gw-width--narrow">
+      <div class="gw-stack--lg">
+        <h2 class="gw-heading-l">Using Groundwork</h2>
+
+        <div class="gw-prose"><h3 class="gw-heading-m">Getting started</h3><p>One CSS file. No build step. No dependencies.</p></div>
+
+        <div class="docs-code">&lt;link rel="stylesheet" href="groundwork.css"&gt;
+
+&lt;div class="gw-width"&gt;
+  &lt;main class="gw-stack--lg"&gt;
+    &lt;div class="gw-field"&gt;
+      &lt;label class="gw-label" for="email"&gt;Email address&lt;/label&gt;
+      &lt;span class="gw-hint"&gt;We'll send your receipt here&lt;/span&gt;
+      &lt;input class="gw-input gw-input--w30" id="email" type="email"&gt;
+    &lt;/div&gt;
+    &lt;button class="gw-button"&gt;Continue&lt;/button&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</div>
+
+        <div class="gw-prose"><h3 class="gw-heading-m">Re-theming</h3><p>Override primitives. Everything inherits.</p></div>
+
+        <div class="docs-code">/* your-brand.css */
+:root {
+  --_gw-blue-500: #7c3aed;   /* violet */
+  --_gw-blue-600: #5b21b6;
+  --_gw-blue-300: #a78bfa;
+  --_gw-blue-200: #c4b5fd;
+}
+/* Done. Buttons, links, tabs, focus — all update. */</div>
+
+        <div class="gw-prose"><h3 class="gw-heading-m">The rules</h3></div>
+
+        <div class="gw-stack">
+          <div class="gw-banner"><p class="gw-banner__title">Only reference semantic tokens</p><p class="gw-banner__body">No raw hex. No <code class="gw-mono">var(--_gw-*)</code> in components. Semantic tokens only.</p></div>
+          <div class="gw-banner"><p class="gw-banner__title">Every input needs a label</p><p class="gw-banner__body">Wrap in <code class="gw-mono">.gw-field</code> with <code class="gw-mono">.gw-label</code>. Orphaned inputs look broken.</p></div>
+          <div class="gw-banner"><p class="gw-banner__title">Error messages explain the fix</p><p class="gw-banner__body">"Enter your email address" not "Invalid input".</p></div>
+          <div class="gw-banner"><p class="gw-banner__title">Colour is never the only signal</p><p class="gw-banner__body">Text, icons, or structural cues always accompany colour.</p></div>
+          <div class="gw-banner"><p class="gw-banner__title">One primary action per view</p><p class="gw-banner__body">Two primary buttons means one is wrong.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="gw-section" style="padding-block:var(--space-8)">
+    <div class="gw-width">
+      <p class="gw-body--xs">Groundwork Design System — v0.2.0 — Two-tier tokens, zero dependencies, framework agnostic.</p>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
