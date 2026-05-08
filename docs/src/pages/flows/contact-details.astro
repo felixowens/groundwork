@@ -1,0 +1,54 @@
+---
+import { ContactDetailsFlow } from '../../components/ContactDetailsFlow';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Contact details flow" description="A complete Groundwork contact-details flow">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--xl">
+      <div class="gw-prose">
+        <p class="gw-caption">Flow</p>
+        <h1 class="gw-heading-l">Contact details</h1>
+        <p>
+          This flow demonstrates a realistic form journey: collect details, show validation errors, review answers, and confirm completion.
+        </p>
+      </div>
+
+      <div class="docs-flow-grid">
+        <div class="gw-card gw-stack">
+          <h2 class="gw-heading-m">Human test script</h2>
+          <ol class="gw-list">
+            <li>Submit the empty form and confirm the error summary appears.</li>
+            <li>Use each summary link and confirm it moves to the matching field.</li>
+            <li>Fill valid details and continue to the review step.</li>
+            <li>Use a Change link and confirm your previous answers are preserved.</li>
+            <li>Confirm and check that the success state is clear.</li>
+            <li>Repeat with keyboard only.</li>
+          </ol>
+        </div>
+
+        <section class="gw-card gw-stack--lg" aria-labelledby="flow-demo-heading">
+          <h2 class="gw-heading-m" id="flow-demo-heading">Interactive demo</h2>
+          <div>
+            <ContactDetailsFlow client:load />
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .docs-flow-grid {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.9fr) minmax(20rem, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .docs-flow-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

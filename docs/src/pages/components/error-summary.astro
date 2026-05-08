@@ -1,0 +1,28 @@
+---
+import { ErrorDemo } from '../../components/FieldDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Error summary" description="Groundwork validation error pattern">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Error summary</h1>
+        <p>Use an error summary at the top of a page when validation fails. Each item links to the field that needs attention.</p>
+        <h2 class="gw-heading-m">Copy rule</h2>
+        <p>Error messages should say what went wrong and how to fix it. Groundwork models error copy as structured problem and fix text.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <ErrorDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">Render the summary when validation fails and move focus to it so keyboard and screen-reader users hear the problem before returning to the form.</p>
+        <p class="gw-body--sm">Each summary link should point to the field that needs attention. Field-level errors still need to appear next to the relevant control; the summary does not replace inline error copy.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

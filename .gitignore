@@ -1,0 +1,15 @@
+node_modules/
+docs/node_modules/
+
+# Build output
+dist/
+docs/dist/
+docs/.astro/
+src/styles/generated/
+
+# Test output
+test-results/
+playwright-report/
+
+# Agent/tool logs
+.logs/

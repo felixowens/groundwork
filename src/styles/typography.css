@@ -1,0 +1,73 @@
+.gw-heading-xl {
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+.gw-heading-l {
+  font-size: var(--text-title);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+}
+
+.gw-heading-m {
+  font-size: var(--text-heading);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+}
+
+.gw-heading-s {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+}
+
+.gw-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+}
+
+.gw-body--sm {
+  font-size: var(--text-secondary);
+}
+
+.gw-body--xs {
+  font-size: var(--text-caption);
+  color: var(--ink-secondary);
+}
+
+.gw-caption {
+  font-size: var(--text-caption);
+  color: var(--ink-secondary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.gw-mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.gw-link {
+  color: var(--action);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-width-thin);
+  text-underline-offset: 2px;
+  transition: color var(--duration) var(--ease);
+}
+
+.gw-link:hover {
+  color: var(--action-hover);
+  text-decoration-thickness: var(--border-width-medium);
+}
+
+.gw-list {
+  padding-left: var(--space-6);
+}
+
+.gw-list > li + li {
+  margin-top: var(--space-2);
+}

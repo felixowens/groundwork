@@ -1,0 +1,61 @@
+---
+import '../../../css/groundwork.css';
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — Groundwork</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <a href="#main" class="gw-skip-link">Skip to main content</a>
+    <header class="gw-section">
+      <div class="gw-width gw-stack">
+        <p class="gw-caption">Groundwork PoC</p>
+        <nav aria-label="Primary">
+          <ul class="docs-primary-nav">
+            <li><a href="/">Overview</a></li>
+            <li><a href="/tokens/">Tokens</a></li>
+            <li><a href="/flows/">Flows</a></li>
+            <li><a href="/components/button/">Button</a></li>
+            <li><a href="/components/field/">Field</a></li>
+            <li><a href="/components/error-summary/">Errors</a></li>
+            <li><a href="/wiki/">Wiki</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  astro-island {
+    display: block;
+  }
+
+  .docs-primary-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-secondary);
+  }
+
+  .docs-primary-nav a {
+    color: var(--action);
+    text-decoration: none;
+  }
+
+  .docs-primary-nav a:hover {
+    text-decoration: underline;
+  }
+</style>

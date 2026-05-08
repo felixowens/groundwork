@@ -1,0 +1,30 @@
+---
+import { FieldDemo } from '../../components/FieldDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Field" description="Groundwork field and form controls">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Field</h1>
+        <p>Field is the primary form API. It renders the label, hint, error copy, and ARIA description wiring for the control.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use Field for every text input, textarea, and select. Width hints communicate the expected answer length.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not render an orphaned input and add label markup manually unless you are building a lower-level primitive.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <FieldDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">Field provides the structural relationship between label, hint, error copy, and the control. It supplies <code class="gw-mono">aria-labelledby</code>, <code class="gw-mono">aria-describedby</code>, and <code class="gw-mono">aria-invalid</code> props to the child render function.</p>
+        <p class="gw-body--sm">Consumers must pass those props to exactly one form control and keep the visible label specific to the answer being requested.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

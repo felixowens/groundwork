@@ -1,0 +1,27 @@
+---
+import { ButtonDemo } from '../../components/ButtonDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Button" description="Groundwork button component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Button</h1>
+        <p>Use buttons for actions. Use links for navigation. There should be one primary action per view.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use a button to navigate to another page. Do not use multiple primary buttons in the same decision area.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <ButtonDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">Button text should describe the action, for example “Save address” rather than “Submit”. Disabled buttons use both opacity and disabled semantics.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
