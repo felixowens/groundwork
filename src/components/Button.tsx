@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { assertNever } from '../assert-never';
+import { assertNever } from '../lib/assert-never';
 import type { WithoutStyleOverrides } from './types';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';

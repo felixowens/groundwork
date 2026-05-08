@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Button, ErrorSummary, Field, Input, Select, Textarea, type ErrorSummaryItem, type FieldError } from '../../../src';
-import { assertNever } from '../../../src/assert-never';
+import { assertNever } from '../../../src/lib/assert-never';
 
 type FlowStep = 'form' | 'review' | 'confirmation';
 type ContactReason = 'account' | 'billing' | 'technical';

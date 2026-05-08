@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { InputHTMLAttributes } from 'react';
-import { assertNever } from '../assert-never';
+import { assertNever } from '../lib/assert-never';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
 export type InputWidth = 'full' | 'w5' | 'w10' | 'w20' | 'w30' | 'two-thirds';
