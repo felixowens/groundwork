@@ -16,11 +16,11 @@
   white-space: nowrap;
 }
 
-.gw-button:hover {
+.gw-button:not(:disabled):not([aria-disabled='true']):hover {
   background: var(--action-hover);
 }
 
-.gw-button:active {
+.gw-button:not(:disabled):not([aria-disabled='true']):active {
   transform: translateY(1px);
 }
 
@@ -28,6 +28,9 @@
 .gw-button[aria-disabled='true'] {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.gw-button[aria-disabled='true'] {
   pointer-events: none;
 }
 
@@ -37,7 +40,7 @@
   border-color: var(--action);
 }
 
-.gw-button--secondary:hover {
+.gw-button--secondary:not(:disabled):not([aria-disabled='true']):hover {
   background: var(--action);
   color: var(--action-text);
 }
@@ -47,7 +50,7 @@
   color: var(--destructive-text);
 }
 
-.gw-button--destructive:hover {
+.gw-button--destructive:not(:disabled):not([aria-disabled='true']):hover {
   background: var(--destructive-hover);
 }
 
@@ -57,7 +60,7 @@
   border-color: transparent;
 }
 
-.gw-button--ghost:hover {
+.gw-button--ghost:not(:disabled):not([aria-disabled='true']):hover {
   background: var(--surface-raised);
 }
 

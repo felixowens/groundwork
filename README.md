@@ -37,7 +37,7 @@ npm test
 npm run review:ui
 ```
 
-`npm run review:ui` captures local UI-review screenshots and layout checks in `.logs/ui-review/latest/`. It is a development review tool, not a CI gate.
+`npm run review:ui` captures UI-review screenshots and layout checks in `.logs/ui-review/latest/`. It is also part of `npm run ci` so measurable layout regressions fail the build.
 
 `just ci` runs the same validation entrypoint as `npm run ci`.
 

@@ -27,8 +27,8 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(functi
       <ul>
         {items.map((item) => (
           <li key={item.id}>
-            <a href={`#${item.id}`} aria-label={`${item.label}: ${formatFieldError(item.error)}`}>
-              {formatFieldError(item.error)}
+            <a href={`#${item.id}`}>
+              {item.label}: {formatFieldError(item.error)}
             </a>
           </li>
         ))}

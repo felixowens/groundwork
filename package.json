@@ -33,7 +33,7 @@
     "test:visual": "playwright test tests/visual",
     "check:generated-css": "node scripts/check-generated-css.mjs",
     "test": "npm run test:a11y && npm run test:components && npm run test:flows && npm run test:visual",
-    "ci": "npm run build:css && npm run check:generated-css && npm run check:css && npm run typecheck && npm run build && npm test"
+    "ci": "npm run build:css && npm run check:generated-css && npm run check:css && npm run typecheck && npm run build && npm test && npm run review:ui"
   },
   "peerDependencies": {
     "react": ">=19.0.0"

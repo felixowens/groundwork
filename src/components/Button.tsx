@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { assertNever } from '../assert-never';
 import type { WithoutStyleOverrides } from './types';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
@@ -8,10 +9,6 @@ export type ButtonProps = WithoutStyleOverrides<ButtonHTMLAttributes<HTMLButtonE
   variant?: ButtonVariant;
   children: ReactNode;
 };
-
-function assertNever(value: never): never {
-  throw new Error(`Unhandled ButtonVariant: ${value}`);
-}
 
 function buttonClassName(variant: ButtonVariant): string {
   switch (variant) {

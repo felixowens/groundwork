@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Button, ErrorSummary, Field, Input, Select, Textarea, type ErrorSummaryItem, type FieldError } from '../../../src';
+import { assertNever } from '../../../src/assert-never';
 
 type FlowStep = 'form' | 'review' | 'confirmation';
 type ContactReason = 'account' | 'billing' | 'technical';
@@ -7,7 +8,7 @@ type ContactReason = 'account' | 'billing' | 'technical';
 type ContactDetails = {
   fullName: string;
   email: string;
-  contactReason: ContactReason | '';
+  contactReason: ContactReason | null;
   notes: string;
 };
 
@@ -20,7 +21,7 @@ type ContactDetailsErrors = Partial<Record<keyof ContactDetails, FieldError>>;
 const initialDetails: ContactDetails = {
   fullName: '',
   email: '',
-  contactReason: '',
+  contactReason: null,
   notes: '',
 };
 
@@ -41,7 +42,7 @@ function validateContactDetails(details: ContactDetails): ContactDetailsErrors {
     };
   }
 
-  if (details.contactReason === '') {
+  if (details.contactReason === null) {
     errors.contactReason = {
       problem: 'The contact reason has not been selected.',
       fix: 'Select the reason you are contacting us.',
@@ -69,14 +70,10 @@ function errorSummaryItems(errors: ContactDetailsErrors): ErrorSummaryItem[] {
   return items;
 }
 
-function assertNever(value: never): never {
-  throw new Error(`Unhandled contact reason: ${value}`);
-}
-
 function parseContactReason(value: string): ContactDetails['contactReason'] {
   switch (value) {
     case '':
-      return '';
+      return null;
     case 'account':
     case 'billing':
     case 'technical':
@@ -132,7 +129,7 @@ export function ContactDetailsFlow() {
       return;
     }
 
-    if (details.contactReason === '') {
+    if (details.contactReason === null) {
       throw new Error('Contact reason should be selected before review.');
     }
 
@@ -247,7 +244,7 @@ export function ContactDetailsFlow() {
           <Select
             {...inputProps}
             name="contactReason"
-            value={details.contactReason}
+            value={details.contactReason ?? ''}
             onChange={(event) => updateDetail('contactReason', parseContactReason(event.currentTarget.value))}
           >
             <option value="">Select a reason</option>

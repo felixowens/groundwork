@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import type { InputHTMLAttributes } from 'react';
+import { assertNever } from '../assert-never';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
 export type InputWidth = 'full' | 'w5' | 'w10' | 'w20' | 'w30' | 'two-thirds';
@@ -10,10 +11,6 @@ export type InputProps = WithoutStyleOverrides<
   AccessibleName & {
     width?: InputWidth;
   };
-
-function assertNever(value: never): never {
-  throw new Error(`Unhandled InputWidth: ${value}`);
-}
 
 function inputClassName(width: InputWidth): string {
   switch (width) {
