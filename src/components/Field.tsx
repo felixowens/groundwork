@@ -1,5 +1,5 @@
 import type { AriaAttributes, ReactNode } from 'react';
-import { formatFieldError, type FieldError } from '../form/field-error';
+import { type FieldError, formatFieldError } from '../form/field-error';
 
 type DescribedInputProps = {
   id: string;

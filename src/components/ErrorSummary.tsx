@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { formatFieldError, type FieldError } from '../form/field-error';
+import { type FieldError, formatFieldError } from '../form/field-error';
 
 export type ErrorSummaryItem = {
   id: string;

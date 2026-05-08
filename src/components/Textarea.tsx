@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
 import type { TextareaHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
 export type TextareaProps = WithoutStyleOverrides<

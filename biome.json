@@ -1,0 +1,96 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.14/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!node_modules",
+      "!docs/node_modules",
+      "!dist",
+      "!docs/dist",
+      "!docs/.astro",
+      "!**/*.astro",
+      "!meta/artifacts",
+      "!src/styles/generated",
+      "!css/groundwork.css",
+      "!package-lock.json",
+      "!test-results",
+      "!playwright-report",
+      "!.logs"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noGlobalObjectCalls": "error",
+        "noUnreachable": "error",
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error"
+      },
+      "suspicious": {
+        "noCompareNegZero": "error",
+        "noConsole": "error",
+        "noReactForwardRef": "error"
+      },
+      "style": {
+        "noDescendingSpecificity": "off",
+        "noNegationElse": "error",
+        "noNonNullAssertion": "error",
+        "noParameterAssign": "error",
+        "useDeprecatedReason": "error",
+        "useFilenamingConvention": "error"
+      },
+      "complexity": {
+        "useLiteralKeys": "error",
+        "useOptionalChain": "error",
+        "useRegexLiterals": "error"
+      },
+      "nursery": {
+        "useExhaustiveSwitchCases": "error"
+      }
+    },
+    "domains": {
+      "playwright": "recommended",
+      "react": "recommended",
+      "project": "recommended",
+      "test": "recommended",
+      "types": "recommended"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  }
+}

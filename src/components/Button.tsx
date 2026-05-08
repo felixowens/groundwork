@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { forwardRef } from 'react';
 import { assertNever } from '../lib/assert-never';
 import type { WithoutStyleOverrides } from './types';
 

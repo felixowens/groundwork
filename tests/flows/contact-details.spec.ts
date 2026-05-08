@@ -23,7 +23,7 @@ test('contact details flow validates, reviews, and confirms', async ({ page }) =
   await expect(page.getByText('Harry Thompson')).toBeVisible();
   await expect(page.getByText('Technical support')).toBeVisible();
 
-  await page.getByRole('link', { name: 'Change' }).first().click();
+  await page.getByRole('button', { name: 'Change' }).first().click();
   await expect(page.getByRole('textbox', { name: 'Full name' })).toHaveValue('Harry Thompson');
 
   await page.getByRole('button', { name: 'Continue' }).click();

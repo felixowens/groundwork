@@ -23,7 +23,9 @@ function routeFromPage(page: string): string {
   const withoutExtension = relativePath.replace(/\.astro$/, '');
   const withoutIndex = withoutExtension.replace(/(^|\/)index$/, '');
 
-  return `/${withoutIndex}`.replace(/\/+/g, '/').replace(/\/$/, '') + '/';
+  const normalizedPath = `/${withoutIndex}`.replace(/\/+/g, '/').replace(/\/$/, '');
+
+  return `${normalizedPath}/`;
 }
 
 function snapshotNameForRoute(path: string): string {

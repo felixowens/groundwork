@@ -31,11 +31,14 @@ Components reference only semantic tokens. Primitive tokens exist so themes can 
 ```bash
 npm install
 npm run build:css
+npm run check:biome
 npm run typecheck
 npm run build
 npm test
 npm run review:ui
 ```
+
+`npm run format` applies Biome formatting and safe fixes. `npm run check:biome` runs Biome formatting, linting, and import-order checks without writing changes.
 
 `npm run review:ui` captures UI-review screenshots and layout checks in `.logs/ui-review/latest/`. It is also part of `npm run ci` so measurable layout regressions fail the build.
 
