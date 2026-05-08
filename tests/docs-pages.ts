@@ -11,7 +11,7 @@ function astroPages(directory: string): string[] {
     const entryPath = join(directory, entry.name);
 
     if (entry.isDirectory()) {
-      return astroPages(entryPath);
+      return entry.name === 'test-fixtures' ? [] : astroPages(entryPath);
     }
 
     return entry.isFile() && entry.name.endsWith('.astro') ? [entryPath] : [];

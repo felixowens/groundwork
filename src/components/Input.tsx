@@ -11,6 +11,10 @@ export type InputProps = WithoutStyleOverrides<
     width?: InputWidth;
   };
 
+function assertNever(value: never): never {
+  throw new Error(`Unhandled InputWidth: ${value}`);
+}
+
 function inputClassName(width: InputWidth): string {
   switch (width) {
     case 'full':
@@ -25,6 +29,8 @@ function inputClassName(width: InputWidth): string {
       return 'gw-input gw-input--w30';
     case 'two-thirds':
       return 'gw-input gw-input--two-thirds';
+    default:
+      return assertNever(width);
   }
 }
 

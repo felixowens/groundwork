@@ -12,6 +12,9 @@ build-css:
 check-css:
 	@npm run check:css
 
+check-generated-css:
+	@npm run check:generated-css
+
 docs:
 	@npm run docs:dev
 
@@ -23,6 +26,9 @@ test:
 
 test-a11y:
 	@npm run test:a11y
+
+test-components:
+	@npm run test:components
 
 test-flows:
 	@npm run test:flows

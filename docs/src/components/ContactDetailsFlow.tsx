@@ -2,12 +2,17 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Button, ErrorSummary, Field, Input, Select, Textarea, type ErrorSummaryItem, type FieldError } from '../../../src';
 
 type FlowStep = 'form' | 'review' | 'confirmation';
+type ContactReason = 'account' | 'billing' | 'technical';
 
 type ContactDetails = {
   fullName: string;
   email: string;
-  contactReason: string;
+  contactReason: ContactReason | '';
   notes: string;
+};
+
+type ReviewedContactDetails = Omit<ContactDetails, 'contactReason'> & {
+  contactReason: ContactReason;
 };
 
 type ContactDetailsErrors = Partial<Record<keyof ContactDetails, FieldError>>;
@@ -64,7 +69,24 @@ function errorSummaryItems(errors: ContactDetailsErrors): ErrorSummaryItem[] {
   return items;
 }
 
-function contactReasonLabel(value: string): string {
+function assertNever(value: never): never {
+  throw new Error(`Unhandled contact reason: ${value}`);
+}
+
+function parseContactReason(value: string): ContactDetails['contactReason'] {
+  switch (value) {
+    case '':
+      return '';
+    case 'account':
+    case 'billing':
+    case 'technical':
+      return value;
+    default:
+      throw new Error(`Unknown contact reason: ${value}`);
+  }
+}
+
+function contactReasonLabel(value: ContactReason): string {
   switch (value) {
     case 'account':
       return 'Account question';
@@ -73,13 +95,14 @@ function contactReasonLabel(value: string): string {
     case 'technical':
       return 'Technical support';
     default:
-      return 'Not selected';
+      return assertNever(value);
   }
 }
 
 export function ContactDetailsFlow() {
   const [step, setStep] = useState<FlowStep>('form');
   const [details, setDetails] = useState<ContactDetails>(initialDetails);
+  const [reviewDetails, setReviewDetails] = useState<ReviewedContactDetails | undefined>(undefined);
   const [errors, setErrors] = useState<ContactDetailsErrors>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
@@ -92,7 +115,7 @@ export function ContactDetailsFlow() {
     }
   }, [errorItems.length, hasSubmitted, step]);
 
-  function updateDetail(field: keyof ContactDetails, value: string) {
+  function updateDetail<Field extends keyof ContactDetails>(field: Field, value: ContactDetails[Field]) {
     setDetails((current) => ({ ...current, [field]: value }));
   }
 
@@ -104,10 +127,16 @@ export function ContactDetailsFlow() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
+      setReviewDetails(undefined);
       setStep('form');
       return;
     }
 
+    if (details.contactReason === '') {
+      throw new Error('Contact reason should be selected before review.');
+    }
+
+    setReviewDetails({ ...details, contactReason: details.contactReason });
     setStep('review');
   }
 
@@ -118,6 +147,7 @@ export function ContactDetailsFlow() {
 
   function resetFlow() {
     setDetails(initialDetails);
+    setReviewDetails(undefined);
     setErrors({});
     setHasSubmitted(false);
     setStep('form');
@@ -140,6 +170,10 @@ export function ContactDetailsFlow() {
   }
 
   if (step === 'review') {
+    if (reviewDetails === undefined) {
+      throw new Error('Review details should be available on the review step.');
+    }
+
     return (
       <form className="gw-stack--lg" onSubmit={submitReview}>
         <div className="gw-prose">
@@ -150,22 +184,22 @@ export function ContactDetailsFlow() {
         <dl className="gw-summary-list">
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Full name</dt>
-            <dd className="gw-summary-list__value">{details.fullName}</dd>
+            <dd className="gw-summary-list__value">{reviewDetails.fullName}</dd>
             <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
           </div>
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Email address</dt>
-            <dd className="gw-summary-list__value">{details.email}</dd>
+            <dd className="gw-summary-list__value">{reviewDetails.email}</dd>
             <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
           </div>
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Reason</dt>
-            <dd className="gw-summary-list__value">{contactReasonLabel(details.contactReason)}</dd>
+            <dd className="gw-summary-list__value">{contactReasonLabel(reviewDetails.contactReason)}</dd>
             <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
           </div>
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Notes</dt>
-            <dd className="gw-summary-list__value">{details.notes.trim() === '' ? 'Not provided' : details.notes}</dd>
+            <dd className="gw-summary-list__value">{reviewDetails.notes.trim() === '' ? 'Not provided' : reviewDetails.notes}</dd>
             <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
           </div>
         </dl>
@@ -214,7 +248,7 @@ export function ContactDetailsFlow() {
             {...inputProps}
             name="contactReason"
             value={details.contactReason}
-            onChange={(event) => updateDetail('contactReason', event.currentTarget.value)}
+            onChange={(event) => updateDetail('contactReason', parseContactReason(event.currentTarget.value))}
           >
             <option value="">Select a reason</option>
             <option value="account">Account question</option>

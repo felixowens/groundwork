@@ -27,6 +27,12 @@ test('contact details flow validates, reviews, and confirms', async ({ page }) =
   await expect(page.getByRole('textbox', { name: 'Full name' })).toHaveValue('Harry Thompson');
 
   await page.getByRole('button', { name: 'Continue' }).click();
+  await expect(page.getByRole('heading', { name: 'Check your answers' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Back' }).click();
+  await expect(page.getByRole('textbox', { name: 'Full name' })).toHaveValue('Harry Thompson');
+
+  await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Confirm and continue' }).click();
 
   await expect(page.getByText('Contact details saved')).toBeVisible();

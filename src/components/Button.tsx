@@ -9,6 +9,10 @@ export type ButtonProps = WithoutStyleOverrides<ButtonHTMLAttributes<HTMLButtonE
   children: ReactNode;
 };
 
+function assertNever(value: never): never {
+  throw new Error(`Unhandled ButtonVariant: ${value}`);
+}
+
 function buttonClassName(variant: ButtonVariant): string {
   switch (variant) {
     case 'primary':
@@ -19,6 +23,8 @@ function buttonClassName(variant: ButtonVariant): string {
       return 'gw-button gw-button--destructive';
     case 'ghost':
       return 'gw-button gw-button--ghost';
+    default:
+      return assertNever(variant);
   }
 }
 

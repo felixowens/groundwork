@@ -245,7 +245,7 @@ try {
       errorSummaryFocused: errorSummaryState.isFocused,
       errorSummaryHasVisibleOutline: Number.parseFloat(errorSummaryState.outlineWidth) > 0 && errorSummaryState.outlineStyle !== 'none',
       listsHavePadding: lists
-        .filter((list) => list.className !== 'gw-breadcrumb')
+        .filter((list) => list.className !== 'gw-breadcrumb' && list.className !== 'docs-primary-nav')
         .every((list) => Number.parseFloat(list.paddingLeft) > 0),
       stackSpacingPreserved: [
         ...initialStackViolations,

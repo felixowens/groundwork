@@ -68,6 +68,12 @@
   --_gw-border-heavy: 4px;
   --_gw-radius-sm: 3px;
   --_gw-radius-md: 6px;
+  --_gw-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --_gw-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --_gw-shadow-dark-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --_gw-shadow-dark-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --_gw-motion-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --_gw-motion-duration: 150ms;
   --space-1: var(--_gw-space-1);
   --space-2: var(--_gw-space-2);
   --space-3: var(--_gw-space-3);
@@ -122,10 +128,10 @@
   --focus-text: var(--_gw-neutral-800);
   --radius-sm: var(--_gw-radius-sm);
   --radius-md: var(--_gw-radius-md);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --duration: 150ms;
+  --shadow-sm: var(--_gw-shadow-sm);
+  --shadow-md: var(--_gw-shadow-md);
+  --ease: var(--_gw-motion-ease);
+  --duration: var(--_gw-motion-duration);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -152,8 +158,8 @@
     --error: var(--_gw-red-300);
     --error-surface: var(--_gw-neutral-950);
     --focus-text: var(--_gw-neutral-900);
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-sm: var(--_gw-shadow-dark-sm);
+    --shadow-md: var(--_gw-shadow-dark-md);
   }
 }
 

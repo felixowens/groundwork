@@ -18,13 +18,14 @@ const { title, description } = Astro.props;
       <div class="gw-width gw-stack">
         <p class="gw-caption">Groundwork PoC</p>
         <nav aria-label="Primary">
-          <ul class="gw-breadcrumb">
+          <ul class="docs-primary-nav">
             <li><a href="/">Overview</a></li>
             <li><a href="/tokens/">Tokens</a></li>
             <li><a href="/flows/">Flows</a></li>
             <li><a href="/components/button/">Button</a></li>
             <li><a href="/components/field/">Field</a></li>
             <li><a href="/components/error-summary/">Errors</a></li>
+            <li><a href="/wiki/">Wiki</a></li>
           </ul>
         </nav>
       </div>
@@ -38,5 +39,23 @@ const { title, description } = Astro.props;
 <style is:global>
   astro-island {
     display: block;
+  }
+
+  .docs-primary-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-secondary);
+  }
+
+  .docs-primary-nav a {
+    color: var(--action);
+    text-decoration: none;
+  }
+
+  .docs-primary-nav a:hover {
+    text-decoration: underline;
   }
 </style>
