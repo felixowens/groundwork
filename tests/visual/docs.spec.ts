@@ -1,18 +1,10 @@
 import { expect, test } from '@playwright/test';
+import { docsPages } from '../docs-pages';
 
-const pages = [
-  { path: '/', snapshot: 'overview.png' },
-  { path: '/tokens/', snapshot: 'tokens.png' },
-  { path: '/flows/', snapshot: 'flows.png' },
-  { path: '/flows/contact-details/', snapshot: 'contact-details-flow.png' },
-  { path: '/components/button/', snapshot: 'button.png' },
-  { path: '/components/field/', snapshot: 'field.png' },
-  { path: '/components/error-summary/', snapshot: 'error-summary.png' },
-];
-
-for (const { path, snapshot } of pages) {
+for (const { path, snapshot } of docsPages) {
   test(`${path} matches the visual baseline`, async ({ page }) => {
     await page.goto(path);
+    await page.addStyleTag({ content: 'astro-dev-toolbar { display: none !important; }' });
     await expect(page).toHaveScreenshot(snapshot, { fullPage: true });
   });
 }

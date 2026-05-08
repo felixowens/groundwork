@@ -6,7 +6,7 @@ This repository is currently a proof of concept.
 
 ## What is included
 
-- Two-tier design tokens: private primitives (`--_gw-*`) mapped to public semantic tokens.
+- Two-tier DTCG-format design tokens: OKLCH private primitives (`--_gw-*`) mapped to public semantic tokens.
 - Generated distributable CSS at `css/groundwork.css`.
 - Restrictive React components for the core form workflow: `Field`, `Input`, `Textarea`, `Select`, `Button`, and `ErrorSummary`.
 - Astro documentation pages with live demos.
@@ -21,6 +21,8 @@ semantic.json    ─┘                                                        �
                                                                            ├─ scripts/build-css.mjs ─> css/groundwork.css
 src/styles/*.css ──────────────────────────────────────────────────────────┘
 ```
+
+Style Dictionary generates the token CSS; `scripts/build-css.mjs` assembles that generated token CSS with authored source CSS into the distributable file.
 
 Components reference only semantic tokens. Primitive tokens exist so themes can swap raw values without rewriting component CSS.
 

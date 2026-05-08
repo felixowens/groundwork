@@ -16,5 +16,5 @@ export type { SelectProps } from './components/Select';
 export { Textarea } from './components/Textarea';
 export type { TextareaProps } from './components/Textarea';
 
-export type { FieldError } from './components/field-error';
-export { formatFieldError } from './components/field-error';
+export type { FieldError } from './form/field-error';
+export { formatFieldError } from './form/field-error';

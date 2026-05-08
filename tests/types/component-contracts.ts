@@ -1,30 +1,44 @@
-import type { ButtonProps, InputProps, SelectProps, TextareaProps } from '../../src';
+import type { ComponentProps } from 'react';
+import * as PublicApi from '../../src';
+import type { InputProps, SelectProps, TextareaProps } from '../../src';
 
 type HasKey<T, Key extends PropertyKey> = Key extends keyof T ? true : false;
 
-type AssertFalse<T extends false> = T;
 type AssertTrue<T extends true> = T;
+type AssertNever<T extends never> = T;
 
-type ButtonHasNoClassName = AssertFalse<HasKey<ButtonProps, 'className'>>;
-type ButtonHasNoStyle = AssertFalse<HasKey<ButtonProps, 'style'>>;
+type ExportedComponentName = {
+  [Key in keyof typeof PublicApi]: Key extends Capitalize<Key & string> ? Key : never;
+}[keyof typeof PublicApi];
 
-type InputHasNoClassName = AssertFalse<HasKey<InputProps, 'className'>>;
-type InputHasNoStyle = AssertFalse<HasKey<InputProps, 'style'>>;
+const componentContractCoverage = {
+  Button: true,
+  ErrorSummary: true,
+  Field: true,
+  Input: true,
+  Select: true,
+  Textarea: true,
+} satisfies Record<ExportedComponentName, true>;
+
+type StyleOverrideViolations = {
+  [Key in ExportedComponentName]: HasKey<ComponentProps<(typeof PublicApi)[Key]>, 'className'> extends true
+    ? Key
+    : HasKey<ComponentProps<(typeof PublicApi)[Key]>, 'style'> extends true
+      ? Key
+      : never;
+}[ExportedComponentName];
+
+type NoExportedComponentAcceptsStyleOverrides = AssertNever<StyleOverrideViolations>;
+
 type InputRequiresAccessibleName = AssertTrue<HasKey<InputProps, 'aria-label'> | HasKey<InputProps, 'aria-labelledby'>>;
+type SelectRequiresAccessibleName = AssertTrue<HasKey<SelectProps, 'aria-label'> | HasKey<SelectProps, 'aria-labelledby'>>;
+type TextareaRequiresAccessibleName = AssertTrue<HasKey<TextareaProps, 'aria-label'> | HasKey<TextareaProps, 'aria-labelledby'>>;
 
-type SelectHasNoClassName = AssertFalse<HasKey<SelectProps, 'className'>>;
-type SelectHasNoStyle = AssertFalse<HasKey<SelectProps, 'style'>>;
-
-type TextareaHasNoClassName = AssertFalse<HasKey<TextareaProps, 'className'>>;
-type TextareaHasNoStyle = AssertFalse<HasKey<TextareaProps, 'style'>>;
+type CoverageIncludesAllExportedComponents = typeof componentContractCoverage;
 
 export type ComponentContractAssertions =
-  | ButtonHasNoClassName
-  | ButtonHasNoStyle
-  | InputHasNoClassName
-  | InputHasNoStyle
+  | CoverageIncludesAllExportedComponents
+  | NoExportedComponentAcceptsStyleOverrides
   | InputRequiresAccessibleName
-  | SelectHasNoClassName
-  | SelectHasNoStyle
-  | TextareaHasNoClassName
-  | TextareaHasNoStyle;
+  | SelectRequiresAccessibleName
+  | TextareaRequiresAccessibleName;
