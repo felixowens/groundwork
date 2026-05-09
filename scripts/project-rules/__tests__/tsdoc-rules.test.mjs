@@ -148,6 +148,29 @@ export function publicHelper(): string {
     expect(diagnosticsForRule(diagnostics, 'tsdoc/summary-style')).toHaveLength(1);
   });
 
+  test('accepts summaries ending with exclamation points and question marks', () => {
+    const diagnostics = diagnosticsForFixture({
+      'src/index.ts': "export type { ExcitedSummary, QuestionSummary } from './public-api';\n",
+      'src/public-api.ts': `
+/**
+ * Save now!
+ *
+ * @public
+ */
+export interface ExcitedSummary { value: string; }
+
+/**
+ * Save later?
+ *
+ * @public
+ */
+export interface QuestionSummary { value: string; }
+`,
+    });
+
+    expect(diagnosticsForRule(diagnostics, 'tsdoc/summary-style')).toHaveLength(0);
+  });
+
   test('does not treat @deprecated text outside a block tag as deprecation', () => {
     const diagnostics = diagnosticsForFixture({
       'src/index.ts': "export type { CurrentApi } from './public-api';\n",
@@ -358,11 +381,33 @@ export function orphanedAlpha(): string { return ''; }
 /**
  * A public helper.
  *
- * @public
  * @example
  * \`\`\`ts
  * helper();
  * \`\`\`
+ *
+ * @public
+ */
+export function helper(): string { return ''; }
+`,
+    });
+
+    expect(diagnosticsForRule(diagnostics, 'tsdoc/public-api-export')).toHaveLength(0);
+  });
+
+  test('accepts @public definition exported through export star', () => {
+    const diagnostics = diagnosticsForFixture({
+      'src/index.ts': "export * from './lib';\n",
+      'src/lib.ts': `
+/**
+ * A public helper.
+ *
+ * @example
+ * \`\`\`ts
+ * helper();
+ * \`\`\`
+ *
+ * @public
  */
 export function helper(): string { return ''; }
 `,
@@ -593,5 +638,24 @@ export interface Opts { verbose: boolean; }
     });
 
     expect(diagnosticsForRule(diagnostics, 'tsdoc/modifier-tag-last-line')).toHaveLength(0);
+  });
+
+  test('reports modifier tag before fenced code content', () => {
+    const diagnostics = diagnosticsForFixture({
+      'src/index.ts': "export { helper } from './lib';\n",
+      'src/lib.ts': `
+/**
+ * A helper.
+ *
+ * @public
+ * \`\`\`ts
+ * helper();
+ * \`\`\`
+ */
+export function helper(): string { return ''; }
+`,
+    });
+
+    expect(diagnosticsForRule(diagnostics, 'tsdoc/modifier-tag-last-line')).toHaveLength(1);
   });
 });

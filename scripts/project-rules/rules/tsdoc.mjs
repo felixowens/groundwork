@@ -42,16 +42,21 @@ function docCommentForItem(context, item) {
 }
 
 function parsedDocComment(context, item) {
-  const comment = docCommentForItem(context, item);
-
-  if (comment === null) {
-    return null;
+  if (context.parsedDocCommentCache.has(item.declaration)) {
+    return context.parsedDocCommentCache.get(item.declaration);
   }
 
-  return {
-    comment,
-    parserContext: TSDOC_PARSER.parseString(comment.text),
-  };
+  const comment = docCommentForItem(context, item);
+  const parsed =
+    comment === null
+      ? null
+      : {
+          comment,
+          parserContext: TSDOC_PARSER.parseString(comment.text),
+        };
+
+  context.parsedDocCommentCache.set(item.declaration, parsed);
+  return parsed;
 }
 
 function declarationPosition(item) {

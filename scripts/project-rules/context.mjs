@@ -144,6 +144,7 @@ export function createProjectContext({
     checker,
     cwd,
     entrypoint,
+    parsedDocCommentCache: new WeakMap(),
     program,
     publicApiItems: publicApi,
     publicApiNameSet,
