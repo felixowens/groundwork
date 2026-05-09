@@ -1,5 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { forwardRef } from 'react';
+import type { ButtonHTMLAttributes, ReactNode, Ref } from 'react';
 import { assertNever } from '../lib/assert-never';
 import type { WithoutStyleOverrides } from './types';
 
@@ -8,6 +7,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
 export type ButtonProps = WithoutStyleOverrides<ButtonHTMLAttributes<HTMLButtonElement>> & {
   variant?: ButtonVariant;
   children: ReactNode;
+  ref?: Ref<HTMLButtonElement>;
 };
 
 function buttonClassName(variant: ButtonVariant): string {
@@ -26,13 +26,10 @@ function buttonClassName(variant: ButtonVariant): string {
 }
 
 /** Renders an action button with Groundwork's closed variant set. */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = 'primary', type = 'button', children, ...props },
-  ref,
-) {
+export function Button({ variant = 'primary', type = 'button', children, ref, ...props }: ButtonProps) {
   return (
     <button ref={ref} {...props} className={buttonClassName(variant)} style={undefined} type={type}>
       {children}
     </button>
   );
-});
+}

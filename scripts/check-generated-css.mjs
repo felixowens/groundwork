@@ -8,16 +8,16 @@ if (result.status === 0) {
   process.exit(0);
 }
 
-if (result.error !== undefined) {
-  console.error(result.error.message);
-} else {
-  console.error('css/groundwork.css is out of date. Run npm run build:css and commit the result.');
+if (result.error === undefined) {
+  process.stderr.write('css/groundwork.css is out of date. Run npm run build:css and commit the result.\n');
   if (result.stdout.trim() !== '') {
-    console.error(result.stdout);
+    process.stderr.write(result.stdout);
   }
   if (result.stderr.trim() !== '') {
-    console.error(result.stderr);
+    process.stderr.write(result.stderr);
   }
+  process.exit(result.status ?? 1);
 }
 
+process.stderr.write(`${result.error.message}\n`);
 process.exit(result.status ?? 1);

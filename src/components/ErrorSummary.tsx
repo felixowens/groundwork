@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import type { Ref } from 'react';
 import { type FieldError, formatFieldError } from '../form/field-error';
 
 export type ErrorSummaryItem = {
@@ -10,13 +10,11 @@ export type ErrorSummaryItem = {
 export type ErrorSummaryProps = {
   title?: string;
   items: readonly ErrorSummaryItem[];
+  ref?: Ref<HTMLDivElement>;
 };
 
 /** Renders a page-level validation summary linking to each invalid field. */
-export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(function ErrorSummary(
-  { title = 'There is a problem', items },
-  ref,
-) {
+export function ErrorSummary({ title = 'There is a problem', items, ref }: ErrorSummaryProps) {
   if (items.length === 0) {
     return null;
   }
@@ -35,4 +33,4 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(functi
       </ul>
     </div>
   );
-});
+}

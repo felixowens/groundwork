@@ -1,5 +1,4 @@
-import type { InputHTMLAttributes } from 'react';
-import { forwardRef } from 'react';
+import type { InputHTMLAttributes, Ref } from 'react';
 import { assertNever } from '../lib/assert-never';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
@@ -10,6 +9,7 @@ export type InputProps = WithoutStyleOverrides<
 > &
   AccessibleName & {
     width?: InputWidth;
+    ref?: Ref<HTMLInputElement>;
   };
 
 function inputClassName(width: InputWidth): string {
@@ -32,6 +32,6 @@ function inputClassName(width: InputWidth): string {
 }
 
 /** Renders a Groundwork text input. Prefer using it inside Field for labelling and ARIA wiring. */
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({ width = 'full', ...props }, ref) {
+export function Input({ width = 'full', ref, ...props }: InputProps) {
   return <input ref={ref} {...props} className={inputClassName(width)} style={undefined} />;
-});
+}

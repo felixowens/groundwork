@@ -264,8 +264,9 @@ try {
     },
   };
 
-  await writeFile(`${outputDirectory}/report.json`, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
-  console.log(JSON.stringify(summary, null, 2));
+  const summaryJson = `${JSON.stringify(summary, null, 2)}\n`;
+  await writeFile(`${outputDirectory}/report.json`, summaryJson, 'utf8');
+  process.stdout.write(summaryJson);
 
   if (
     !summary.checks.noHorizontalOverflow ||

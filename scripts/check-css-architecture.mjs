@@ -39,6 +39,6 @@ for (const file of await cssFiles('src/styles')) {
 }
 
 if (violations.length > 0) {
-  console.error(violations.join('\n'));
+  process.stderr.write(`${violations.join('\n')}\n`);
   process.exitCode = 1;
 }

@@ -1,5 +1,4 @@
-import type { ReactNode, SelectHTMLAttributes } from 'react';
-import { forwardRef } from 'react';
+import type { ReactNode, Ref, SelectHTMLAttributes } from 'react';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
 export type SelectProps = WithoutStyleOverrides<
@@ -7,13 +6,14 @@ export type SelectProps = WithoutStyleOverrides<
 > &
   AccessibleName & {
     children: ReactNode;
+    ref?: Ref<HTMLSelectElement>;
   };
 
 /** Renders a Groundwork select. Prefer using it inside Field for labelling and ARIA wiring. */
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select({ children, ...props }, ref) {
+export function Select({ children, ref, ...props }: SelectProps) {
   return (
     <select ref={ref} {...props} className="gw-select" style={undefined}>
       {children}
     </select>
   );
-});
+}
