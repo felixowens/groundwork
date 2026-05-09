@@ -1,0 +1,30 @@
+---
+import { CheckboxGroupDemo } from '../../components/form-control-demos';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="CheckboxGroup" description="Groundwork checkbox group component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">CheckboxGroup</h1>
+        <p>Use CheckboxGroup when users can choose more than one option from a short list.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use CheckboxGroup for multi-select questions where every available option should be visible. The group renders a fieldset and legend so the question stays attached to each checkbox.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use CheckboxGroup when users must choose exactly one option. Use RadioGroup instead. Do not use it for long searchable lists; build a dedicated picker pattern.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <CheckboxGroupDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">CheckboxGroup requires a visible <code class="gw-mono">legend</code>. Hints and errors are connected to the fieldset with <code class="gw-mono">aria-describedby</code>.</p>
+        <p class="gw-body--sm">Use checkbox groups only when multiple answers are valid. If users need to pick one answer, radio buttons are clearer.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

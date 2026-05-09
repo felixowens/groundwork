@@ -1,0 +1,30 @@
+---
+import { RadioGroupDemo } from '../../components/form-control-demos';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="RadioGroup" description="Groundwork radio group component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">RadioGroup</h1>
+        <p>Use RadioGroup when users need to choose exactly one option from a short list.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use RadioGroup for prominent choices where seeing every option helps users answer quickly. The group renders a fieldset and legend so assistive technology announces the question before each option.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use RadioGroup for long lists or searchable datasets. Use Select for compact single-choice lists, or design a dedicated autocomplete pattern for large datasets.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <RadioGroupDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">RadioGroup requires a visible <code class="gw-mono">legend</code>. Hints and errors are connected to the fieldset with <code class="gw-mono">aria-describedby</code>.</p>
+        <p class="gw-body--sm">Use short option labels. Add option hints only when a choice needs clarification.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
