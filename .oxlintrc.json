@@ -1,0 +1,38 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "jsx-a11y", "promise", "node"],
+  "categories": {
+    "correctness": "error",
+    "perf": "error"
+  },
+  "rules": {
+    "oxc/approx-constant": "error",
+    "oxc/bad-bitwise-operator": "error",
+    "oxc/branches-sharing-code": "error",
+    "oxc/misrefactored-assign-op": "error",
+    "oxc/no-const-enum": "error",
+    "oxc/no-map-spread": "error",
+    "oxc/no-this-in-exported-function": "error",
+    "unicorn/no-useless-undefined": "error"
+  },
+  "env": {
+    "browser": true,
+    "builtin": true,
+    "node": true
+  },
+  "ignorePatterns": [
+    "node_modules",
+    "docs/node_modules",
+    "dist",
+    "docs/dist",
+    "docs/.astro",
+    "**/*.astro",
+    "meta/artifacts",
+    "src/styles/generated",
+    "css/groundwork.css",
+    "package-lock.json",
+    "test-results",
+    "playwright-report",
+    ".logs"
+  ]
+}

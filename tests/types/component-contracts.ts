@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import * as PublicApi from '../../src';
+import type * as PublicApi from '../../src';
 import type { InputProps, SelectProps, TextareaProps } from '../../src';
 
 type HasKey<T, Key extends PropertyKey> = Key extends keyof T ? true : false;
@@ -31,8 +31,12 @@ type StyleOverrideViolations = {
 type NoExportedComponentAcceptsStyleOverrides = AssertNever<StyleOverrideViolations>;
 
 type InputRequiresAccessibleName = AssertTrue<HasKey<InputProps, 'aria-label'> | HasKey<InputProps, 'aria-labelledby'>>;
-type SelectRequiresAccessibleName = AssertTrue<HasKey<SelectProps, 'aria-label'> | HasKey<SelectProps, 'aria-labelledby'>>;
-type TextareaRequiresAccessibleName = AssertTrue<HasKey<TextareaProps, 'aria-label'> | HasKey<TextareaProps, 'aria-labelledby'>>;
+type SelectRequiresAccessibleName = AssertTrue<
+  HasKey<SelectProps, 'aria-label'> | HasKey<SelectProps, 'aria-labelledby'>
+>;
+type TextareaRequiresAccessibleName = AssertTrue<
+  HasKey<TextareaProps, 'aria-label'> | HasKey<TextareaProps, 'aria-labelledby'>
+>;
 
 type CoverageIncludesAllExportedComponents = typeof componentContractCoverage;
 

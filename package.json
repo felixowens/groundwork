@@ -20,6 +20,11 @@
     "build:tokens": "style-dictionary build --config style-dictionary.config.mjs",
     "build:css": "npm run build:tokens && node scripts/build-css.mjs",
     "check:css": "node scripts/check-css-architecture.mjs",
+    "check:biome": "biome ci .",
+    "check:oxlint": "oxlint . --deny-warnings",
+    "format": "biome check --write .",
+    "format:check": "biome check .",
+    "lint": "npm run check:biome && npm run check:oxlint",
     "typecheck": "tsc --noEmit",
     "build:lib": "tsc -p tsconfig.build.json",
     "docs:dev": "astro dev --root docs",
@@ -33,7 +38,7 @@
     "test:visual": "playwright test tests/visual",
     "check:generated-css": "node scripts/check-generated-css.mjs",
     "test": "npm run test:a11y && npm run test:components && npm run test:flows && npm run test:visual",
-    "ci": "npm run build:css && npm run check:generated-css && npm run check:css && npm run typecheck && npm run build && npm test && npm run review:ui"
+    "ci": "npm run build:css && npm run check:generated-css && npm run check:css && npm run check:biome && npm run check:oxlint && npm run typecheck && npm run build && npm test && npm run review:ui"
   },
   "peerDependencies": {
     "react": ">=19.0.0"
@@ -42,11 +47,13 @@
     "@astrojs/mdx": "5.0.4",
     "@astrojs/react": "5.0.4",
     "@axe-core/playwright": "4.11.3",
+    "@biomejs/biome": "2.4.14",
     "@playwright/test": "1.59.1",
     "@types/node": "25.6.1",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "astro": "6.3.1",
+    "oxlint": "1.63.0",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "style-dictionary": "5.4.0",

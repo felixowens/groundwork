@@ -1,10 +1,10 @@
 import { readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
-export type DocsPage = {
+export interface DocsPage {
   path: string;
   snapshot: string;
-};
+}
 
 function astroPages(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -23,7 +23,9 @@ function routeFromPage(page: string): string {
   const withoutExtension = relativePath.replace(/\.astro$/, '');
   const withoutIndex = withoutExtension.replace(/(^|\/)index$/, '');
 
-  return `/${withoutIndex}`.replace(/\/+/g, '/').replace(/\/$/, '') + '/';
+  const normalizedPath = `/${withoutIndex}`.replace(/\/+/g, '/').replace(/\/$/, '');
+
+  return `${normalizedPath}/`;
 }
 
 function snapshotNameForRoute(path: string): string {

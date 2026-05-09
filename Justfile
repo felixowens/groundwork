@@ -15,11 +15,26 @@ check-css:
 check-generated-css:
 	@npm run check:generated-css
 
+check-biome:
+	@npm run check:biome
+
+check-oxlint:
+	@npm run check:oxlint
+
 docs:
 	@npm run docs:dev
 
 docs-build:
 	@npm run docs:build
+
+format:
+	@npm run format
+
+format-check:
+	@npm run format:check
+
+lint:
+	@npm run lint
 
 test:
 	@npm test

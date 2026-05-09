@@ -1,4 +1,4 @@
-import { Button, ErrorSummary, Field, Input, Select, Textarea, type ErrorSummaryItem } from '../../../src';
+import { Button, ErrorSummary, type ErrorSummaryItem, Field, Input, Select, Textarea } from '../../../src';
 
 const emailError = {
   problem: 'The email address is missing a domain.',

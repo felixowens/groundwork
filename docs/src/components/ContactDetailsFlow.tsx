@@ -1,20 +1,29 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Button, ErrorSummary, Field, Input, Select, Textarea, type ErrorSummaryItem, type FieldError } from '../../../src';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
+import {
+  Button,
+  ErrorSummary,
+  type ErrorSummaryItem,
+  Field,
+  type FieldError,
+  Input,
+  Select,
+  Textarea,
+} from '../../../src';
 import { assertNever } from '../../../src/lib/assert-never';
 
 type FlowStep = 'form' | 'review' | 'confirmation';
 type ContactReason = 'account' | 'billing' | 'technical';
 
-type ContactDetails = {
+interface ContactDetails {
   fullName: string;
   email: string;
   contactReason: ContactReason | null;
   notes: string;
-};
+}
 
-type ReviewedContactDetails = Omit<ContactDetails, 'contactReason'> & {
+interface ReviewedContactDetails extends Omit<ContactDetails, 'contactReason'> {
   contactReason: ContactReason;
-};
+}
 
 type ContactDetailsErrors = Partial<Record<keyof ContactDetails, FieldError>>;
 
@@ -99,7 +108,7 @@ function contactReasonLabel(value: ContactReason): string {
 export function ContactDetailsFlow() {
   const [step, setStep] = useState<FlowStep>('form');
   const [details, setDetails] = useState<ContactDetails>(initialDetails);
-  const [reviewDetails, setReviewDetails] = useState<ReviewedContactDetails | undefined>(undefined);
+  const [reviewDetails, setReviewDetails] = useState<ReviewedContactDetails | undefined>();
   const [errors, setErrors] = useState<ContactDetailsErrors>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
@@ -159,8 +168,12 @@ export function ContactDetailsFlow() {
         </div>
         <div className="gw-card gw-stack">
           <h2 className="gw-heading-m">What happens next</h2>
-          <p className="gw-body--sm">This demo ends here. In a real service, the next step would send the request or return to the account area.</p>
-          <Button variant="secondary" onClick={resetFlow}>Start again</Button>
+          <p className="gw-body--sm">
+            This demo ends here. In a real service, the next step would send the request or return to the account area.
+          </p>
+          <Button variant="secondary" onClick={resetFlow}>
+            Start again
+          </Button>
         </div>
       </section>
     );
@@ -182,35 +195,55 @@ export function ContactDetailsFlow() {
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Full name</dt>
             <dd className="gw-summary-list__value">{reviewDetails.fullName}</dd>
-            <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
+            <dd className="gw-summary-list__action">
+              <button className="gw-link" type="button" onClick={() => setStep('form')}>
+                Change
+              </button>
+            </dd>
           </div>
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Email address</dt>
             <dd className="gw-summary-list__value">{reviewDetails.email}</dd>
-            <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
+            <dd className="gw-summary-list__action">
+              <button className="gw-link" type="button" onClick={() => setStep('form')}>
+                Change
+              </button>
+            </dd>
           </div>
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Reason</dt>
             <dd className="gw-summary-list__value">{contactReasonLabel(reviewDetails.contactReason)}</dd>
-            <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
+            <dd className="gw-summary-list__action">
+              <button className="gw-link" type="button" onClick={() => setStep('form')}>
+                Change
+              </button>
+            </dd>
           </div>
           <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Notes</dt>
-            <dd className="gw-summary-list__value">{reviewDetails.notes.trim() === '' ? 'Not provided' : reviewDetails.notes}</dd>
-            <dd className="gw-summary-list__action"><a className="gw-link" href="#contact-details-flow" onClick={() => setStep('form')}>Change</a></dd>
+            <dd className="gw-summary-list__value">
+              {reviewDetails.notes.trim() === '' ? 'Not provided' : reviewDetails.notes}
+            </dd>
+            <dd className="gw-summary-list__action">
+              <button className="gw-link" type="button" onClick={() => setStep('form')}>
+                Change
+              </button>
+            </dd>
           </div>
         </dl>
 
         <div className="gw-button-group">
           <Button type="submit">Confirm and continue</Button>
-          <Button type="button" variant="secondary" onClick={() => setStep('form')}>Back</Button>
+          <Button type="button" variant="secondary" onClick={() => setStep('form')}>
+            Back
+          </Button>
         </div>
       </form>
     );
   }
 
   return (
-    <form className="gw-stack--lg" id="contact-details-flow" onSubmit={submitDetails} noValidate>
+    <form className="gw-stack--lg" id="contact-details-flow" onSubmit={submitDetails} noValidate={true}>
       <ErrorSummary ref={errorSummaryRef} items={errorItems} />
 
       <Field id="flow-full-name" label="Full name" error={errors.fullName}>
@@ -225,7 +258,12 @@ export function ContactDetailsFlow() {
         )}
       </Field>
 
-      <Field id="flow-email" label="Email address" hint="We'll only use this for follow-up about this request." error={errors.email}>
+      <Field
+        id="flow-email"
+        label="Email address"
+        hint="We'll only use this for follow-up about this request."
+        error={errors.email}
+      >
         {({ inputProps }) => (
           <Input
             {...inputProps}

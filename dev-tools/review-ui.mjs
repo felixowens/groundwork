@@ -1,27 +1,30 @@
-import { chromium } from '@playwright/test';
-import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { chromium } from '@playwright/test';
 
 const outputDirectory = '.logs/ui-review/latest';
 const baseUrl = 'http://127.0.0.1:4321';
 
-async function waitForServer(url) {
-  const deadline = Date.now() + 30_000;
+function delay(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
 
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        return;
-      }
-    } catch {
-      // Server is still starting.
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 250));
+async function waitForServer(url, deadline = Date.now() + 30_000) {
+  if (Date.now() >= deadline) {
+    throw new Error(`Timed out waiting for ${url}`);
   }
 
-  throw new Error(`Timed out waiting for ${url}`);
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      return;
+    }
+  } catch {
+    // Server is still starting.
+  }
+
+  await delay(250);
+  return waitForServer(url, deadline);
 }
 
 function startDocsServer() {
@@ -47,41 +50,45 @@ async function capturePage(page, path, filename) {
   }));
 }
 
-async function listMetrics(page) {
-  return page.locator('ol, ul').evaluateAll((lists) => lists.map((list) => {
-    const rect = list.getBoundingClientRect();
-    const styles = getComputedStyle(list);
+function listMetrics(page) {
+  return page.locator('ol, ul').evaluateAll((lists) =>
+    lists.map((list) => {
+      const rect = list.getBoundingClientRect();
+      const styles = getComputedStyle(list);
 
-    return {
-      tagName: list.tagName.toLowerCase(),
-      className: list.className,
-      left: Math.round(rect.left),
-      paddingLeft: styles.paddingLeft,
-      listStylePosition: styles.listStylePosition,
-    };
-  }));
+      return {
+        tagName: list.tagName.toLowerCase(),
+        className: list.className,
+        left: Math.round(rect.left),
+        paddingLeft: styles.paddingLeft,
+        listStylePosition: styles.listStylePosition,
+      };
+    }),
+  );
 }
 
-async function interactiveCardMetrics(page) {
-  return page.locator('.gw-card--interactive').evaluateAll((cards) => cards.map((card) => {
-    const styles = getComputedStyle(card);
-    const tagName = card.tagName.toLowerCase();
-    const role = card.getAttribute('role');
-    const isActionableElement = tagName === 'a' || tagName === 'button';
-    const hasActionableRole = role === 'link' || role === 'button';
+function interactiveCardMetrics(page) {
+  return page.locator('.gw-card--interactive').evaluateAll((cards) =>
+    cards.map((card) => {
+      const styles = getComputedStyle(card);
+      const tagName = card.tagName.toLowerCase();
+      const role = card.getAttribute('role');
+      const isActionableElement = tagName === 'a' || tagName === 'button';
+      const hasActionableRole = role === 'link' || role === 'button';
 
-    return {
-      tagName,
-      className: card.className,
-      role,
-      cursor: styles.cursor,
-      text: card.textContent?.trim().slice(0, 80),
-      isPointerOnActionableElement: styles.cursor !== 'pointer' || isActionableElement || hasActionableRole,
-    };
-  }));
+      return {
+        tagName,
+        className: card.className,
+        role,
+        cursor: styles.cursor,
+        text: card.textContent?.trim().slice(0, 80),
+        isPointerOnActionableElement: styles.cursor !== 'pointer' || isActionableElement || hasActionableRole,
+      };
+    }),
+  );
 }
 
-async function stackMetrics(page) {
+function stackMetrics(page) {
   return page.locator('.gw-stack, .gw-stack--sm, .gw-stack--lg, .gw-stack--xl').evaluateAll((stacks) => {
     const expectedGapByClass = [
       ['gw-stack--sm', 8],
@@ -99,7 +106,7 @@ async function stackMetrics(page) {
       const styles = getComputedStyle(element);
 
       if (styles.display === 'none' || styles.visibility === 'hidden') {
-        return undefined;
+        return;
       }
 
       const rect = element.getBoundingClientRect();
@@ -115,7 +122,7 @@ async function stackMetrics(page) {
         .filter((box) => box !== undefined);
 
       if (descendantBoxes.length === 0) {
-        return undefined;
+        return;
       }
 
       return {
@@ -243,23 +250,26 @@ try {
     checks: {
       noHorizontalOverflow: allPageReports.every((entry) => !entry.hasHorizontalOverflow),
       errorSummaryFocused: errorSummaryState.isFocused,
-      errorSummaryHasVisibleOutline: Number.parseFloat(errorSummaryState.outlineWidth) > 0 && errorSummaryState.outlineStyle !== 'none',
+      errorSummaryHasVisibleOutline:
+        Number.parseFloat(errorSummaryState.outlineWidth) > 0 && errorSummaryState.outlineStyle !== 'none',
       listsHavePadding: lists
         .filter((list) => list.className !== 'gw-breadcrumb' && list.className !== 'docs-primary-nav')
         .every((list) => Number.parseFloat(list.paddingLeft) > 0),
-      stackSpacingPreserved: [
-        ...initialStackViolations,
-        ...errorStackViolations,
-        ...confirmationStackViolations,
-        ...darkStackViolations,
-        ...mobileStackViolations,
-      ].length === 0,
+      stackSpacingPreserved:
+        [
+          ...initialStackViolations,
+          ...errorStackViolations,
+          ...confirmationStackViolations,
+          ...darkStackViolations,
+          ...mobileStackViolations,
+        ].length === 0,
       interactivePointersAreActionable: interactiveCards.every((card) => card.isPointerOnActionableElement),
     },
   };
 
-  await writeFile(`${outputDirectory}/report.json`, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
-  console.log(JSON.stringify(summary, null, 2));
+  const summaryJson = `${JSON.stringify(summary, null, 2)}\n`;
+  await writeFile(`${outputDirectory}/report.json`, summaryJson, 'utf8');
+  process.stdout.write(summaryJson);
 
   if (
     !summary.checks.noHorizontalOverflow ||

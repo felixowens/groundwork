@@ -11,5 +11,7 @@ test('includes field context in the summary link accessible name', async ({ page
   await page.goto('/components/error-summary/');
 
   await expect(page.getByRole('link', { name: /Email address: The email address is missing a domain/ })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Email address: The email address is missing a domain/ })).not.toHaveAttribute('aria-label');
+  await expect(
+    page.getByRole('link', { name: /Email address: The email address is missing a domain/ }),
+  ).not.toHaveAttribute('aria-label');
 });
