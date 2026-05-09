@@ -1,17 +1,17 @@
 import type { Ref } from 'react';
 import { type FieldError, formatFieldError } from '../form/field-error';
 
-export type ErrorSummaryItem = {
+export interface ErrorSummaryItem {
   id: string;
   label: string;
   error: FieldError;
-};
+}
 
-export type ErrorSummaryProps = {
+export interface ErrorSummaryProps {
   title?: string;
   items: readonly ErrorSummaryItem[];
   ref?: Ref<HTMLDivElement>;
-};
+}
 
 /** Renders a page-level validation summary linking to each invalid field. */
 export function ErrorSummary({ title = 'There is a problem', items, ref }: ErrorSummaryProps) {

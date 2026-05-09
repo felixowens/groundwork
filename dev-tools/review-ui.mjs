@@ -5,23 +5,26 @@ import { chromium } from '@playwright/test';
 const outputDirectory = '.logs/ui-review/latest';
 const baseUrl = 'http://127.0.0.1:4321';
 
-async function waitForServer(url) {
-  const deadline = Date.now() + 30_000;
+function delay(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
 
-  while (Date.now() < deadline) {
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        return;
-      }
-    } catch {
-      // Server is still starting.
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 250));
+async function waitForServer(url, deadline = Date.now() + 30_000) {
+  if (Date.now() >= deadline) {
+    throw new Error(`Timed out waiting for ${url}`);
   }
 
-  throw new Error(`Timed out waiting for ${url}`);
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      return;
+    }
+  } catch {
+    // Server is still starting.
+  }
+
+  await delay(250);
+  return waitForServer(url, deadline);
 }
 
 function startDocsServer() {
@@ -47,7 +50,7 @@ async function capturePage(page, path, filename) {
   }));
 }
 
-async function listMetrics(page) {
+function listMetrics(page) {
   return page.locator('ol, ul').evaluateAll((lists) =>
     lists.map((list) => {
       const rect = list.getBoundingClientRect();
@@ -64,7 +67,7 @@ async function listMetrics(page) {
   );
 }
 
-async function interactiveCardMetrics(page) {
+function interactiveCardMetrics(page) {
   return page.locator('.gw-card--interactive').evaluateAll((cards) =>
     cards.map((card) => {
       const styles = getComputedStyle(card);
@@ -85,7 +88,7 @@ async function interactiveCardMetrics(page) {
   );
 }
 
-async function stackMetrics(page) {
+function stackMetrics(page) {
   return page.locator('.gw-stack, .gw-stack--sm, .gw-stack--lg, .gw-stack--xl').evaluateAll((stacks) => {
     const expectedGapByClass = [
       ['gw-stack--sm', 8],
@@ -103,7 +106,7 @@ async function stackMetrics(page) {
       const styles = getComputedStyle(element);
 
       if (styles.display === 'none' || styles.visibility === 'hidden') {
-        return undefined;
+        return;
       }
 
       const rect = element.getBoundingClientRect();
@@ -119,7 +122,7 @@ async function stackMetrics(page) {
         .filter((box) => box !== undefined);
 
       if (descendantBoxes.length === 0) {
-        return undefined;
+        return;
       }
 
       return {

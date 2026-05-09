@@ -37,30 +37,80 @@
       "correctness": {
         "noGlobalObjectCalls": "error",
         "noUnreachable": "error",
+        "noUnusedFunctionParameters": "error",
+        "noUnusedImports": "error",
         "noUnusedVariables": "error",
         "useExhaustiveDependencies": "error",
-        "useHookAtTopLevel": "error"
+        "useHookAtTopLevel": "error",
+        "useParseIntRadix": "error"
       },
       "suspicious": {
         "noCompareNegZero": "error",
         "noConsole": "error",
-        "noReactForwardRef": "error"
+        "noDebugger": "error",
+        "noDoubleEquals": "error",
+        "noExplicitAny": "error",
+        "noReactForwardRef": "error",
+        "noTsIgnore": "error",
+        "noVar": "error",
+        "useAwait": "error",
+        "useErrorMessage": "error"
       },
       "style": {
+        "noDefaultExport": "error",
         "noDescendingSpecificity": "error",
+        "noEnum": "error",
+        "noImplicitBoolean": "error",
         "noNegationElse": "error",
+        "noNestedTernary": "error",
         "noNonNullAssertion": "error",
         "noParameterAssign": "error",
+        "noUselessElse": "error",
+        "useBlockStatements": "error",
+        "useConsistentTypeDefinitions": "error",
+        "useConst": "error",
         "useDeprecatedReason": "error",
-        "useFilenamingConvention": "error"
+        "useExportType": "error",
+        "useFilenamingConvention": "error",
+        "useImportType": "error",
+        "useNodejsImportProtocol": "error",
+        "useSelfClosingElements": "error",
+        "useTemplate": "error",
+        "useThrowNewError": "error",
+        "useThrowOnlyError": "error"
       },
       "complexity": {
+        "noForEach": "error",
+        "noUselessStringConcat": "error",
+        "noUselessTernary": "error",
+        "noUselessUndefined": "error",
+        "useDateNow": "error",
+        "useFlatMap": "error",
+        "useIndexOf": "error",
         "useLiteralKeys": "error",
         "useOptionalChain": "error",
-        "useRegexLiterals": "error"
+        "useRegexLiterals": "error",
+        "useWhile": "error"
+      },
+      "performance": {
+        "noAccumulatingSpread": "error",
+        "noAwaitInLoops": "error",
+        "useTopLevelRegex": "error"
       },
       "nursery": {
-        "useExhaustiveSwitchCases": "error"
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "noMultiAssign": "error",
+        "noShadow": "error",
+        "noUnsafePlusOperands": "error",
+        "useErrorCause": "error",
+        "useExhaustiveSwitchCases": "error",
+        "useNullishCoalescing": "error"
+      },
+      "security": {
+        "noBlankTarget": "error",
+        "noDangerouslySetInnerHtml": "error",
+        "noSecrets": "error"
       }
     },
     "domains": {
@@ -92,5 +142,27 @@
     "formatter": {
       "trailingCommas": "none"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["docs/astro.config.mjs", "playwright.config.ts", "style-dictionary.config.mjs"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["tests/**/*.ts"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "useTopLevelRegex": "off"
+          }
+        }
+      }
+    }
+  ]
 }

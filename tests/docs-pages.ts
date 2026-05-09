@@ -1,10 +1,10 @@
 import { readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 
-export type DocsPage = {
+export interface DocsPage {
   path: string;
   snapshot: string;
-};
+}
 
 function astroPages(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {

@@ -1,25 +1,25 @@
 import type { AriaAttributes, ReactNode } from 'react';
 import { type FieldError, formatFieldError } from '../form/field-error';
 
-type DescribedInputProps = {
+interface DescribedInputProps {
   id: string;
   'aria-labelledby': string;
   'aria-describedby'?: AriaAttributes['aria-describedby'];
   'aria-invalid'?: AriaAttributes['aria-invalid'];
-};
+}
 
-export type FieldRenderProps = {
+export interface FieldRenderProps {
   inputProps: DescribedInputProps;
   hasError: boolean;
-};
+}
 
-export type FieldProps = {
+export interface FieldProps {
   id: string;
   label: string;
   hint?: string | undefined;
   error?: FieldError | undefined;
   children: (field: FieldRenderProps) => ReactNode;
-};
+}
 
 function describedBy(hintId: string | undefined, errorId: string | undefined): string | undefined {
   const ids = [hintId, errorId].filter((id): id is string => id !== undefined);

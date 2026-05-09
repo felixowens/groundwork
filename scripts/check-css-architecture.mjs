@@ -3,32 +3,31 @@ import { join } from 'node:path';
 
 async function cssFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
-  const files = [];
+  const filesByEntry = await Promise.all(
+    entries.map((entry) => {
+      const path = join(directory, entry.name);
 
-  for (const entry of entries) {
-    const path = join(directory, entry.name);
-
-    if (entry.isDirectory()) {
-      if (entry.name === 'generated') {
-        continue;
+      if (entry.isDirectory()) {
+        return entry.name === 'generated' ? [] : cssFiles(path);
       }
 
-      files.push(...(await cssFiles(path)));
-      continue;
-    }
+      return entry.isFile() && entry.name.endsWith('.css') ? [path] : [];
+    }),
+  );
 
-    if (entry.isFile() && entry.name.endsWith('.css')) {
-      files.push(path);
-    }
-  }
-
-  return files;
+  return filesByEntry.flat();
 }
 
 const violations = [];
+const sourceCssFiles = await cssFiles('src/styles');
+const sourceCssFilesWithContent = await Promise.all(
+  sourceCssFiles.map(async (file) => ({
+    file,
+    content: await readFile(file, 'utf8'),
+  })),
+);
 
-for (const file of await cssFiles('src/styles')) {
-  const content = await readFile(file, 'utf8');
+for (const { file, content } of sourceCssFilesWithContent) {
   const lines = content.split('\n');
 
   lines.forEach((line, index) => {

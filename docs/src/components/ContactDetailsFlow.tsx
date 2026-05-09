@@ -14,16 +14,16 @@ import { assertNever } from '../../../src/lib/assert-never';
 type FlowStep = 'form' | 'review' | 'confirmation';
 type ContactReason = 'account' | 'billing' | 'technical';
 
-type ContactDetails = {
+interface ContactDetails {
   fullName: string;
   email: string;
   contactReason: ContactReason | null;
   notes: string;
-};
+}
 
-type ReviewedContactDetails = Omit<ContactDetails, 'contactReason'> & {
+interface ReviewedContactDetails extends Omit<ContactDetails, 'contactReason'> {
   contactReason: ContactReason;
-};
+}
 
 type ContactDetailsErrors = Partial<Record<keyof ContactDetails, FieldError>>;
 
@@ -243,7 +243,7 @@ export function ContactDetailsFlow() {
   }
 
   return (
-    <form className="gw-stack--lg" id="contact-details-flow" onSubmit={submitDetails} noValidate>
+    <form className="gw-stack--lg" id="contact-details-flow" onSubmit={submitDetails} noValidate={true}>
       <ErrorSummary ref={errorSummaryRef} items={errorItems} />
 
       <Field id="flow-full-name" label="Full name" error={errors.fullName}>
