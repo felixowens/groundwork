@@ -46,6 +46,12 @@ Every new component needs:
 
 Colocated unit tests live in `src/**/__tests__/`. Use them for pure helpers, formatting logic, and runtime guard branches that do not need a browser. Keep Playwright tests for browser behavior, accessibility, user flows, and visual regression.
 
+## Project rules
+
+Project-specific lint rules live in `scripts/project-rules/`. Add a rule there when a Groundwork convention should fail CI but does not belong in Biome or Oxlint. Rules must report errors, never warnings.
+
+TSDoc blocks must use multiline format with a bare `/**` opening line. Every file-exported source definition needs a TSDoc block with exactly one release tag: `@public`, `@alpha`, or `@internal`. Definitions tagged `@public` or `@alpha` must be exported from `src/index.ts`. Exported functions need `@example` blocks. Functions containing `throw` statements must document what they throw with `@throws Throws {@link ErrorType} when ...`. Modifier tags such as `@public` and `@internal` belong on the last line of the TSDoc block. Keep TSDoc API-focused; use docs pages for extended usage guidance and visual examples.
+
 ## Validation
 
 Use:

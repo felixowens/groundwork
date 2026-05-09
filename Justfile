@@ -21,6 +21,9 @@ check-biome:
 check-oxlint:
 	@npm run check:oxlint
 
+check-project-rules:
+	@npm run check:project-rules
+
 docs:
 	@npm run docs:dev
 
