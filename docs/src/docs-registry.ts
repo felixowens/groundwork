@@ -43,6 +43,16 @@ export const componentDocs = [
     href: '/components/error-summary/',
     label: 'Error summary',
   },
+  {
+    description: 'One choice from a short visible list, grouped with fieldset and legend.',
+    href: '/components/radio-group/',
+    label: 'RadioGroup',
+  },
+  {
+    description: 'Multiple choices from a short visible list, grouped with fieldset and legend.',
+    href: '/components/checkbox-group/',
+    label: 'CheckboxGroup',
+  },
 ] satisfies readonly ComponentDoc[];
 
 export const docsNavSections = [

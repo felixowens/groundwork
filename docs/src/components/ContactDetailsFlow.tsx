@@ -1,23 +1,26 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
 import {
   Button,
+  CheckboxGroup,
   ErrorSummary,
   type ErrorSummaryItem,
   Field,
   type FieldError,
   Input,
-  Select,
+  RadioGroup,
   Textarea,
 } from '../../../src';
 import { assertNever } from '../../../src/lib/assert-never';
 
 type FlowStep = 'form' | 'review' | 'confirmation';
 type ContactReason = 'account' | 'billing' | 'technical';
+type NotificationType = 'security' | 'billing' | 'product';
 
 interface ContactDetails {
   fullName: string;
   email: string;
   contactReason: ContactReason | null;
+  notificationTypes: NotificationType[];
   notes: string;
 }
 
@@ -31,6 +34,7 @@ const initialDetails: ContactDetails = {
   fullName: '',
   email: '',
   contactReason: null,
+  notificationTypes: [],
   notes: '',
 };
 
@@ -58,6 +62,13 @@ function validateContactDetails(details: ContactDetails): ContactDetailsErrors {
     };
   }
 
+  if (details.notificationTypes.length === 0) {
+    errors.notificationTypes = {
+      problem: 'No notification type has been selected.',
+      fix: 'Select at least one notification type.',
+    };
+  }
+
   return errors;
 }
 
@@ -76,6 +87,10 @@ function errorSummaryItems(errors: ContactDetailsErrors): ErrorSummaryItem[] {
     items.push({ id: 'flow-contact-reason', label: 'Reason for contact', error: errors.contactReason });
   }
 
+  if (errors.notificationTypes !== undefined) {
+    items.push({ id: 'flow-notification-types', label: 'Notification types', error: errors.notificationTypes });
+  }
+
   return items;
 }
 
@@ -92,6 +107,17 @@ function parseContactReason(value: string): ContactDetails['contactReason'] {
   }
 }
 
+function parseNotificationType(value: string): NotificationType {
+  switch (value) {
+    case 'security':
+    case 'billing':
+    case 'product':
+      return value;
+    default:
+      throw new Error(`Unknown notification type: ${value}`);
+  }
+}
+
 function contactReasonLabel(value: ContactReason): string {
   switch (value) {
     case 'account':
@@ -100,6 +126,19 @@ function contactReasonLabel(value: ContactReason): string {
       return 'Billing question';
     case 'technical':
       return 'Technical support';
+    default:
+      return assertNever(value);
+  }
+}
+
+function notificationTypeLabel(value: NotificationType): string {
+  switch (value) {
+    case 'security':
+      return 'Security alerts';
+    case 'billing':
+      return 'Billing updates';
+    case 'product':
+      return 'Product announcements';
     default:
       return assertNever(value);
   }
@@ -123,6 +162,17 @@ export function ContactDetailsFlow() {
 
   function updateDetail<Field extends keyof ContactDetails>(field: Field, value: ContactDetails[Field]) {
     setDetails((current) => ({ ...current, [field]: value }));
+  }
+
+  function updateNotificationType(value: string, checked: boolean) {
+    const notificationType = parseNotificationType(value);
+
+    setDetails((current) => ({
+      ...current,
+      notificationTypes: checked
+        ? [...current.notificationTypes, notificationType]
+        : current.notificationTypes.filter((currentType) => currentType !== notificationType),
+    }));
   }
 
   function submitDetails(event: FormEvent<HTMLFormElement>) {
@@ -220,6 +270,17 @@ export function ContactDetailsFlow() {
             </dd>
           </div>
           <div className="gw-summary-list__row">
+            <dt className="gw-summary-list__key">Notifications</dt>
+            <dd className="gw-summary-list__value">
+              {reviewDetails.notificationTypes.map(notificationTypeLabel).join(', ')}
+            </dd>
+            <dd className="gw-summary-list__action">
+              <button className="gw-link" type="button" onClick={() => setStep('form')}>
+                Change
+              </button>
+            </dd>
+          </div>
+          <div className="gw-summary-list__row">
             <dt className="gw-summary-list__key">Notes</dt>
             <dd className="gw-summary-list__value">
               {reviewDetails.notes.trim() === '' ? 'Not provided' : reviewDetails.notes}
@@ -277,21 +338,38 @@ export function ContactDetailsFlow() {
         )}
       </Field>
 
-      <Field id="flow-contact-reason" label="Reason for contact" error={errors.contactReason}>
-        {({ inputProps }) => (
-          <Select
-            {...inputProps}
-            name="contactReason"
-            value={details.contactReason ?? ''}
-            onChange={(event) => updateDetail('contactReason', parseContactReason(event.currentTarget.value))}
-          >
-            <option value="">Select a reason</option>
-            <option value="account">Account question</option>
-            <option value="billing">Billing question</option>
-            <option value="technical">Technical support</option>
-          </Select>
-        )}
-      </Field>
+      <RadioGroup
+        id="flow-contact-reason"
+        name="contactReason"
+        legend="Reason for contact"
+        error={errors.contactReason}
+        value={details.contactReason ?? undefined}
+        onChange={(event) => updateDetail('contactReason', parseContactReason(event.currentTarget.value))}
+        options={[
+          { value: 'account', label: 'Account question' },
+          { value: 'billing', label: 'Billing question' },
+          {
+            value: 'technical',
+            label: 'Technical support',
+            hint: 'Use this for deployment, access, or configuration problems.',
+          },
+        ]}
+      />
+
+      <CheckboxGroup
+        id="flow-notification-types"
+        name="notificationTypes"
+        legend="Notification types"
+        hint="Select all updates you want to receive."
+        error={errors.notificationTypes}
+        values={details.notificationTypes}
+        onChange={(event) => updateNotificationType(event.currentTarget.value, event.currentTarget.checked)}
+        options={[
+          { value: 'security', label: 'Security alerts', hint: 'Important account and access changes.' },
+          { value: 'billing', label: 'Billing updates' },
+          { value: 'product', label: 'Product announcements' },
+        ]}
+      />
 
       <Field id="flow-notes" label="Notes" hint="Optional. Include anything that helps us understand the request.">
         {({ inputProps }) => (

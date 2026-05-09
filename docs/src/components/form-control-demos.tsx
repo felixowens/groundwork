@@ -1,4 +1,4 @@
-import { Field, Input, Select, Textarea } from '../../../src';
+import { CheckboxGroup, Field, Input, RadioGroup, Select, Textarea } from '../../../src';
 
 export function InputDemo() {
   return (
@@ -42,6 +42,54 @@ export function TextareaDemo() {
       >
         {({ inputProps }) => <Textarea {...inputProps} name="supportingInformation" rows={5} />}
       </Field>
+    </form>
+  );
+}
+
+export function RadioGroupDemo() {
+  return (
+    <form className="gw-stack--lg">
+      <RadioGroup
+        id="contact-preference"
+        name="contactPreference"
+        legend="How should we contact you?"
+        hint="Choose the method we should use for service updates."
+        defaultValue="email"
+        options={[
+          { value: 'email', label: 'Email', hint: 'Use the email address on your account.' },
+          { value: 'phone', label: 'Phone' },
+          { value: 'post', label: 'Post', disabled: true, hint: 'Postal updates are not available yet.' },
+        ]}
+      />
+    </form>
+  );
+}
+
+export function CheckboxGroupDemo() {
+  return (
+    <form className="gw-stack--lg">
+      <CheckboxGroup
+        id="services-used"
+        name="servicesUsed"
+        legend="Which services do you use?"
+        hint="Select all that apply."
+        defaultValues={['web']}
+        options={[
+          { value: 'web', label: 'Web application' },
+          { value: 'api', label: 'REST API' },
+          { value: 'mobile', label: 'Mobile app', hint: 'Include iOS and Android apps.' },
+        ]}
+      />
+      <CheckboxGroup
+        id="notification-types"
+        name="notificationTypes"
+        legend="Notification types"
+        error={{ problem: 'No notification type selected.', fix: 'Select at least one notification type.' }}
+        options={[
+          { value: 'security', label: 'Security alerts' },
+          { value: 'billing', label: 'Billing updates' },
+        ]}
+      />
     </form>
   );
 }
