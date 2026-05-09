@@ -44,6 +44,8 @@ Every new component needs:
 - Playwright accessibility coverage.
 - Playwright visual-regression coverage.
 
+Colocated unit tests live in `src/**/__tests__/`. Use them for pure helpers, formatting logic, and runtime guard branches that do not need a browser. Keep Playwright tests for browser behavior, accessibility, user flows, and visual regression.
+
 ## Validation
 
 Use:

@@ -42,6 +42,9 @@ test:
 test-unit:
 	@npm run test:unit
 
+test-unit-coverage:
+	@npm run test:unit:coverage
+
 test-a11y:
 	@npm run test:a11y
 

@@ -145,7 +145,7 @@
   },
   "overrides": [
     {
-      "includes": ["docs/astro.config.mjs", "playwright.config.ts", "style-dictionary.config.mjs"],
+      "includes": ["docs/astro.config.mjs", "playwright.config.ts", "style-dictionary.config.mjs", "vitest.config.ts"],
       "linter": {
         "rules": {
           "style": {
@@ -155,7 +155,7 @@
       }
     },
     {
-      "includes": ["tests/**/*.ts"],
+      "includes": ["tests/**/*.ts", "src/**/__tests__/**/*.{ts,tsx}"],
       "linter": {
         "rules": {
           "performance": {
