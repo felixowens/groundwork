@@ -20,6 +20,10 @@
  *   }
  * }
  * ```
+ *
+ * @throws Throws {@link Error} when called at runtime with a value that should be unreachable.
+ *
+ * @internal
  */
 export function assertNever(value: never): never {
   throw new Error(`Unexpected unreachable value: ${String(value)}`);

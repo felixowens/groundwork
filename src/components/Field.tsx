@@ -8,11 +8,19 @@ interface DescribedInputProps {
   'aria-invalid'?: AriaAttributes['aria-invalid'];
 }
 
+/** Props supplied by Field to the form control render function.
+ *
+ * @public
+ */
 export interface FieldRenderProps {
   inputProps: DescribedInputProps;
   hasError: boolean;
 }
 
+/** Props for the Groundwork Field component.
+ *
+ * @public
+ */
 export interface FieldProps {
   id: string;
   label: string;
@@ -26,7 +34,18 @@ function describedBy(hintId: string | undefined, errorId: string | undefined): s
   return ids.length > 0 ? ids.join(' ') : undefined;
 }
 
-/** Renders a labelled form field and supplies ARIA props to the child control. */
+/**
+ * Renders a labelled form field and supplies ARIA props to the child control.
+ *
+ * @example
+ * ```tsx
+ * <Field id="email" label="Email address">
+ *   {({ inputProps }) => <Input {...inputProps} />}
+ * </Field>
+ * ```
+ *
+ * @public
+ */
 export function Field({ id, label, hint, error, children }: FieldProps) {
   const labelId = `${id}-label`;
   const hintId = hint === undefined ? undefined : `${id}-hint`;
