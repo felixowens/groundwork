@@ -10,7 +10,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <h1 class="gw-heading-l">Error summary</h1>
         <p>Use an error summary at the top of a page when validation fails. Each item links to the field that needs attention.</p>
         <h2 class="gw-heading-m">Copy rule</h2>
-        <p>Error messages should say what went wrong and how to fix it. Groundwork models error copy as structured problem and fix text.</p>
+        <p>Error messages should say what went wrong and how to fix it. Groundwork models error copy as structured <code class="gw-mono">FieldError</code> data: <code class="gw-mono">problem</code> names the issue and <code class="gw-mono">fix</code> gives the next action.</p>
+        <p>Use <code class="gw-mono">formatFieldError</code> when custom validation UI needs the same combined copy as Field and ErrorSummary.</p>
       </div>
 
       <div class="gw-card gw-stack">
