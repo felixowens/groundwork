@@ -1,0 +1,31 @@
+---
+import { InputDemo } from '../../components/form-control-demos';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Input" description="Groundwork text input component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Input</h1>
+        <p>Use Input for short, single-line answers such as names, reference numbers, postcodes, and email addresses.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use Input inside Field for most forms. Field renders the visible label, hint, error copy, and ARIA wiring; Input renders the control with Groundwork sizing and styling.</p>
+        <p>Choose the narrowest width that comfortably fits the expected answer. Width hints communicate the kind of answer you expect.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use Input for long free-text answers. Use Textarea instead. Do not render a standalone Input unless a visible label and description are already provided by surrounding markup.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <InputDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">Input requires an accessible name through <code class="gw-mono">aria-label</code> or <code class="gw-mono">aria-labelledby</code>. Prefer getting that from Field rather than writing ARIA attributes by hand.</p>
+        <p class="gw-body--sm">Set an appropriate native <code class="gw-mono">type</code> and <code class="gw-mono">autoComplete</code> value when the browser can help users enter the answer.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

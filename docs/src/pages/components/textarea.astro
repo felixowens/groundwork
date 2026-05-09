@@ -1,0 +1,31 @@
+---
+import { TextareaDemo } from '../../components/form-control-demos';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Textarea" description="Groundwork textarea component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Textarea</h1>
+        <p>Use Textarea for longer free-text answers that need more than one line.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use Textarea inside Field for comments, explanations, supporting information, and other prose answers.</p>
+        <p>Set <code class="gw-mono">rows</code> to match the expected answer length. The initial size should invite the right amount of detail.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use Textarea for short structured answers such as names, postcodes, dates, or reference numbers. Use Input with an appropriate width instead.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <TextareaDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">Textarea requires an accessible name through <code class="gw-mono">aria-label</code> or <code class="gw-mono">aria-labelledby</code>. Prefer using Field to provide the visible label and ARIA wiring.</p>
+        <p class="gw-body--sm">Use hint text to explain length, format, or content expectations. Do not rely on placeholder text as the only instruction.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
