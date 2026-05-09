@@ -1,37 +1,9 @@
 ---
 import '../../../css/groundwork.css';
+import { docsNavSections } from '../docs-registry';
 
 const { title, description } = Astro.props;
 const currentPath = Astro.url.pathname;
-
-const navSections = [
-  {
-    heading: 'Start',
-    links: [
-      { href: '/', label: 'Overview' },
-      { href: '/tokens/', label: 'Tokens' },
-    ],
-  },
-  {
-    heading: 'Components',
-    links: [
-      { href: '/components/', label: 'All components' },
-      { href: '/components/button/', label: 'Button' },
-      { href: '/components/field/', label: 'Field' },
-      { href: '/components/input/', label: 'Input' },
-      { href: '/components/select/', label: 'Select' },
-      { href: '/components/textarea/', label: 'Textarea' },
-      { href: '/components/error-summary/', label: 'Error summary' },
-    ],
-  },
-  {
-    heading: 'Guides',
-    links: [
-      { href: '/flows/', label: 'Flows' },
-      { href: '/wiki/', label: 'Wiki' },
-    ],
-  },
-];
 ---
 
 <!doctype html>
@@ -55,7 +27,7 @@ const navSections = [
       <aside class="docs-sidebar">
         <nav class="docs-primary-nav" aria-label="Documentation">
           {
-            navSections.map((section) => (
+            docsNavSections.map((section) => (
               <section class="docs-nav-section" aria-labelledby={`docs-nav-${section.heading.toLowerCase()}`}>
                 <h2 class="docs-nav-heading" id={`docs-nav-${section.heading.toLowerCase()}`}>
                   {section.heading}

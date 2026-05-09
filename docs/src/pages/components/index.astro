@@ -1,4 +1,5 @@
 ---
+import { componentDocs } from '../../docs-registry';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 ---
 
@@ -12,30 +13,16 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       </div>
 
       <div class="gw-grid">
-        <article class="gw-card gw-stack--sm">
-          <h2 class="gw-heading-s"><a href="/components/button/">Button</a></h2>
-          <p class="gw-body--sm">Actions with closed visual variants and clear hierarchy.</p>
-        </article>
-        <article class="gw-card gw-stack--sm">
-          <h2 class="gw-heading-s"><a href="/components/field/">Field</a></h2>
-          <p class="gw-body--sm">The primary form API for labels, hints, errors, and ARIA wiring.</p>
-        </article>
-        <article class="gw-card gw-stack--sm">
-          <h2 class="gw-heading-s"><a href="/components/input/">Input</a></h2>
-          <p class="gw-body--sm">Single-line answers with width hints for expected answer length.</p>
-        </article>
-        <article class="gw-card gw-stack--sm">
-          <h2 class="gw-heading-s"><a href="/components/select/">Select</a></h2>
-          <p class="gw-body--sm">One choice from a short, known list.</p>
-        </article>
-        <article class="gw-card gw-stack--sm">
-          <h2 class="gw-heading-s"><a href="/components/textarea/">Textarea</a></h2>
-          <p class="gw-body--sm">Longer free-text answers that need more than one line.</p>
-        </article>
-        <article class="gw-card gw-stack--sm">
-          <h2 class="gw-heading-s"><a href="/components/error-summary/">Error summary</a></h2>
-          <p class="gw-body--sm">Page-level validation summary that links back to invalid fields.</p>
-        </article>
+        {
+          componentDocs.map((component) => (
+            <article class="gw-card gw-stack--sm">
+              <h2 class="gw-heading-s">
+                <a href={component.href}>{component.label}</a>
+              </h2>
+              <p class="gw-body--sm">{component.description}</p>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
