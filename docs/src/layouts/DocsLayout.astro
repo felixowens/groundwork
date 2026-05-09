@@ -2,6 +2,36 @@
 import '../../../css/groundwork.css';
 
 const { title, description } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navSections = [
+  {
+    heading: 'Start',
+    links: [
+      { href: '/', label: 'Overview' },
+      { href: '/tokens/', label: 'Tokens' },
+    ],
+  },
+  {
+    heading: 'Components',
+    links: [
+      { href: '/components/', label: 'All components' },
+      { href: '/components/button/', label: 'Button' },
+      { href: '/components/field/', label: 'Field' },
+      { href: '/components/input/', label: 'Input' },
+      { href: '/components/select/', label: 'Select' },
+      { href: '/components/textarea/', label: 'Textarea' },
+      { href: '/components/error-summary/', label: 'Error summary' },
+    ],
+  },
+  {
+    heading: 'Guides',
+    links: [
+      { href: '/flows/', label: 'Flows' },
+      { href: '/wiki/', label: 'Wiki' },
+    ],
+  },
+];
 ---
 
 <!doctype html>
@@ -14,28 +44,39 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <a href="#main" class="gw-skip-link">Skip to main content</a>
-    <header class="gw-section">
-      <div class="gw-width gw-stack">
-        <p class="gw-caption">Groundwork PoC</p>
-        <nav aria-label="Primary">
-          <ul class="docs-primary-nav">
-            <li><a href="/">Overview</a></li>
-            <li><a href="/tokens/">Tokens</a></li>
-            <li><a href="/flows/">Flows</a></li>
-            <li><a href="/components/button/">Button</a></li>
-            <li><a href="/components/field/">Field</a></li>
-            <li><a href="/components/input/">Input</a></li>
-            <li><a href="/components/select/">Select</a></li>
-            <li><a href="/components/textarea/">Textarea</a></li>
-            <li><a href="/components/error-summary/">Errors</a></li>
-            <li><a href="/wiki/">Wiki</a></li>
-          </ul>
-        </nav>
+    <header class="docs-header">
+      <div class="docs-shell">
+        <a class="docs-brand" href="/">Groundwork</a>
+        <p class="gw-caption">Design System v0.2 PoC</p>
       </div>
     </header>
-    <main id="main">
-      <slot />
-    </main>
+
+    <div class="docs-shell docs-layout">
+      <aside class="docs-sidebar">
+        <nav class="docs-primary-nav" aria-label="Documentation">
+          {
+            navSections.map((section) => (
+              <section class="docs-nav-section" aria-labelledby={`docs-nav-${section.heading.toLowerCase()}`}>
+                <h2 class="docs-nav-heading" id={`docs-nav-${section.heading.toLowerCase()}`}>
+                  {section.heading}
+                </h2>
+                <div class="docs-nav-links">
+                  {section.links.map((link) => (
+                    <a href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <main id="main" class="docs-main">
+        <slot />
+      </main>
+    </div>
   </body>
 </html>
 
@@ -44,21 +85,105 @@ const { title, description } = Astro.props;
     display: block;
   }
 
-  .docs-primary-nav {
+  .docs-header {
+    border-bottom: var(--border-width-thin) solid var(--border);
+  }
+
+  .docs-shell {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--space-6);
+  }
+
+  .docs-header .docs-shell {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-3);
-    padding: 0;
-    list-style: none;
+    gap: var(--space-2) var(--space-4);
+    align-items: baseline;
+    padding-block: var(--space-4);
+  }
+
+  .docs-brand {
+    color: var(--ink);
+    font-size: var(--text-subheading);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+  }
+
+  .docs-layout {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .docs-sidebar {
+    position: sticky;
+    top: 0;
+    padding-block: var(--space-8);
+  }
+
+  .docs-primary-nav {
+    display: grid;
+    gap: var(--space-6);
     font-size: var(--text-secondary);
   }
 
-  .docs-primary-nav a {
+  .docs-nav-section {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .docs-nav-heading {
+    margin: 0;
+    color: var(--ink-secondary);
+    font-size: var(--text-caption);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .docs-nav-links {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .docs-nav-links a {
+    display: block;
+    padding: var(--space-1) var(--space-2);
+    border-left: var(--border-width-medium) solid transparent;
     color: var(--action);
     text-decoration: none;
   }
 
-  .docs-primary-nav a:hover {
+  .docs-nav-links a:hover {
     text-decoration: underline;
+  }
+
+  .docs-nav-links a[aria-current='page'] {
+    border-left-color: var(--action);
+    color: var(--ink);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+  }
+
+  .docs-main .gw-width {
+    margin-inline: 0;
+  }
+
+  @media (max-width: 760px) {
+    .docs-layout {
+      display: block;
+    }
+
+    .docs-sidebar {
+      position: static;
+      padding-block: var(--space-6) 0;
+    }
+
+    .docs-primary-nav {
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--space-4);
+    }
   }
 </style>

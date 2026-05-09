@@ -1,0 +1,42 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Components" description="Groundwork component documentation">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Components</h1>
+        <p>Groundwork components are intentionally small and restrictive. Use them to keep application UI consistent without repeating accessibility wiring by hand.</p>
+        <p>For forms, start with Field. It connects labels, hints, errors, and ARIA attributes before the control reaches the page.</p>
+      </div>
+
+      <div class="gw-grid">
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s"><a href="/components/button/">Button</a></h2>
+          <p class="gw-body--sm">Actions with closed visual variants and clear hierarchy.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s"><a href="/components/field/">Field</a></h2>
+          <p class="gw-body--sm">The primary form API for labels, hints, errors, and ARIA wiring.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s"><a href="/components/input/">Input</a></h2>
+          <p class="gw-body--sm">Single-line answers with width hints for expected answer length.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s"><a href="/components/select/">Select</a></h2>
+          <p class="gw-body--sm">One choice from a short, known list.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s"><a href="/components/textarea/">Textarea</a></h2>
+          <p class="gw-body--sm">Longer free-text answers that need more than one line.</p>
+        </article>
+        <article class="gw-card gw-stack--sm">
+          <h2 class="gw-heading-s"><a href="/components/error-summary/">Error summary</a></h2>
+          <p class="gw-body--sm">Page-level validation summary that links back to invalid fields.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
