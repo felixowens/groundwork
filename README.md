@@ -40,6 +40,8 @@ npm run review:ui
 
 `npm run format` applies Biome formatting and safe fixes. `npm run check:biome` runs Biome formatting, linting, and import-order checks without writing changes.
 
+`npm test` runs Vitest unit tests first, then the Playwright accessibility, component, flow, and visual suites.
+
 `npm run review:ui` captures UI-review screenshots and layout checks in `.logs/ui-review/latest/`. It is also part of `npm run ci` so measurable layout regressions fail the build.
 
 `just ci` runs the same validation entrypoint as `npm run ci`.

@@ -39,6 +39,9 @@ lint:
 test:
 	@npm test
 
+test-unit:
+	@npm run test:unit
+
 test-a11y:
 	@npm run test:a11y
 
