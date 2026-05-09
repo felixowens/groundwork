@@ -108,7 +108,7 @@ function contactReasonLabel(value: ContactReason): string {
 export function ContactDetailsFlow() {
   const [step, setStep] = useState<FlowStep>('form');
   const [details, setDetails] = useState<ContactDetails>(initialDetails);
-  const [reviewDetails, setReviewDetails] = useState<ReviewedContactDetails | undefined>(undefined);
+  const [reviewDetails, setReviewDetails] = useState<ReviewedContactDetails | undefined>();
   const [errors, setErrors] = useState<ContactDetailsErrors>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const errorSummaryRef = useRef<HTMLDivElement>(null);

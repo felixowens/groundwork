@@ -18,6 +18,9 @@ check-generated-css:
 check-biome:
 	@npm run check:biome
 
+check-oxlint:
+	@npm run check:oxlint
+
 docs:
 	@npm run docs:dev
 
