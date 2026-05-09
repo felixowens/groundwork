@@ -1,7 +1,8 @@
 import type { Ref } from 'react';
 import { type FieldError, formatFieldError } from '../form/field-error';
 
-/** A single invalid field listed in an ErrorSummary.
+/**
+ * A single invalid field listed in an ErrorSummary.
  *
  * @public
  */
@@ -11,7 +12,8 @@ export interface ErrorSummaryItem {
   error: FieldError;
 }
 
-/** Props for the Groundwork ErrorSummary component.
+/**
+ * Props for the Groundwork ErrorSummary component.
  *
  * @public
  */

@@ -8,7 +8,8 @@ interface DescribedInputProps {
   'aria-invalid'?: AriaAttributes['aria-invalid'];
 }
 
-/** Props supplied by Field to the form control render function.
+/**
+ * Props supplied by Field to the form control render function.
  *
  * @public
  */
@@ -17,7 +18,8 @@ export interface FieldRenderProps {
   hasError: boolean;
 }
 
-/** Props for the Groundwork Field component.
+/**
+ * Props for the Groundwork Field component.
  *
  * @public
  */

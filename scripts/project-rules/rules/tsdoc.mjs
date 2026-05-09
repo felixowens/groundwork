@@ -3,6 +3,7 @@ import { createDiagnostic } from '../diagnostics.mjs';
 
 const CODE_FENCE_PATTERN = /^```/;
 const IGNORED_TSDOC_MESSAGE_IDS = new Set(['tsdoc-missing-deprecation-message']);
+const JSDOC_MULTILINE_START_PATTERN = /^\/\*\*\r?\n/;
 const JSDOC_START = '/**';
 const LEADING_STAR_PATTERN = /^\s*\*\s?/;
 const MODIFIER_TAG_NAMES = new Set([
@@ -438,6 +439,25 @@ function modifierTagLastLineDiagnostics(context) {
   });
 }
 
+function blockFormatDiagnostics(context) {
+  return context.sourceDefinitions.flatMap((item) => {
+    const parsed = parsedDocComment(context, item);
+
+    if (parsed === null || JSDOC_MULTILINE_START_PATTERN.test(parsed.comment.text)) {
+      return [];
+    }
+
+    return [
+      createDiagnostic({
+        filePath: item.filePath,
+        message: `TSDoc block for "${item.name}" must start with a bare /** line.`,
+        position: parsed.comment.position,
+        ruleName: 'tsdoc/block-format',
+      }),
+    ];
+  });
+}
+
 function isPublicFunction(context, item) {
   return context.ts.isFunctionDeclaration(item.declaration);
 }
@@ -466,6 +486,10 @@ function publicFunctionExampleDiagnostics(context) {
 }
 
 export const tsdocRules = [
+  {
+    check: blockFormatDiagnostics,
+    name: 'tsdoc/block-format',
+  },
   {
     check: syntaxDiagnostics,
     name: 'tsdoc/syntax',

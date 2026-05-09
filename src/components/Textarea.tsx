@@ -1,7 +1,8 @@
 import type { Ref, TextareaHTMLAttributes } from 'react';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
-/** Props for the Groundwork Textarea component.
+/**
+ * Props for the Groundwork Textarea component.
  *
  * @public
  */

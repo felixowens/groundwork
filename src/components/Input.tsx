@@ -2,13 +2,15 @@ import type { InputHTMLAttributes, Ref } from 'react';
 import { assertNever } from '../lib/assert-never';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
-/** Supported width hints for Groundwork text inputs.
+/**
+ * Supported width hints for Groundwork text inputs.
  *
  * @public
  */
 export type InputWidth = 'full' | 'w5' | 'w10' | 'w20' | 'w30' | 'two-thirds';
 
-/** Props for the Groundwork Input component.
+/**
+ * Props for the Groundwork Input component.
  *
  * @public
  */

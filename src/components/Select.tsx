@@ -1,7 +1,8 @@
 import type { ReactNode, Ref, SelectHTMLAttributes } from 'react';
 import type { AccessibleName, WithoutStyleOverrides } from './types';
 
-/** Props for the Groundwork Select component.
+/**
+ * Props for the Groundwork Select component.
  *
  * @public
  */

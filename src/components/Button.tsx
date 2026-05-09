@@ -2,13 +2,15 @@ import type { ButtonHTMLAttributes, ReactNode, Ref } from 'react';
 import { assertNever } from '../lib/assert-never';
 import type { WithoutStyleOverrides } from './types';
 
-/** Supported visual treatments for Groundwork buttons.
+/**
+ * Supported visual treatments for Groundwork buttons.
  *
  * @public
  */
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'ghost';
 
-/** Props for the Groundwork Button component.
+/**
+ * Props for the Groundwork Button component.
  *
  * @public
  */

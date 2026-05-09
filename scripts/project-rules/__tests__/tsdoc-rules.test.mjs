@@ -228,6 +228,42 @@ export function formatValue(value: string): string {
   });
 });
 
+describe('tsdoc/block-format', () => {
+  test('accepts TSDoc blocks that start with a bare opening line', () => {
+    const diagnostics = diagnosticsForFixture({
+      'src/index.ts': "export type { Opts } from './lib';\n",
+      'src/lib.ts': `
+/**
+ * Options.
+ *
+ * @public
+ */
+export interface Opts { verbose: boolean; }
+`,
+    });
+
+    expect(diagnosticsForRule(diagnostics, 'tsdoc/block-format')).toHaveLength(0);
+  });
+
+  test('reports summary text on the opening TSDoc line', () => {
+    const diagnostics = diagnosticsForFixture({
+      'src/index.ts': "export type { Opts } from './lib';\n",
+      'src/lib.ts': '/** Options.\n *\n * @public\n */\nexport interface Opts { verbose: boolean; }\n',
+    });
+
+    expect(diagnosticsForRule(diagnostics, 'tsdoc/block-format')).toHaveLength(1);
+  });
+
+  test('reports single-line TSDoc blocks', () => {
+    const diagnostics = diagnosticsForFixture({
+      'src/index.ts': '',
+      'src/lib.ts': '/** @internal */\nexport type InternalOptions = { verbose: boolean };\n',
+    });
+
+    expect(diagnosticsForRule(diagnostics, 'tsdoc/block-format')).toHaveLength(1);
+  });
+});
+
 describe('tsdoc/release-tag', () => {
   test('reports a definition with no TSDoc block', () => {
     const diagnostics = diagnosticsForFixture({
