@@ -1,8 +1,16 @@
 import type { ComponentProps } from 'react';
 import type * as PublicApi from '../../src';
-import type { CheckboxGroupProps, InputProps, RadioGroupProps, SelectProps, TextareaProps } from '../../src';
+import type {
+  BannerProps,
+  CheckboxGroupProps,
+  InputProps,
+  RadioGroupProps,
+  SelectProps,
+  TextareaProps,
+} from '../../src';
 
 type HasKey<T, Key extends PropertyKey> = Key extends keyof T ? true : false;
+type IsRequired<T, Key extends keyof T> = Record<string, never> extends Pick<T, Key> ? false : true;
 
 type AssertTrue<T extends true> = T;
 type AssertNever<T extends never> = T;
@@ -12,6 +20,7 @@ type ExportedComponentName = {
 }[keyof typeof PublicApi];
 
 const componentContractCoverage = {
+  Banner: true,
   Button: true,
   CheckboxGroup: true,
   ErrorSummary: true,
@@ -41,6 +50,7 @@ type TextareaRequiresAccessibleName = AssertTrue<
 >;
 type RadioGroupRequiresLegend = AssertTrue<HasKey<RadioGroupProps, 'legend'>>;
 type CheckboxGroupRequiresLegend = AssertTrue<HasKey<CheckboxGroupProps, 'legend'>>;
+type BannerRequiresTitle = AssertTrue<IsRequired<BannerProps, 'title'>>;
 
 type CoverageIncludesAllExportedComponents = typeof componentContractCoverage;
 
@@ -51,4 +61,5 @@ export type ComponentContractAssertions =
   | SelectRequiresAccessibleName
   | TextareaRequiresAccessibleName
   | RadioGroupRequiresLegend
-  | CheckboxGroupRequiresLegend;
+  | CheckboxGroupRequiresLegend
+  | BannerRequiresTitle;

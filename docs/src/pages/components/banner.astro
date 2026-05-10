@@ -1,0 +1,30 @@
+---
+import { BannerDemo } from '../../components/BannerDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Banner" description="Groundwork banner component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Banner</h1>
+        <p>Use Banner for important page-level messages that users should notice before continuing.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use Banner for confirmations, warnings, errors, and neutral notices. Every banner has a visible title so the message is clear without relying on colour alone.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use Banner for inline form validation; use Field errors and ErrorSummary. Do not use it for decorative callouts or low-priority marketing content.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <BannerDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">Banner requires a visible title. The title gives the message a non-colour cue, while the variant adds supporting visual emphasis.</p>
+        <p class="gw-body--sm">Static banners should not announce themselves by default. Use <code class="gw-mono">announcement="polite"</code> for dynamically inserted status messages and <code class="gw-mono">announcement="assertive"</code> only for urgent messages that need immediate attention.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

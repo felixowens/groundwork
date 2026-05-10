@@ -70,12 +70,14 @@
   gap: var(--space-3);
 }
 
+/* @gw-stack-root gw-field div */
 .gw-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
 }
 
+/* @gw-stack-root gw-fieldset fieldset */
 .gw-fieldset {
   min-inline-size: 0;
   padding: 0;
@@ -298,6 +300,7 @@
   color: var(--ink);
 }
 
+/* @gw-stack-root gw-error-summary div */
 .gw-error-summary {
   padding: var(--space-6);
   border: var(--border-width-thick) solid var(--error);
@@ -330,6 +333,7 @@
   outline-offset: var(--focus-ring-offset);
 }
 
+/* @gw-stack-root gw-banner div */
 .gw-banner {
   padding: var(--space-4) var(--space-6);
   border-left: var(--border-width-heavy) solid var(--border-strong);
@@ -397,6 +401,7 @@
   color: var(--error);
 }
 
+/* @gw-stack-root gw-summary-list dl */
 .gw-summary-list {
   border-top: var(--border-width-thin) solid var(--border);
 }
@@ -432,6 +437,7 @@
   cursor: pointer;
 }
 
+/* @gw-stack-root gw-table table */
 .gw-table {
   width: 100%;
   border-collapse: collapse;
@@ -464,6 +470,7 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* @gw-stack-root gw-card div */
 .gw-card {
   padding: var(--space-6);
   border: var(--border-width-thin) solid var(--border);

@@ -1,4 +1,10 @@
+import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
+
+interface ComponentRoot {
+  className: string;
+  tagName: string;
+}
 
 const stackCases = [
   { className: 'gw-stack', token: '--space-4' },
@@ -7,44 +13,55 @@ const stackCases = [
   { className: 'gw-stack--xl', token: '--space-12' },
 ] as const;
 
-// Keep this ledger aligned with public component root classes in src/styles/components.css.
-// The stack invariant protects component roots from resetting margins and overriding layout primitives.
-const componentRootClasses = [
-  'gw-banner',
-  'gw-card',
-  'gw-error-summary',
-  'gw-field',
-  'gw-fieldset',
-  'gw-summary-list',
-  'gw-table',
-] as const;
+function stackRootsFromComponentsCss(): ComponentRoot[] {
+  const css = readFileSync('src/styles/components.css', 'utf8');
+  const roots = Array.from(
+    css.matchAll(/\/\*\s*@gw-stack-root\s+(?<className>[a-z0-9-]+)\s+(?<tagName>[a-z0-9-]+)\s*\*\//gu),
+  ).map((match) => {
+    const { className, tagName } = match.groups ?? {};
 
-function elementForClass(className: string, testId: string): string {
-  if (className === 'gw-fieldset') {
+    if (className === undefined || tagName === undefined) {
+      throw new Error(`Invalid @gw-stack-root annotation: ${match[0]}`);
+    }
+
+    return { className, tagName };
+  });
+
+  if (roots.length === 0) {
+    throw new Error('No @gw-stack-root annotations found in src/styles/components.css.');
+  }
+
+  return roots;
+}
+
+const componentRoots = stackRootsFromComponentsCss();
+
+function elementForRoot({ className, tagName }: ComponentRoot, testId: string): string {
+  if (tagName === 'fieldset') {
     return `<fieldset class="${className}" data-testid="${testId}"><legend>Question</legend></fieldset>`;
   }
 
-  if (className === 'gw-table') {
+  if (tagName === 'table') {
     return `<table class="${className}" data-testid="${testId}"><tbody><tr><td>Cell</td></tr></tbody></table>`;
   }
 
-  if (className === 'gw-summary-list') {
+  if (tagName === 'dl') {
     return `<dl class="${className}" data-testid="${testId}"><div><dt>Key</dt><dd>Value</dd></div></dl>`;
   }
 
-  return `<div class="${className}" data-testid="${testId}">Content</div>`;
+  return `<${tagName} class="${className}" data-testid="${testId}">Content</${tagName}>`;
 }
 
 for (const { className: stackClass, token } of stackCases) {
   test(`${stackClass} owns vertical spacing for component root children`, async ({ page }) => {
     await page.setContent(`
       <main>
-        ${componentRootClasses
+        ${componentRoots
           .map(
-            (componentClass) => `
-              <section class="${stackClass}" data-component-class="${componentClass}">
-                ${elementForClass(componentClass, 'first')}
-                ${elementForClass(componentClass, 'second')}
+            (componentRoot) => `
+              <section class="${stackClass}" data-component-class="${componentRoot.className}">
+                ${elementForRoot(componentRoot, 'first')}
+                ${elementForRoot(componentRoot, 'second')}
               </section>
             `,
           )
@@ -54,8 +71,8 @@ for (const { className: stackClass, token } of stackCases) {
     await page.addStyleTag({ path: 'css/groundwork.css' });
 
     const spacings = await Promise.all(
-      componentRootClasses.map(async (componentClass) => {
-        const section = page.locator(`[data-component-class="${componentClass}"]`);
+      componentRoots.map(async (componentRoot) => {
+        const section = page.locator(`[data-component-class="${componentRoot.className}"]`);
         const spacing = await section.locator('[data-testid="second"]').evaluate((element, expectedToken) => {
           const probe = document.createElement('div');
           probe.style.width = getComputedStyle(document.documentElement).getPropertyValue(expectedToken).trim();
@@ -69,7 +86,7 @@ for (const { className: stackClass, token } of stackCases) {
           };
         }, token);
 
-        return { componentClass, spacing };
+        return { componentClass: componentRoot.className, spacing };
       }),
     );
 

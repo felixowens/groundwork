@@ -1,3 +1,5 @@
+export type { BannerAnnouncement, BannerProps, BannerVariant } from './components/Banner';
+export { Banner } from './components/Banner';
 export type { ButtonProps, ButtonVariant } from './components/Button';
 export { Button } from './components/Button';
 export type { CheckboxGroupOption, CheckboxGroupProps } from './components/CheckboxGroup';
