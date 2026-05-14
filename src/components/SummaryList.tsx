@@ -2,6 +2,8 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, ReactN
 import { assertNever } from '../lib/assert-never';
 import type { WithoutStyleOverrides } from './types';
 
+const REL_TOKEN_SEPARATOR = /\s+/u;
+
 interface SummaryListActionBase {
   label: ReactNode;
   visuallyHiddenText: string;
@@ -75,15 +77,35 @@ function actionContent(action: SummaryListAction): ReactNode {
   );
 }
 
+function safeLinkRel(target: string | undefined, rel: string | undefined): string | undefined {
+  if (target !== '_blank') {
+    return rel;
+  }
+
+  const relTokens = new Set(rel?.split(REL_TOKEN_SEPARATOR).filter((token) => token.length > 0));
+  relTokens.add('noopener');
+  relTokens.add('noreferrer');
+
+  return Array.from(relTokens).join(' ');
+}
+
 function renderAction(action: SummaryListAction): ReactNode {
   const kind = action.kind;
 
   switch (kind) {
     case 'link': {
-      const { kind: _kind, label: _label, visuallyHiddenText: _visuallyHiddenText, href, ...props } = action;
+      const {
+        kind: _kind,
+        label: _label,
+        visuallyHiddenText: _visuallyHiddenText,
+        href,
+        rel,
+        target,
+        ...props
+      } = action;
 
       return (
-        <a {...props} href={href} className="gw-link" style={undefined}>
+        <a {...props} href={href} rel={safeLinkRel(target, rel)} target={target} className="gw-link" style={undefined}>
           {actionContent(action)}
         </a>
       );
@@ -108,13 +130,9 @@ function renderActions(actions: readonly SummaryListAction[] | undefined): React
   }
 
   if (actions.length === 1) {
-    const action = actions[0];
-
-    if (action === undefined) {
-      return null;
+    for (const action of actions) {
+      return <dd className="gw-summary-list__action">{renderAction(action)}</dd>;
     }
-
-    return <dd className="gw-summary-list__action">{renderAction(action)}</dd>;
   }
 
   return (

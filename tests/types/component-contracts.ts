@@ -6,8 +6,7 @@ import type {
   InputProps,
   RadioGroupProps,
   SelectProps,
-  SummaryListButtonAction,
-  SummaryListLinkAction,
+  SummaryListAction,
   SummaryListProps,
   TextareaProps,
 } from '../../src';
@@ -56,8 +55,9 @@ type RadioGroupRequiresLegend = AssertTrue<HasKey<RadioGroupProps, 'legend'>>;
 type CheckboxGroupRequiresLegend = AssertTrue<HasKey<CheckboxGroupProps, 'legend'>>;
 type BannerRequiresTitle = AssertTrue<IsRequired<BannerProps, 'title'>>;
 type SummaryListRequiresRows = AssertTrue<IsRequired<SummaryListProps, 'rows'>>;
-type SummaryListLinkActionRequiresHiddenText = AssertTrue<IsRequired<SummaryListLinkAction, 'visuallyHiddenText'>>;
-type SummaryListButtonActionRequiresHiddenText = AssertTrue<IsRequired<SummaryListButtonAction, 'visuallyHiddenText'>>;
+type SummaryListActionRequiresHiddenText = AssertTrue<
+  SummaryListAction extends { visuallyHiddenText: string } ? true : false
+>;
 
 type CoverageIncludesAllExportedComponents = typeof componentContractCoverage;
 
@@ -71,5 +71,4 @@ export type ComponentContractAssertions =
   | CheckboxGroupRequiresLegend
   | BannerRequiresTitle
   | SummaryListRequiresRows
-  | SummaryListLinkActionRequiresHiddenText
-  | SummaryListButtonActionRequiresHiddenText;
+  | SummaryListActionRequiresHiddenText;

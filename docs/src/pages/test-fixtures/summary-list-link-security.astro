@@ -1,0 +1,44 @@
+---
+import { SummaryList } from '../../../../src';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Summary list link security test" description="Test harness for SummaryList external-link rendering">
+  <section class="gw-section">
+    <div class="gw-width">
+      <SummaryList
+        rows={[
+          {
+            id: 'external-record',
+            key: 'External record',
+            value: 'Case 123',
+            actions: [
+              {
+                kind: 'link',
+                href: 'https://example.com/records/123',
+                target: '_blank',
+                label: 'Open',
+                visuallyHiddenText: 'external record',
+              },
+            ],
+          },
+          {
+            id: 'existing-rel',
+            key: 'Existing rel',
+            value: 'Case 456',
+            actions: [
+              {
+                kind: 'link',
+                href: 'https://example.com/records/456',
+                rel: 'external',
+                target: '_blank',
+                label: 'Open',
+                visuallyHiddenText: 'existing rel record',
+              },
+            ],
+          },
+        ]}
+      />
+    </div>
+  </section>
+</DocsLayout>
