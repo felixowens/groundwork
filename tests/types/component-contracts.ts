@@ -6,6 +6,9 @@ import type {
   InputProps,
   RadioGroupProps,
   SelectProps,
+  SummaryListButtonAction,
+  SummaryListLinkAction,
+  SummaryListProps,
   TextareaProps,
 } from '../../src';
 
@@ -28,6 +31,7 @@ const componentContractCoverage = {
   Input: true,
   RadioGroup: true,
   Select: true,
+  SummaryList: true,
   Textarea: true,
 } satisfies Record<ExportedComponentName, true>;
 
@@ -51,6 +55,9 @@ type TextareaRequiresAccessibleName = AssertTrue<
 type RadioGroupRequiresLegend = AssertTrue<HasKey<RadioGroupProps, 'legend'>>;
 type CheckboxGroupRequiresLegend = AssertTrue<HasKey<CheckboxGroupProps, 'legend'>>;
 type BannerRequiresTitle = AssertTrue<IsRequired<BannerProps, 'title'>>;
+type SummaryListRequiresRows = AssertTrue<IsRequired<SummaryListProps, 'rows'>>;
+type SummaryListLinkActionRequiresHiddenText = AssertTrue<IsRequired<SummaryListLinkAction, 'visuallyHiddenText'>>;
+type SummaryListButtonActionRequiresHiddenText = AssertTrue<IsRequired<SummaryListButtonAction, 'visuallyHiddenText'>>;
 
 type CoverageIncludesAllExportedComponents = typeof componentContractCoverage;
 
@@ -62,4 +69,7 @@ export type ComponentContractAssertions =
   | TextareaRequiresAccessibleName
   | RadioGroupRequiresLegend
   | CheckboxGroupRequiresLegend
-  | BannerRequiresTitle;
+  | BannerRequiresTitle
+  | SummaryListRequiresRows
+  | SummaryListLinkActionRequiresHiddenText
+  | SummaryListButtonActionRequiresHiddenText;

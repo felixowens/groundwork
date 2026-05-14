@@ -31,7 +31,7 @@ test('contact details flow validates, reviews, and confirms', async ({ page }) =
   await expect(page.getByText('Technical support')).toBeVisible();
   await expect(page.getByText('Security alerts, Billing updates')).toBeVisible();
 
-  await page.getByRole('button', { name: 'Change' }).first().click();
+  await page.getByRole('button', { name: 'Change full name' }).click();
   await expect(page.getByRole('textbox', { name: 'Full name' })).toHaveValue('Harry Thompson');
   await expect(page.getByRole('radio', { name: /Technical support/ })).toBeChecked();
   await expect(page.getByRole('checkbox', { name: /Security alerts/ })).toBeChecked();

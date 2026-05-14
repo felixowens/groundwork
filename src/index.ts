@@ -14,6 +14,14 @@ export type { RadioGroupOption, RadioGroupProps } from './components/RadioGroup'
 export { RadioGroup } from './components/RadioGroup';
 export type { SelectProps } from './components/Select';
 export { Select } from './components/Select';
+export type {
+  SummaryListAction,
+  SummaryListButtonAction,
+  SummaryListLinkAction,
+  SummaryListProps,
+  SummaryListRow,
+} from './components/SummaryList';
+export { SummaryList } from './components/SummaryList';
 export type { TextareaProps } from './components/Textarea';
 export { Textarea } from './components/Textarea';
 

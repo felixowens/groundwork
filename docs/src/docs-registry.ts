@@ -49,6 +49,11 @@ export const componentDocs = [
     label: 'Error summary',
   },
   {
+    description: 'Key/value facts for check-your-answers screens and read-only details.',
+    href: '/components/summary-list/',
+    label: 'SummaryList',
+  },
+  {
     description: 'One choice from a short visible list, grouped with fieldset and legend.',
     href: '/components/radio-group/',
     label: 'RadioGroup',
