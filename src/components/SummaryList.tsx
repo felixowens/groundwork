@@ -5,7 +5,13 @@ import type { WithoutStyleOverrides } from './types';
 const REL_TOKEN_SEPARATOR = /\s+/u;
 
 interface SummaryListActionBase {
+  /**
+   * Visible action text, such as "Change" or "Remove".
+   */
   label: ReactNode;
+  /**
+   * Additional screen-reader text that names the row context, such as "full name".
+   */
   visuallyHiddenText: string;
 }
 

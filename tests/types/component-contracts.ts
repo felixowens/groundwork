@@ -55,9 +55,8 @@ type RadioGroupRequiresLegend = AssertTrue<HasKey<RadioGroupProps, 'legend'>>;
 type CheckboxGroupRequiresLegend = AssertTrue<HasKey<CheckboxGroupProps, 'legend'>>;
 type BannerRequiresTitle = AssertTrue<IsRequired<BannerProps, 'title'>>;
 type SummaryListRequiresRows = AssertTrue<IsRequired<SummaryListProps, 'rows'>>;
-type SummaryListActionRequiresHiddenText = AssertTrue<
-  SummaryListAction extends { visuallyHiddenText: string } ? true : false
->;
+type SummaryListActionMissingHiddenText = Exclude<SummaryListAction, { visuallyHiddenText: string }>;
+type SummaryListActionRequiresHiddenText = AssertNever<SummaryListActionMissingHiddenText>;
 
 type CoverageIncludesAllExportedComponents = typeof componentContractCoverage;
 
