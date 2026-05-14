@@ -46,6 +46,8 @@ Every new component needs:
 
 Colocated unit tests live in `src/**/__tests__/`. Use them for pure helpers, formatting logic, and runtime guard branches that do not need a browser. Keep Playwright tests for browser behavior, accessibility, user flows, and visual regression.
 
+When adding a public component root class to `src/styles/components.css`, add a `/* @gw-stack-root <class> <tag> */` annotation directly above the root rule so `tests/components/layout-primitives.spec.ts` includes it in spacing-invariance coverage. Do not annotate modifiers, internal elements, or repeated choice items.
+
 ## Project rules
 
 Project-specific lint rules live in `scripts/project-rules/`. Add a rule there when a Groundwork convention should fail CI but does not belong in Biome or Oxlint. Rules must report errors, never warnings.

@@ -14,6 +14,11 @@ export interface ComponentDoc extends DocsLink {
 
 export const componentDocs = [
   {
+    description: 'Page-level messages with required titles and closed statuses.',
+    href: '/components/banner/',
+    label: 'Banner',
+  },
+  {
     description: 'Actions with closed visual variants and clear hierarchy.',
     href: '/components/button/',
     label: 'Button',

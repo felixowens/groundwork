@@ -199,7 +199,8 @@ try {
 
   await page.getByRole('textbox', { name: 'Full name' }).fill('Harry Thompson');
   await page.getByRole('textbox', { name: 'Email address' }).fill('harry@example.com');
-  await page.getByRole('combobox', { name: 'Reason for contact' }).selectOption('technical');
+  await page.getByRole('radio', { name: /Technical support/ }).check();
+  await page.getByRole('checkbox', { name: /Security alerts/ }).check();
   await page.getByRole('textbox', { name: 'Notes' }).fill('I need help configuring a deployment.');
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.screenshot({ path: `${outputDirectory}/contact-details-review.png`, fullPage: true });

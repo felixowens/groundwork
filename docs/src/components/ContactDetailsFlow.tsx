@@ -1,5 +1,6 @@
 import { type FormEvent, useEffect, useRef, useState } from 'react';
 import {
+  Banner,
   Button,
   CheckboxGroup,
   ErrorSummary,
@@ -211,11 +212,10 @@ export function ContactDetailsFlow() {
 
   if (step === 'confirmation') {
     return (
-      <section className="gw-stack--lg" aria-live="polite">
-        <div className="gw-banner gw-banner--success">
-          <p className="gw-banner__title">Contact details saved</p>
-          <p className="gw-banner__body">We will use these details if we need to follow up.</p>
-        </div>
+      <section className="gw-stack--lg">
+        <Banner announcement="polite" variant="success" title="Contact details saved">
+          We will use these details if we need to follow up.
+        </Banner>
         <div className="gw-card gw-stack">
           <h2 className="gw-heading-m">What happens next</h2>
           <p className="gw-body--sm">
