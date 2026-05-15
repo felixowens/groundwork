@@ -176,7 +176,7 @@ Deletion test on `docs-registry.ts`: deleting it concentrates complexity (the na
 
 ### 5. Parameterize the Field-ARIA contract test instead of writing it N times
 
-**Status:** Open
+**Status:** Implemented 2026-05-15
 
 **Files:**
 - `tests/components/form-controls.spec.ts:3–97`
@@ -189,7 +189,27 @@ Worth flagging: this is a consequence of (2). If the ARIA wiring is a deep modul
 
 **Benefits.** Adding a new field-wired component becomes a one-line test addition. The shared contract is asserted by the factory; component-specific behaviour (selecting an option, filling a textarea) stays in bespoke tests where it belongs.
 
-**Outcome.** _(grilling pending)_
+**Outcome.** Implemented 2026-05-15.
+
+- **Helper:** `tests/field-aria-contract.ts` exports `testFieldAriaContract(name, config)`. Config is a discriminated union: `shape: 'single-control'` (for `<Field>` + Input/Select/Textarea) and `shape: 'fieldset'` (for Choice groups). Sibling to `tests/docs-pages.ts`, matching the existing top-level-helper convention.
+- **Scope of the contract.** What the factory asserts mirrors what `describeField()` guarantees:
+  - **Single-control:** the control has the expected `gw-X` class; `aria-labelledby = ${id}-label`; `aria-describedby` is composed from `${id}-hint` and/or `${id}-error` in that order; `aria-invalid="true"` is set when an error is expected; the error element contains the expected text.
+  - **Fieldset:** the fieldset has `gw-fieldset`; `aria-describedby` is composed the same way; when an error is expected, `gw-field--error` is set, `aria-invalid="true"` is set, and the error text matches.
+  - The `aria-describedby` composer is the test-side mirror of the helper inside `describeField()`. If the helper drifts, the factory's expectation drifts — both points are now single seams.
+- **What stayed bespoke** (one test each, only the component-specific bits):
+  - Input — width classes (`gw-input--w20`, `gw-input--w10`) and `autocomplete`
+  - Select — default option text and selection behaviour
+  - Textarea — `rows` attribute and `fill()` round-trip
+  - RadioGroup — option-level selection, keyboard navigation (`ArrowDown`), disabled state, per-option `aria-describedby`
+  - CheckboxGroup — option toggling, `Space` to uncheck, per-option `aria-describedby`
+  - Plus the unchanged controlled-values test against the test fixture page
+- **Test count:** the spec file went from 6 tests to 12 (6 contract calls + 6 bespoke tests including the controlled-values one). Granularity is finer — failures now pinpoint either "ARIA contract" or "component behaviour" without ambiguity. Total components project: 20 → 26 tests, all green.
+- **Adding a new field-wired component** (e.g. a date input): append one config object (~9 lines) to call `testFieldAriaContract` and write a bespoke test only for the component-specific behaviour. The previously copy-pasted 4–7 ARIA assertion block is gone.
+- **Files:**
+  - `tests/field-aria-contract.ts` (new, 75 lines including types)
+  - `tests/components/form-controls.spec.ts` (rewritten, 118 → 144 lines but each block is tighter and the duplicated ARIA assertion shape no longer exists)
+- **Verification:** `npm run lint`, `npm run typecheck`, `npm run test:unit` (80 tests), `npm run test:components` (26 tests, up from 20), `npm run test:a11y` (18 tests) all green.
+- **Reporting wrinkle:** Playwright reports the source location of each contract test as `tests/field-aria-contract.ts:3:3` (the inner `test()` call site), not the spec file. Test names are unique enough to disambiguate. Acceptable trade-off vs. a more elaborate "yield config, iterate in spec" pattern that would push the line back to the spec file.
 
 ---
 

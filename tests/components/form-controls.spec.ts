@@ -1,13 +1,63 @@
 import { expect, test } from '@playwright/test';
+import { testFieldAriaContract } from '../field-aria-contract';
 
-test('input docs exercise width classes and Field ARIA wiring', async ({ page }) => {
+testFieldAriaContract('input (National Insurance number) wires Field-ARIA contract', {
+  shape: 'single-control',
+  pageUrl: '/components/input/',
+  role: 'textbox',
+  accessibleName: /National Insurance number/,
+  expectedId: 'national-insurance-number',
+  expectedClass: 'gw-input',
+  expectsHint: true,
+});
+
+testFieldAriaContract('select (Country) wires Field-ARIA contract', {
+  shape: 'single-control',
+  pageUrl: '/components/select/',
+  role: 'combobox',
+  accessibleName: 'Country',
+  expectedId: 'country',
+  expectedClass: 'gw-select',
+});
+
+testFieldAriaContract('textarea (Supporting information) wires Field-ARIA contract', {
+  shape: 'single-control',
+  pageUrl: '/components/textarea/',
+  role: 'textbox',
+  accessibleName: /Supporting information/,
+  expectedId: 'supporting-information',
+  expectedClass: 'gw-textarea',
+  expectsHint: true,
+});
+
+testFieldAriaContract('radio group (Contact preference) wires Field-ARIA contract', {
+  shape: 'fieldset',
+  pageUrl: '/components/radio-group/',
+  fieldsetId: 'contact-preference',
+  expectsHint: true,
+});
+
+testFieldAriaContract('checkbox group (Services used) wires Field-ARIA contract', {
+  shape: 'fieldset',
+  pageUrl: '/components/checkbox-group/',
+  fieldsetId: 'services-used',
+  expectsHint: true,
+});
+
+testFieldAriaContract('checkbox group (Notification types, errored) wires Field-ARIA contract', {
+  shape: 'fieldset',
+  pageUrl: '/components/checkbox-group/',
+  fieldsetId: 'notification-types',
+  expectsError: {
+    containsText: 'No notification type selected. Select at least one notification type.',
+  },
+});
+
+test('input docs exercise width and autocomplete attributes', async ({ page }) => {
   await page.goto('/components/input/');
 
   const nationalInsuranceNumber = page.getByRole('textbox', { name: /National Insurance number/ });
-  await expect(nationalInsuranceNumber).toHaveClass(/gw-input/);
   await expect(nationalInsuranceNumber).toHaveClass(/gw-input--w20/);
-  await expect(nationalInsuranceNumber).toHaveAttribute('aria-labelledby', 'national-insurance-number-label');
-  await expect(nationalInsuranceNumber).toHaveAttribute('aria-describedby', 'national-insurance-number-hint');
   await expect(nationalInsuranceNumber).toHaveAttribute('autocomplete', 'off');
 
   const postcode = page.getByRole('textbox', { name: /Postcode/ });
@@ -15,12 +65,10 @@ test('input docs exercise width classes and Field ARIA wiring', async ({ page })
   await expect(postcode).toHaveAttribute('autocomplete', 'postal-code');
 });
 
-test('select docs exercise default option and Field ARIA wiring', async ({ page }) => {
+test('select docs exercise default option and selection', async ({ page }) => {
   await page.goto('/components/select/');
 
   const country = page.getByRole('combobox', { name: 'Country' });
-  await expect(country).toHaveClass('gw-select');
-  await expect(country).toHaveAttribute('aria-labelledby', 'country-label');
   await expect(country).toHaveValue('');
   await expect(country.locator('option').first()).toHaveText('Select a country');
 
@@ -28,25 +76,18 @@ test('select docs exercise default option and Field ARIA wiring', async ({ page 
   await expect(country).toHaveValue('wales');
 });
 
-test('textarea docs exercise rows property and Field ARIA wiring', async ({ page }) => {
+test('textarea docs exercise rows attribute and accept input', async ({ page }) => {
   await page.goto('/components/textarea/');
 
   const supportingInformation = page.getByRole('textbox', { name: /Supporting information/ });
-  await expect(supportingInformation).toHaveClass('gw-textarea');
-  await expect(supportingInformation).toHaveAttribute('aria-labelledby', 'supporting-information-label');
-  await expect(supportingInformation).toHaveAttribute('aria-describedby', 'supporting-information-hint');
   await expect(supportingInformation).toHaveAttribute('rows', '5');
 
   await supportingInformation.fill('Please review the extra details before continuing.');
   await expect(supportingInformation).toHaveValue('Please review the extra details before continuing.');
 });
 
-test('radio group docs exercise fieldset structure and option selection', async ({ page }) => {
+test('radio group docs exercise option selection, keyboard nav, and per-option hint', async ({ page }) => {
   await page.goto('/components/radio-group/');
-
-  const group = page.locator('fieldset#contact-preference');
-  await expect(group).toHaveClass(/gw-fieldset/);
-  await expect(group).toHaveAttribute('aria-describedby', 'contact-preference-hint');
 
   const email = page.getByRole('radio', { name: /Email/ });
   const phone = page.getByRole('radio', { name: 'Phone' });
@@ -66,12 +107,8 @@ test('radio group docs exercise fieldset structure and option selection', async 
   await expect(post).toHaveAttribute('aria-describedby', 'contact-preference-post-hint');
 });
 
-test('checkbox group docs exercise fieldset structure, selections, and error wiring', async ({ page }) => {
+test('checkbox group docs exercise option toggling and per-option hint', async ({ page }) => {
   await page.goto('/components/checkbox-group/');
-
-  const group = page.locator('fieldset#services-used');
-  await expect(group).toHaveClass(/gw-fieldset/);
-  await expect(group).toHaveAttribute('aria-describedby', 'services-used-hint');
 
   const web = page.getByRole('checkbox', { name: 'Web application' });
   const api = page.getByRole('checkbox', { name: 'REST API' });
@@ -86,14 +123,6 @@ test('checkbox group docs exercise fieldset structure, selections, and error wir
   await api.check();
   await expect(api).toBeChecked();
   await expect(mobile).toHaveAttribute('aria-describedby', 'services-used-mobile-hint');
-
-  const erroredGroup = page.locator('fieldset#notification-types');
-  await expect(erroredGroup).toHaveClass(/gw-field--error/);
-  await expect(erroredGroup).toHaveAttribute('aria-invalid', 'true');
-  await expect(erroredGroup).toHaveAttribute('aria-describedby', 'notification-types-error');
-  await expect(page.locator('#notification-types-error')).toContainText(
-    'No notification type selected. Select at least one notification type.',
-  );
 });
 
 test('grouped controls support controlled values', async ({ page }) => {
