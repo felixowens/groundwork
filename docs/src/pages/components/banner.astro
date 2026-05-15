@@ -1,9 +1,10 @@
 ---
 import { BannerDemo } from '../../components/BannerDemo';
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { meta } from './_meta/banner';
 ---
 
-<DocsLayout title="Banner" description="Groundwork banner component">
+<DocsLayout title={meta.label} description={meta.description}>
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">

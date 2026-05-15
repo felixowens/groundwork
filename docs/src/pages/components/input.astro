@@ -1,9 +1,10 @@
 ---
 import { InputDemo } from '../../components/form-control-demos';
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import { meta } from './_meta/input';
 ---
 
-<DocsLayout title="Input" description="Groundwork text input component">
+<DocsLayout title={meta.label} description={meta.description}>
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">

@@ -1,3 +1,5 @@
+import type { ComponentMeta } from './component-meta';
+
 export interface DocsLink {
   href: string;
   label: string;
@@ -12,58 +14,24 @@ export interface ComponentDoc extends DocsLink {
   description: string;
 }
 
-export const componentDocs = [
-  {
-    description: 'Page-level messages with required titles and closed statuses.',
-    href: '/components/banner/',
-    label: 'Banner',
-  },
-  {
-    description: 'Actions with closed visual variants and clear hierarchy.',
-    href: '/components/button/',
-    label: 'Button',
-  },
-  {
-    description: 'The primary form API for labels, hints, errors, and ARIA wiring.',
-    href: '/components/field/',
-    label: 'Field',
-  },
-  {
-    description: 'Single-line answers with width hints for expected answer length.',
-    href: '/components/input/',
-    label: 'Input',
-  },
-  {
-    description: 'One choice from a short, known list.',
-    href: '/components/select/',
-    label: 'Select',
-  },
-  {
-    description: 'Longer free-text answers that need more than one line.',
-    href: '/components/textarea/',
-    label: 'Textarea',
-  },
-  {
-    description: 'Page-level validation summary that links back to invalid fields.',
-    href: '/components/error-summary/',
-    label: 'Error summary',
-  },
-  {
-    description: 'Key/value facts for check-your-answers screens and read-only details.',
-    href: '/components/summary-list/',
-    label: 'Summary list',
-  },
-  {
-    description: 'One choice from a short visible list, grouped with fieldset and legend.',
-    href: '/components/radio-group/',
-    label: 'Radio group',
-  },
-  {
-    description: 'Multiple choices from a short visible list, grouped with fieldset and legend.',
-    href: '/components/checkbox-group/',
-    label: 'Checkbox group',
-  },
-] satisfies readonly ComponentDoc[];
+interface ComponentMetaModule {
+  meta: ComponentMeta;
+}
+
+const componentMetaModules = import.meta.glob<ComponentMetaModule>('./pages/components/_meta/*.ts', { eager: true });
+
+function hrefFromMetaPath(metaPath: string): string {
+  const slug = metaPath.replace('./pages/components/_meta/', '').replace('.ts', '');
+  return `/components/${slug}/`;
+}
+
+export const componentDocs: readonly ComponentDoc[] = Object.entries(componentMetaModules)
+  .sort(([, a], [, b]) => a.meta.order - b.meta.order)
+  .map(([path, mod]) => ({
+    label: mod.meta.label,
+    description: mod.meta.description,
+    href: hrefFromMetaPath(path),
+  }));
 
 export const docsNavSections = [
   {

@@ -134,7 +134,7 @@ Either way the seam moves: "labelled wrapper with hint + error + ARIA wiring" be
 
 ### 4. Auto-derive component nav from a single source — kill the manual `docs-registry.ts`
 
-**Status:** Open
+**Status:** Implemented 2026-05-15
 
 **Files:**
 - `docs/src/docs-registry.ts:15–66`
@@ -155,7 +155,22 @@ Deletion test on `docs-registry.ts`: deleting it concentrates complexity (the na
 - **Leverage.** New pages appear in nav automatically; impossible to ship a page that isn't navigable, or a nav entry that 404s.
 - **Tests.** `tests/docs-registry.test.ts` can be replaced with the discovery shape from `docs-pages.ts`.
 
-**Outcome.** _(grilling pending)_
+**Outcome.** Implemented 2026-05-15.
+
+- **Approach:** Sidecar `.ts` meta files per component page, auto-derived via `import.meta.glob`.
+- **Type:** `docs/src/component-meta.ts` — the shared `ComponentMeta = { label, description, order }`.
+- **Data files:** `docs/src/pages/components/_meta/<slug>.ts` (10 files). Astro skips `_`-prefixed directories from routing, so the files sit next to their `.astro` page without becoming phantom API routes.
+- **Why a subdirectory:** First attempt put `*.meta.ts` siblings next to the `.astro` files. Astro processed them as TypeScript API endpoints and emitted 10 warnings about missing GET handlers. Moving them into `_meta/` is the canonical Astro-friendly fix.
+- **Registry:** `docs/src/docs-registry.ts` rewritten — `componentDocs` is now derived from `import.meta.glob('./pages/components/_meta/*.ts', { eager: true })`, sorted by `meta.order`. `docsNavSections` still hand-authored for the non-components sections (Start, Guides).
+- **Page consumption:** Each `.astro` page imports its own meta and uses it for `<DocsLayout title={meta.label} description={meta.description}>`, replacing two hardcoded strings per page.
+- **Content tweaks (visible):** Browser tab titles for three pages now match the human-readable nav label: `RadioGroup → Radio group`, `CheckboxGroup → Checkbox group`, `SummaryList → Summary list`. The per-page SEO description goes from generic ("Groundwork radio group component") to the usage-oriented description from the meta. No body content changes.
+- **Files changed:**
+  - `docs/src/component-meta.ts` (new — type)
+  - `docs/src/pages/components/_meta/*.ts` (10 new — one per component)
+  - `docs/src/pages/components/*.astro` (10 edited — import meta, use in DocsLayout)
+  - `docs/src/docs-registry.ts` (rewritten — auto-derives `componentDocs`)
+- **Verification:** `npm run lint`, `npm run typecheck`, `npm run test:unit` (80 tests including `docs-registry.test.ts`), `npm run test:components` (20 tests), `npm run test:a11y` (18 tests), `npm run docs:build` (zero warnings) all green.
+- **What got better:** Adding a new component page is now: create the `.astro` file + create a `_meta/<slug>.ts`. The registry, nav, and components-index all update automatically. The two hardcoded strings per `.astro` (browser title + SEO description) and the manual registry entry collapse into one source of truth per component.
 
 ---
 
