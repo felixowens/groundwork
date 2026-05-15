@@ -108,7 +108,7 @@ Deletion test: removing `describedBy()` from any one file concentrates complexit
 
 ### 3. Lift the Field shell so `<fieldset>`-backed fields and `<div>`-backed fields share one outer container
 
-**Status:** Open
+**Status:** Rejected 2026-05-15 — recorded as ADR-0001
 
 **Files:**
 - `src/components/Field.tsx:65–82`
@@ -128,7 +128,20 @@ Either way the seam moves: "labelled wrapper with hint + error + ARIA wiring" be
 - **Leverage.** Combined with (1) and (2), a new fieldset-backed component (address fieldset, date-parts trio) gets the full Field treatment for free.
 - **Tests.** Visual regression for "field error state" stops being multi-snapshot. The accessibility contract test is one shape.
 
-**Outcome.** _(grilling pending)_
+**Outcome.** Rejected 2026-05-15. Recorded as [`docs/adr/0001-no-shared-field-shell.md`](../../docs/adr/0001-no-shared-field-shell.md).
+
+After findings (1) and (2) landed, the residual shell duplication shrank to: the error-state class ternary (`'gw-field [extra]?' + (hasError ? ' gw-field--error' : '')`), the `{hintNode}{errorNode}` JSX pair, and the rough shape of "labelled wrapper." Everything else is genuine structural variance:
+
+- **Outer element:** `<div>` vs `<fieldset>` — different HTML semantics, different default styles, different attribute sets (no `ref` forwarding on the `<div>` form; the `<fieldset>` form spreads `...rest` for native fieldset attributes).
+- **Label element:** `<label className="gw-label" htmlFor={id} id={labelId}>` vs `<legend className="gw-label">` — `<label>` needs `htmlFor` and `id` to wire to the control; `<legend>` is implicitly associated with its fieldset and needs neither.
+- **Fieldset-only focus management:** `tabIndex={hasError ? -1 : rest.tabIndex}` for the error-jump behaviour used by ErrorSummary. Doesn't apply to `<div>`-backed Fields (the control inside owns focus directly).
+- **Child contract:** Field uses a render prop (`children(field: FieldRenderProps)`) to hand the consumer `inputAriaProps` and `hasError`; ChoiceGroup renders its choices directly because it already has the inputs.
+
+A shared `<FieldShell>` either grows wide signatures to accept all four axes (and obscures each caller's actual idiosyncrasies), or shares only `{hintNode}{errorNode}` — which is two JSX nodes, not a module. The deep ARIA seam is already `describeField`; the remaining shell is conventional CSS composition with two call sites.
+
+The smaller "extract just `fieldClassName` into `describeField`" move was also considered and rejected: it would broaden `describeField`'s scope from "accessibility wiring" to "accessibility wiring + root-element styling," and the choice-group unit test pins the exact class string `'gw-field gw-fieldset gw-field--error'` (order-sensitive), so any extraction reshuffles either the test or the order. Not worth the churn.
+
+ADR-0001 records this so a future architectural pass doesn't re-suggest extracting `<FieldShell>` without recognizing the structural variance. The ADR also names the trigger condition for revisiting: a third Field-shaped component that isn't a Choice group variant.
 
 ---
 
