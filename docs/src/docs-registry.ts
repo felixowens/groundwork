@@ -49,14 +49,19 @@ export const componentDocs = [
     label: 'Error summary',
   },
   {
+    description: 'Key/value facts for check-your-answers screens and read-only details.',
+    href: '/components/summary-list/',
+    label: 'Summary list',
+  },
+  {
     description: 'One choice from a short visible list, grouped with fieldset and legend.',
     href: '/components/radio-group/',
-    label: 'RadioGroup',
+    label: 'Radio group',
   },
   {
     description: 'Multiple choices from a short visible list, grouped with fieldset and legend.',
     href: '/components/checkbox-group/',
-    label: 'CheckboxGroup',
+    label: 'Checkbox group',
   },
 ] satisfies readonly ComponentDoc[];
 

@@ -1,0 +1,31 @@
+---
+import { SummaryListDemo } from '../../components/SummaryListDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="SummaryList" description="Groundwork summary list component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">SummaryList</h1>
+        <p>Use SummaryList to show key facts, such as a user's answers before they confirm a form journey.</p>
+        <h2 class="gw-heading-m">When to use</h2>
+        <p>Use SummaryList when each item has a clear key and value. It works well for check-your-answers screens, record metadata, and compact read-only details. Add row actions when users need to return to an answer or related record, and make those actions specific with hidden context.</p>
+        <h2 class="gw-heading-m">When not to use</h2>
+        <p>Do not use SummaryList for tabular data, task lists, or simple unordered lists. Use a table when users need to compare rows and columns.</p>
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Demo</h2>
+        <SummaryListDemo />
+      </div>
+
+      <div class="gw-card gw-stack">
+        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <p class="gw-body--sm">SummaryList renders a description list so the relationship between each key and value is exposed in the HTML structure.</p>
+        <p class="gw-body--sm">Row actions require <code class="gw-mono">visuallyHiddenText</code> so links and buttons make sense out of context, for example “Change full name” instead of only “Change”.</p>
+        <p class="gw-body--sm">For missing information, put the action to enter that information in the value column rather than showing an unrelated change action.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

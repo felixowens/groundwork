@@ -9,6 +9,7 @@ import {
   type FieldError,
   Input,
   RadioGroup,
+  SummaryList,
   Textarea,
 } from '../../../src';
 import { assertNever } from '../../../src/lib/assert-never';
@@ -241,57 +242,75 @@ export function ContactDetailsFlow() {
           <p>Confirm your contact details before continuing.</p>
         </div>
 
-        <dl className="gw-summary-list">
-          <div className="gw-summary-list__row">
-            <dt className="gw-summary-list__key">Full name</dt>
-            <dd className="gw-summary-list__value">{reviewDetails.fullName}</dd>
-            <dd className="gw-summary-list__action">
-              <button className="gw-link" type="button" onClick={() => setStep('form')}>
-                Change
-              </button>
-            </dd>
-          </div>
-          <div className="gw-summary-list__row">
-            <dt className="gw-summary-list__key">Email address</dt>
-            <dd className="gw-summary-list__value">{reviewDetails.email}</dd>
-            <dd className="gw-summary-list__action">
-              <button className="gw-link" type="button" onClick={() => setStep('form')}>
-                Change
-              </button>
-            </dd>
-          </div>
-          <div className="gw-summary-list__row">
-            <dt className="gw-summary-list__key">Reason</dt>
-            <dd className="gw-summary-list__value">{contactReasonLabel(reviewDetails.contactReason)}</dd>
-            <dd className="gw-summary-list__action">
-              <button className="gw-link" type="button" onClick={() => setStep('form')}>
-                Change
-              </button>
-            </dd>
-          </div>
-          <div className="gw-summary-list__row">
-            <dt className="gw-summary-list__key">Notifications</dt>
-            <dd className="gw-summary-list__value">
-              {reviewDetails.notificationTypes.map(notificationTypeLabel).join(', ')}
-            </dd>
-            <dd className="gw-summary-list__action">
-              <button className="gw-link" type="button" onClick={() => setStep('form')}>
-                Change
-              </button>
-            </dd>
-          </div>
-          <div className="gw-summary-list__row">
-            <dt className="gw-summary-list__key">Notes</dt>
-            <dd className="gw-summary-list__value">
-              {reviewDetails.notes.trim() === '' ? 'Not provided' : reviewDetails.notes}
-            </dd>
-            <dd className="gw-summary-list__action">
-              <button className="gw-link" type="button" onClick={() => setStep('form')}>
-                Change
-              </button>
-            </dd>
-          </div>
-        </dl>
+        <SummaryList
+          rows={[
+            {
+              id: 'review-full-name',
+              key: 'Full name',
+              value: reviewDetails.fullName,
+              actions: [
+                {
+                  kind: 'button',
+                  label: 'Change',
+                  visuallyHiddenText: 'full name',
+                  onClick: () => setStep('form'),
+                },
+              ],
+            },
+            {
+              id: 'review-email',
+              key: 'Email address',
+              value: reviewDetails.email,
+              actions: [
+                {
+                  kind: 'button',
+                  label: 'Change',
+                  visuallyHiddenText: 'email address',
+                  onClick: () => setStep('form'),
+                },
+              ],
+            },
+            {
+              id: 'review-reason',
+              key: 'Reason',
+              value: contactReasonLabel(reviewDetails.contactReason),
+              actions: [
+                {
+                  kind: 'button',
+                  label: 'Change',
+                  visuallyHiddenText: 'reason for contact',
+                  onClick: () => setStep('form'),
+                },
+              ],
+            },
+            {
+              id: 'review-notifications',
+              key: 'Notifications',
+              value: reviewDetails.notificationTypes.map(notificationTypeLabel).join(', '),
+              actions: [
+                {
+                  kind: 'button',
+                  label: 'Change',
+                  visuallyHiddenText: 'notification types',
+                  onClick: () => setStep('form'),
+                },
+              ],
+            },
+            {
+              id: 'review-notes',
+              key: 'Notes',
+              value: reviewDetails.notes.trim() === '' ? 'Not provided' : reviewDetails.notes,
+              actions: [
+                {
+                  kind: 'button',
+                  label: 'Change',
+                  visuallyHiddenText: 'notes',
+                  onClick: () => setStep('form'),
+                },
+              ],
+            },
+          ]}
+        />
 
         <div className="gw-button-group">
           <Button type="submit">Confirm and continue</Button>
