@@ -26,7 +26,7 @@ No `CONTEXT.md` or ADRs exist yet, so domain vocabulary is drawn from `INTENT.md
 
 ### 1. Collapse `RadioGroup` and `CheckboxGroup` into one fieldset-backed choice module
 
-**Status:** Open
+**Status:** Implemented 2026-05-15
 
 **Files:**
 - `src/components/RadioGroup.tsx:1–139`
@@ -48,7 +48,19 @@ That's a tiny axis of variance. The current shape puts it at file granularity, s
 - **Leverage.** Future variants (toggle-buttons, segmented controls, "yes/no" shortcuts) plug in instead of becoming the third copy.
 - **Tests.** The fieldset ARIA contract is asserted against one implementation. The radio/checkbox cases in `tests/components/form-controls.spec.ts:44–97` become "fixture A and fixture B exercising the same module."
 
-**Outcome.** _(grilling pending)_
+**Outcome.** Implemented 2026-05-15.
+
+- **Shape:** Option A from grilling — one internal `<ChoiceGroup>` at `src/components/_internal/ChoiceGroup.tsx`, with `<RadioGroup>` and `<CheckboxGroup>` as ~25-line public wrappers. Public surface unchanged.
+- **Internal interface:** Mode-discriminated union. `mode: 'single'` narrows `selected?: string` and `defaultSelected?: string`; `mode: 'multi'` narrows them to `readonly string[]`. The selection predicate lives entirely inside `<ChoiceGroup>`.
+- **Wrappers:** Translate public `value`/`values` (and `defaultValue`/`defaultValues`) to the internal's `selected`/`defaultSelected`, plus pass `inputType`, `groupClass`, `itemClass`. The five-line "real variance" axis is finally encoded as data instead of code duplication.
+- **Validates finding (2):** `<ChoiceGroup>` consumes `describeField` for the fieldset's ARIA wiring and hint/error nodes. With Field + ChoiceGroup both consuming the helper, "two adapters = real seam" is now satisfied.
+- **Files:**
+  - `src/components/_internal/ChoiceGroup.tsx` (new — establishes the `_internal/` convention for shared, non-public components)
+  - `src/components/_internal/__tests__/choice-group.test.tsx` (new, 8 tests covering mode discrimination, controlled/uncontrolled, error state, option ID derivation, per-option hint wiring, disabled propagation)
+  - `src/components/RadioGroup.tsx` (rewritten 139→56 lines)
+  - `src/components/CheckboxGroup.tsx` (rewritten 139→56 lines)
+- **Verification:** `npm run lint`, `npm run typecheck`, `npm run test:unit` (80 tests), `npm run test:components` (20 tests) all green. DOM output is byte-identical, so the existing `form-controls.spec.ts` Playwright tests pass unchanged.
+- **Net line count:** 278 → 249 (29 fewer), but the bigger win is locality: option rendering, ARIA wiring, error state, and selection logic now live in one place.
 
 ---
 
