@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode, Ref } from 'react';
 import { assertNever } from '../lib/assert-never';
+import { bemModifier } from '../lib/bem-modifier';
 import type { WithoutStyleOverrides } from './types';
 
 /**
@@ -30,21 +31,6 @@ export type BannerProps = WithoutStyleOverrides<
   announcement?: BannerAnnouncement;
   ref?: Ref<HTMLDivElement>;
 };
-
-function bannerClassName(variant: BannerVariant): string {
-  switch (variant) {
-    case 'neutral':
-      return 'gw-banner';
-    case 'success':
-      return 'gw-banner gw-banner--success';
-    case 'warning':
-      return 'gw-banner gw-banner--warning';
-    case 'error':
-      return 'gw-banner gw-banner--error';
-    default:
-      return assertNever(variant);
-  }
-}
 
 function announcementProps(
   announcement: BannerAnnouncement,
@@ -79,7 +65,7 @@ export function Banner({ variant = 'neutral', title, children, announcement = 'n
       ref={ref}
       {...props}
       {...announcementProps(announcement)}
-      className={bannerClassName(variant)}
+      className={bemModifier('gw-banner', variant, 'neutral')}
       style={undefined}
     >
       <p className="gw-banner__title">{title}</p>

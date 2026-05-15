@@ -228,7 +228,7 @@ Worth flagging: this is a consequence of (2). If the ARIA wiring is a deep modul
 
 ### 6. Variant→class composition as a small utility (lowest-stakes; borderline)
 
-**Status:** Open
+**Status:** Implemented 2026-05-15
 
 **Files:**
 - `src/components/Button.tsx:23–36`
@@ -245,7 +245,20 @@ Deletion test: deleting any individual switch helper just moves the switch into 
 
 **Recommendation.** Skip in isolation. Bundle with (1)–(3) if that work happens — by then `src/components/_internal/` (or similar) for shared helpers exists and the marginal cost is near zero.
 
-**Outcome.** _(grilling pending)_
+**Outcome.** Implemented 2026-05-15.
+
+- **Helper:** `src/lib/bemModifier(base, modifier, defaultModifier?)` at `src/lib/bem-modifier.ts` — sibling to `src/lib/assert-never.ts`. Tagged `@internal`. When the modifier equals the default, returns the bare base; otherwise returns `'base base--modifier'`. When `defaultModifier` is omitted, the modifier class is always appended.
+- **Callers (3):** Each `XClassName(variant)` switch collapsed to one inline call.
+  - `Button.tsx`: `bemModifier('gw-button', variant, 'primary')`
+  - `Banner.tsx`: `bemModifier('gw-banner', variant, 'neutral')`
+  - `Input.tsx`: `bemModifier('gw-input', width, 'full')`
+- **Behaviour change:** The `assertNever` runtime guard inside the three `XClassName` switches is gone. Previously, passing an invalid variant via a TypeScript `as` cast would throw at render time; now it renders with `gw-X gw-X--<unknown>`. The TS-level closed-union (`ButtonVariant`, `BannerVariant`, `InputWidth`) is the real enforcement point, and the other variant-bearing components (Textarea, Select, ChoiceGroup, Field) never had a runtime guard either, so removing the guard from these three brings them in line. Banner keeps `assertNever` for `announcementProps` because that switch maps to attribute pairs, not a class string.
+- **Tests:**
+  - New: `src/lib/__tests__/bem-modifier.test.ts` (4 tests covering default-equal, default-different, no-default, and hyphenated modifier values).
+  - Deleted: `src/components/__tests__/button.test.ts` and `src/components/__tests__/input.test.ts` — both only contained the runtime-guard assertion, which no longer applies.
+  - Trimmed: `src/components/__tests__/banner.test.ts` — removed the variant-guard test, kept the announcement-guard test.
+- **Line count:** Button.tsx 55 → 42, Banner.tsx 90 → 75, Input.tsx 56 → 39. Plus new `bem-modifier.ts` (21 lines) + test (21 lines). Net ~ -23 lines, but the bigger win is naming the pattern: "BEM block + modifier with optional default" is now a vocabulary item, and adding a fourth variant-bearing component (Tag, Pill, Avatar) is one function call rather than another sibling switch.
+- **Verification:** `npm run lint`, `npm run typecheck`, `npm run test:unit` (81 tests), `npm run test:components` (26 tests), `npm run test:a11y` (18 tests) all green. Output className strings are byte-identical to the old switches, so visual baselines hold.
 
 ---
 
@@ -254,6 +267,21 @@ Deletion test: deleting any individual switch helper just moves the switch into 
 (1), (2), and (3) form one coherent move: today, Field is shallow (it cedes ARIA and shell rendering to its would-be consumers), and RadioGroup/CheckboxGroup are a redundant pair carrying duplicated wiring. Doing them together turns "Field is the most important component" from a claim in the handoff into a load-bearing structural fact in the codebase.
 
 (4) and (5) are independent and could happen any time. (6) is small and best bundled.
+
+## Outcome rollup
+
+All six findings resolved in the 2026-05-15 architectural pass:
+
+| # | Finding | Outcome |
+| - | --- | --- |
+| 1 | Collapse RadioGroup + CheckboxGroup → `<ChoiceGroup>` | Implemented (commit `a47aad9`) |
+| 2 | Extract `describeField` for Field-ARIA wiring | Implemented (commit `53b0ce4`) |
+| 3 | Lift the Field shell | Rejected — ADR-0001 (commit `e10a0d9`) |
+| 4 | Auto-derive component nav from sidecar meta | Implemented (commit `61fbd74`) |
+| 5 | Parameterize the Field-ARIA contract test | Implemented (commit `6e8a381`) |
+| 6 | `bemModifier` variant-class utility | Implemented (this commit) |
+
+The (1) + (2) pair landed the substantive deepening: `<Field>` and `<ChoiceGroup>` now share one accessibility seam (`describeField`) instead of three duplicated copies. Finding (3) was rejected once that deepening was in place — the residual shell duplication didn't carry its weight as a separate module. (4) tightened the docs registry; (5) tightened the test surface against the new seam; (6) consolidated the BEM-class pattern across the remaining variant-bearing components.
 
 ## Next
 
