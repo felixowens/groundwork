@@ -48,6 +48,12 @@ describe('docs registry', () => {
     expect(componentDocs.map((component) => component.href).sort()).toEqual(componentPageHrefs());
   });
 
+  test('component labels are human-readable', () => {
+    for (const component of componentDocs) {
+      expect.soft(component.label, component.href).not.toMatch(/[a-z][A-Z]/u);
+    }
+  });
+
   test('component overview uses the same component list as navigation', () => {
     const componentNavLinks = docsNavSections.find((section) => section.heading === 'Components')?.links.slice(1);
 
