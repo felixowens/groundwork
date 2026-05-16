@@ -47,8 +47,8 @@ A bounded region of UI in which the user is being asked to commit to an action �
 _Avoid_: action region, CTA section, "button group" (which refers to the visual layout primitive `gw-button-group`, not the conceptual scope where one-primary-per-area applies).
 
 **Transaction**:
-A user's structured commitment to a service — entering, validating, reviewing, and confirming related information that the service will then act on. Small or medium transactions fit one screen; large transactions span multiple sections and may have one review screen per section. The submit-information pattern is the canonical journey for completing one; the check-answers pattern is the review moment within it.
-_Avoid_: submission flow, form journey, form submission (when you mean the whole commitment, not just the HTTP submit).
+A user atomically submitting structured information through the UI — all the answers committed together, in one UI step or across several. Small or medium transactions fit one screen; large transactions span sections.
+_Avoid_: submission flow, form journey, form submission (when you mean the whole atomic commit, not just the HTTP submit).
 
 ### Documentation
 
