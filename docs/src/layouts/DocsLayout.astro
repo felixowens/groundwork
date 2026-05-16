@@ -2,7 +2,9 @@
 import '../../../css/groundwork.css';
 import { docsNavSections } from '../docs-registry';
 
-const { title, description } = Astro.props;
+const { title: directTitle, description: directDescription, frontmatter } = Astro.props;
+const title = directTitle ?? frontmatter?.title;
+const description = directDescription ?? frontmatter?.description;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -54,6 +56,18 @@ const currentPath = Astro.url.pathname;
 
 <style is:global>
   astro-island {
+    display: block;
+  }
+
+  /*
+   * Astro injects an inline `astro-island { display: contents }` rule per
+   * page when hydrating client:load components. That rule beats the
+   * stylesheet rule above on tied specificity + document order, so margin
+   * selectors targeting astro-island have no visual effect. Bump
+   * specificity here so prose spacing applies through the hydration
+   * wrapper.
+   */
+  .gw-prose > astro-island {
     display: block;
   }
 

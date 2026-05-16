@@ -360,6 +360,51 @@ body {
   margin-top: var(--space-2);
 }
 
+.gw-prose h1:not([class]) {
+  font-size: var(--text-title);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+}
+
+.gw-prose h2:not([class]) {
+  font-size: var(--text-heading);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+}
+
+.gw-prose h3:not([class]) {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+}
+
+.gw-prose p:not([class]) {
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+}
+
+.gw-prose ul:not([class]),
+.gw-prose ol:not([class]) {
+  padding-left: var(--space-6);
+}
+
+.gw-prose ul:not([class]) > li + li,
+.gw-prose ol:not([class]) > li + li {
+  margin-top: var(--space-2);
+}
+
+.gw-prose code:not([class]) {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.gw-prose a:not([class]) {
+  color: var(--action);
+  text-decoration: underline;
+}
+
+/* @gw-stack-root gw-button button */
 .gw-button {
   display: inline-flex;
   align-items: center;

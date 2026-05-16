@@ -1,0 +1,101 @@
+---
+import { CheckAnswersDemo } from '../../components/CheckAnswersDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Help users check their answers before submitting" description="Pattern: let users review and change pre-entered answers before they commit to a transaction">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--xl">
+      <div class="gw-prose">
+        <p class="gw-caption">Pattern</p>
+        <h1 class="gw-heading-l">Help users check their answers before submitting</h1>
+        <p>Before users commit a transaction, show them what they have entered on a single screen and let them change any answer without losing the rest of their work.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">When to use this pattern</h2>
+        <p>Use this pattern for any transaction the user cannot easily undo, where the answers are entered across several Fields, or where getting one detail wrong carries a meaningful cost — sending to the wrong address, paying the wrong amount, applying for the wrong thing.</p>
+        <p>Show a single check-answers screen immediately before the confirmation screen for small or medium transactions. For very large transactions split into sections, include a check-answers screen at the end of each section so users can confirm one section's answers before moving on.</p>
+        <p>This pattern is the review moment that sits inside the broader <a class="gw-link" href="/patterns/submit-information/">Help users submit information correctly</a> journey. If you are designing the whole transaction, start there.</p>
+
+        <h2 class="gw-heading-m">How it works</h2>
+        <p>A check-answers screen does two things at once: it increases users' confidence that the transaction has captured what they intended, and it gives them a last chance to correct mistakes before they commit. The demo below starts on the check-answers screen with pre-filled answers; the narrative pairs each design decision with the screen behaviour you can test against.</p>
+
+        <h3 class="gw-heading-s">Name the page and submit action after the transaction</h3>
+        <p>The page title should tell the user what they need to do — for example, <em>Check your answers before sending your application</em>. A generic title like <em>Check your answers</em> doesn't tell the user the page ends in a commitment, and the submit button at the bottom is easier to miss.</p>
+        <p>The submit button text should describe the action that will run when the user activates it — <em>Send your claim form</em>, <em>Submit your application</em>, <em>Confirm the transfer</em>. Avoid <em>Submit</em> and <em>Continue</em>. See <a class="gw-link" href="/components/button/">Button</a> for the full guidance on button text.</p>
+
+        <h3 class="gw-heading-s">Group related answers into sections</h3>
+        <p>Render related answers as separate <a class="gw-link" href="/components/summary-list/">SummaryList</a> groups with a sub-heading above each one. The demo below splits its answers into <em>Personal details</em> and <em>Application details</em> — two SummaryLists, two sub-headings, one screen.</p>
+        <p>Group answers the way users think about them, not the way the form code is organised. A transaction asking for "everything about you" feels heavier than one asking for personal details, then application details, even when the underlying Fields are the same.</p>
+        <p>Show only the sections that apply to this user. If an earlier answer made a whole section irrelevant — for example, the user said they live in the UK, so questions about non-UK addresses do not apply — leave that section out of the review entirely. Do not render empty placeholders.</p>
+        <p>For optional questions the user skipped, render the answer as <em>Not provided</em> rather than an empty value. This tells the user the question was offered and they declined, instead of leaving them wondering whether the system lost their input. The demo's <em>Additional notes</em> row shows this convention.</p>
+        <p>If a transaction is short enough that everything fits in a single coherent group, one SummaryList is fine. If a single screen feels too long even after grouping, the transaction itself is asking too much.</p>
+
+        <h3 class="gw-heading-s">Rephrase questions and labels for the review</h3>
+        <p>Form labels optimise for filling in; review labels optimise for scanning. A form asking <em>What is your full residential address including postcode?</em> can become a single review row labelled <em>Address</em>. Compress, group, and rephrase freely.</p>
+        <p>The review row only has to name the answer clearly enough that the user can verify it. If the original form question was long or context-dependent, write a shorter label for the review that names what the answer represents.</p>
+
+        <h3 class="gw-heading-s">Make Change actions unambiguous</h3>
+        <p>Each row's <strong>Change</strong> action names the row context in screen-reader-only text — for example, <em>Change full name</em>, not just <em>Change</em>. The visible label stays short; the accessible name stays specific.</p>
+        <p>SummaryList wires this through the <code class="gw-mono">visuallyHiddenText</code> field on each action. Two Change buttons next to each other must read differently to assistive technology.</p>
+
+        <h3 class="gw-heading-s">Preserve context when users return</h3>
+        <p>When the user activates Change, return them to a focused edit screen for that single field with their previous answer already filled in. After saving, return them to the check-answers screen with the new value in place — not back to the start of the transaction.</p>
+        <p>Provide an unambiguous escape: pair every edit screen with a ghost <strong>Cancel</strong> button so users who clicked Change by mistake can return without changing anything.</p>
+        <p>If a change branches the transaction — for example, the user picks a different option that requires additional questions — ask those questions before returning the user to the check-answers screen.</p>
+      </div>
+
+      <div class="docs-flow-grid">
+        <section class="gw-card gw-stack">
+          <h2 class="gw-heading-m">Human test script</h2>
+          <ol class="gw-list">
+            <li>Read each section heading and confirm the answers below it belong to that group.</li>
+            <li>Activate one Change button with the keyboard and confirm the edit screen opens for that field only.</li>
+            <li>Change the value and confirm it appears on the review screen on return, under its original section.</li>
+            <li>Activate Change a second time and confirm the previous (just-changed) answer is pre-filled.</li>
+            <li>Activate Cancel and confirm the review screen returns with the previous value intact.</li>
+            <li>Accept and send, then check that the success state is clear.</li>
+            <li>Repeat with keyboard only.</li>
+          </ol>
+        </section>
+
+        <section class="gw-card gw-stack--lg" aria-labelledby="check-answers-demo-heading">
+          <h2 class="gw-heading-m" id="check-answers-demo-heading">Interactive demo</h2>
+          <div>
+            <CheckAnswersDemo client:load />
+          </div>
+        </section>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/patterns/submit-information/">Help users submit information correctly</a> — the broader validate → review → confirm journey this pattern sits inside.</li>
+          <li><a class="gw-link" href="/components/summary-list/">SummaryList</a> — the component that backs the review screen.</li>
+        </ul>
+
+        <h2 class="gw-heading-m">Background</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/reference/adr/0005-submit-and-check-answers-as-peer-patterns/">ADR-0005</a> — why this pattern is its own page rather than a section inside submit-information.</li>
+          <li><a class="gw-link" href="/reference/conventions/flows-as-tests/">Flows as human-testable documentation</a> — why every Flow is paired with a visible test script.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .docs-flow-grid {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.9fr) minmax(20rem, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .docs-flow-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Principles" description="The five design principles Groundwork is built on">
+  <section class="gw-section">
+    <div class="gw-width gw-prose">
+      <h1 class="gw-heading-l">Principles</h1>
+      <p>
+        Five principles shape every API and token decision in Groundwork. Component and pattern pages cite
+        them by name in their Background sections so the reasoning behind a decision stays traceable to the
+        thing it serves.
+      </p>
+
+      <h2 class="gw-heading-m" id="constraints-produce-consistency">Constraints produce consistency</h2>
+      <p>
+        The spacing scale has intentional gaps. There is no value between 24px and 32px. This is a feature —
+        it eliminates the decision between 26, 28, and 30. You pick 24 or 32 and move on. The principle
+        applies everywhere: two border radii, not five. Three ink colours, not seven. Four border widths that
+        cover every structural use case.
+      </p>
+
+      <h2 class="gw-heading-m" id="names-describe-decisions">Names describe decisions, not appearances</h2>
+      <p>
+        <code class="gw-mono">--ink-secondary</code> tells you <em>when</em> to use it (supporting text).
+        <code class="gw-mono">--ink-muted</code> tells you what it <em>looks like</em> (muted) and leaves you
+        guessing whether it is for hints, disabled states, or metadata. Every token name should pass the
+        rename test: can you change the underlying value without the name becoming a lie?
+      </p>
+      <p>
+        The same rule applies at the component layer. A Button variant is
+        <code class="gw-mono">destructive</code>, not <code class="gw-mono">red</code>, so re-theming the
+        variant is a token swap rather than a rename across every call site.
+      </p>
+
+      <h2 class="gw-heading-m" id="accessibility-is-structural">Accessibility is structural, not aspirational</h2>
+      <p>
+        The React <code class="gw-mono">&lt;Field&gt;</code> component requires a label prop. It is not a
+        lint warning or a documentation note — it is a type error. Error messages are structured into
+        <code class="gw-mono">{`{ problem, fix }`}</code> so the component API guides you toward the pattern
+        that helps users recover. The focus ring is 3px solid yellow — ugly on purpose, unmissable by design,
+        and identical across every interactive element so consistency does the work attention cannot.
+      </p>
+
+      <h2 class="gw-heading-m" id="css-is-the-product">The CSS is the product, React is the enforcement layer</h2>
+      <p>
+        The token system and component styles work as a standalone CSS file. Groundwork can be applied to
+        plain HTML or any framework by attaching class names. The React layer's job is narrower: make the
+        correct patterns the only patterns available through the component API. TypeScript turns the design
+        rules into type constraints.
+      </p>
+
+      <h2 class="gw-heading-m" id="progressive-disclosure">Progressive disclosure of complexity</h2>
+      <p>
+        Start with <code class="gw-mono">&lt;Field&gt;</code>, <code class="gw-mono">&lt;Input&gt;</code>,
+        and <code class="gw-mono">&lt;Button&gt;</code>. That covers most forms. Add error handling when you
+        need it. Add summary lists for review pages. Add banners and choice groups as the surface grows. The
+        system is designed so you can be productive on day one without holding the whole component set in
+        your head.
+      </p>
+    </div>
+  </section>
+</DocsLayout>

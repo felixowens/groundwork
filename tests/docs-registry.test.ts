@@ -3,6 +3,8 @@ import { basename, extname, join } from 'node:path';
 import { describe, expect, test } from 'vitest';
 import { componentDocs, docsNavSections } from '../docs/src/docs-registry';
 
+const PAGE_EXTENSIONS = ['.astro', '.mdx'] as const;
+
 function candidatePagePathsForHref(href: string): string[] {
   if (href === '/') {
     return ['docs/src/pages/index.astro'];
@@ -10,7 +12,10 @@ function candidatePagePathsForHref(href: string): string[] {
 
   const routePath = href.replace(/^\//u, '').replace(/\/$/u, '');
 
-  return [join('docs/src/pages', `${routePath}.astro`), join('docs/src/pages', routePath, 'index.astro')];
+  return PAGE_EXTENSIONS.flatMap((ext) => [
+    join('docs/src/pages', `${routePath}${ext}`),
+    join('docs/src/pages', routePath, `index${ext}`),
+  ]);
 }
 
 function hrefResolvesToPage(href: string): boolean {
@@ -20,11 +25,18 @@ function hrefResolvesToPage(href: string): boolean {
 function componentPageHrefs(): string[] {
   return readdirSync('docs/src/pages/components', { withFileTypes: true })
     .flatMap((entry) => {
-      if (entry.isFile() && extname(entry.name) === '.astro' && entry.name !== 'index.astro') {
-        return [`/components/${basename(entry.name, '.astro')}/`];
+      if (entry.isFile()) {
+        const ext = extname(entry.name);
+        if (PAGE_EXTENSIONS.includes(ext as (typeof PAGE_EXTENSIONS)[number]) && !entry.name.startsWith('index.')) {
+          return [`/components/${basename(entry.name, ext)}/`];
+        }
+        return [];
       }
 
-      if (entry.isDirectory() && existsSync(join('docs/src/pages/components', entry.name, 'index.astro'))) {
+      if (
+        entry.isDirectory() &&
+        PAGE_EXTENSIONS.some((ext) => existsSync(join('docs/src/pages/components', entry.name, `index${ext}`)))
+      ) {
         return [`/components/${entry.name}/`];
       }
 

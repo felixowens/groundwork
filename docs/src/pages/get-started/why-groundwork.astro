@@ -1,0 +1,129 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Why Groundwork" description="The problem Groundwork solves, the bets it makes, and what it deliberately leaves out">
+  <section class="gw-section">
+    <div class="gw-width gw-prose">
+      <h1 class="gw-heading-l">Why Groundwork</h1>
+      <p>
+        Groundwork is a small, opinionated design system for general web application development. This page
+        is the longer answer to "what is this, why does it exist, and what is not in scope" — the kind of
+        context worth reading once before reaching for a component.
+      </p>
+
+      <h2 class="gw-heading-m">The problem</h2>
+      <p>
+        Every new project starts with the same waste: picking colours, arguing about spacing, reinventing
+        form validation UX, forgetting accessible labels, choosing between 14px and 15px for secondary text.
+        These are not interesting decisions. They are tax.
+      </p>
+      <p>
+        Design systems exist to eliminate this tax, but most of them optimise for the wrong thing. They
+        optimise for flexibility — every possible option, so you can build anything. The result is hundreds
+        of utility classes, dozens of button variants, and teams that still ship inconsistent UIs because
+        the system said "here are your options" instead of "here is the answer."
+      </p>
+      <p>
+        GOV.UK's design system works because it does the opposite. It makes the decisions for you. One
+        button style. One input pattern. One way to handle errors. The constraints are not limitations —
+        they are the product. You stop thinking about UI decisions and start thinking about the thing you
+        are actually building.
+      </p>
+      <p>Groundwork is that philosophy applied to general web application development.</p>
+
+      <h2 class="gw-heading-m">The bet</h2>
+      <p>
+        The bet is that a small, closed, opinionated system will produce better outcomes than a large,
+        flexible one. Specifically:
+      </p>
+      <ul class="gw-list">
+        <li>
+          <strong>A closed token set</strong> (12 spacing values, 7 type sizes, semantic-only colours)
+          eliminates visual drift across pages and over time. You cannot introduce
+          <code class="gw-mono">padding: 13px</code> because 13 does not exist.
+        </li>
+        <li>
+          <strong>React components with restrictive APIs</strong> (required labels, no className override,
+          variant unions instead of string props) turn documentation into compiler errors. You do not need
+          to remember the rules — the types enforce them.
+        </li>
+        <li>
+          <strong>Form patterns as the core feature</strong> (Field wrapper, error summary, width hints,
+          check-your-answers) cover the 80% case for application UI. Most apps are forms. Do forms
+          exceptionally well and everything else is incremental.
+        </li>
+        <li>
+          <strong>Two-tier tokens</strong> (private primitives → public semantic) make re-theming a
+          primitive swap rather than a component-by-component restyle, while keeping the public API small
+          enough to hold in your head.
+        </li>
+      </ul>
+
+      <h2 class="gw-heading-m">What Groundwork is not</h2>
+      <ul class="gw-list">
+        <li>
+          <strong>Not a component mega-library.</strong> Roughly seventeen components. If you need a date
+          range picker or a drag-and-drop kanban board, build it on top or use something else.
+        </li>
+        <li>
+          <strong>Not framework-agnostic.</strong> The CSS layer is generic. The component layer is React.
+          There are no Web Component wrappers, no Vue bindings, no Svelte port.
+        </li>
+        <li>
+          <strong>Not a design tool integration.</strong> No Figma plugin, no design-to-code pipeline.
+          Tokens live in JSON, generate CSS, and that is the workflow.
+        </li>
+        <li>
+          <strong>Not a CSS framework.</strong> There is no utility class system. Layout is handled by four
+          primitives (stack, cluster, prose, grid); the rest is component-level.
+        </li>
+      </ul>
+
+      <h2 class="gw-heading-m">Success criteria</h2>
+      <p>Groundwork succeeds when:</p>
+      <ol class="gw-list">
+        <li>Starting a new application's UI takes minutes, not hours.</li>
+        <li>
+          The second project built with Groundwork looks consistent with the first without any manual
+          effort.
+        </li>
+        <li>
+          Accessibility basics (labels, focus, error messaging, colour independence) are impossible to skip,
+          not just encouraged.
+        </li>
+        <li>
+          Re-theming for a different visual identity requires changing a handful of primitive values, not
+          auditing every component.
+        </li>
+      </ol>
+      <p>It fails if:</p>
+      <ol class="gw-list">
+        <li>
+          The token set or component count grows to the point where you need to search documentation to
+          find the right option.
+        </li>
+        <li>
+          The restrictive API creates so much friction that consumers bypass it with escape hatches on every
+          other component.
+        </li>
+        <li>It becomes a project about a design system rather than a tool for building other projects.</li>
+      </ol>
+
+      <h2 class="gw-heading-m">Where to go next</h2>
+      <ul class="gw-list">
+        <li>
+          <a class="gw-link" href="/reference/principles/">Principles</a> — the five design principles
+          referenced from component Background sections.
+        </li>
+        <li>
+          <a class="gw-link" href="/get-started/architecture/">Architecture overview</a> — how the
+          two-tier token system is wired.
+        </li>
+        <li>
+          <a class="gw-link" href="/components/">Components</a> — the React API.
+        </li>
+      </ul>
+    </div>
+  </section>
+</DocsLayout>

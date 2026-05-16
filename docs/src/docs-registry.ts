@@ -35,21 +35,40 @@ export const componentDocs: readonly ComponentDoc[] = Object.entries(componentMe
 
 export const docsNavSections = [
   {
-    heading: 'Start',
+    heading: 'Get started',
     links: [
       { href: '/', label: 'Overview' },
-      { href: '/tokens/', label: 'Tokens' },
+      { href: '/get-started/why-groundwork/', label: 'Why Groundwork' },
+      { href: '/get-started/architecture/', label: 'Architecture overview' },
     ],
+  },
+  {
+    heading: 'Styles',
+    links: [{ href: '/styles/', label: 'All styles' }],
   },
   {
     heading: 'Components',
     links: [{ href: '/components/', label: 'All components' }, ...componentDocs],
   },
   {
-    heading: 'Guides',
+    heading: 'Patterns',
     links: [
-      { href: '/flows/', label: 'Flows' },
-      { href: '/wiki/', label: 'Wiki' },
+      { href: '/patterns/', label: 'All patterns' },
+      { href: '/patterns/submit-information/', label: 'Submit information' },
+      { href: '/patterns/check-answers/', label: 'Check answers' },
+    ],
+  },
+  {
+    heading: 'Reference',
+    links: [
+      { href: '/reference/', label: 'Overview' },
+      { href: '/reference/principles/', label: 'Principles' },
+      { href: '/reference/glossary/', label: 'Glossary' },
+      { href: '/reference/adr/', label: 'Architecture decisions' },
+      { href: '/reference/api/', label: 'API reference' },
+      { href: '/reference/conventions/flows-as-tests/', label: 'Flows as tests' },
+      { href: '/reference/conventions/ui-review/', label: 'UI review workflow' },
+      { href: '/reference/design-tokens-format/', label: 'Design tokens format' },
     ],
   },
 ] satisfies readonly DocsNavSection[];

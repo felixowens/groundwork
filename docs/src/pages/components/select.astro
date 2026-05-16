@@ -14,19 +14,20 @@ import { meta } from './_meta/select';
         <p>Use Select inside Field so the label, hint, error copy, and ARIA relationships stay consistent with other form controls.</p>
         <p>Include a clear empty option such as “Select a country” when there is no safe default.</p>
         <h2 class="gw-heading-m">When not to use</h2>
-        <p>Do not use Select for a very small set of prominent choices where radio buttons would be easier to scan. Do not use it for long searchable datasets; build a dedicated autocomplete pattern instead.</p>
+        <p>Do not use Select for a short, visible list of prominent choices — use <a class="gw-link" href="/components/radio-group/">RadioGroup</a> instead, so users can see every option at once.</p>
+        <p>Do not use Select for very long or searchable datasets; build a dedicated autocomplete pattern instead.</p>
       </div>
 
-      <div class="gw-card gw-stack">
+      <section class="gw-card gw-stack">
         <h2 class="gw-heading-m">Demo</h2>
         <SelectDemo />
-      </div>
+      </section>
 
-      <div class="gw-card gw-stack">
+      <section class="gw-card gw-stack">
         <h2 class="gw-heading-m">Accessibility notes</h2>
         <p class="gw-body--sm">Select requires an accessible name through <code class="gw-mono">aria-label</code> or <code class="gw-mono">aria-labelledby</code>. Prefer using Field to provide the visible label and ARIA wiring.</p>
         <p class="gw-body--sm">Keep option labels short and specific. The selected value should make sense when read with the field label.</p>
-      </div>
+      </section>
     </div>
   </section>
 </DocsLayout>
