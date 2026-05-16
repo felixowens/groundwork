@@ -26,7 +26,7 @@ Use buttons for actions. Use links for navigation. There is one primary action p
 
 <h2 class="gw-heading-m">When to use Button</h2>
 
-Use a button when the user is committing to an action — saving, submitting, deleting, confirming. Write the button text so it names the action: `Save and continue`, `Delete account`, `Send claim`. Avoid generic labels like `Submit` or `OK`.
+Use a button when the user is committing to an action — saving, submitting, deleting, confirming.
 
 Use exactly one primary button per decision area. A decision area is a form, a dialog, or a card asking the user to do something — not a whole page. Multiple decision areas on a page can each have their own primary button.
 
@@ -41,6 +41,21 @@ Do not reach for `variant="destructive"` for "save" actions you suspect users wi
 <h2 class="gw-heading-m">How it works</h2>
 
 The variant set is closed: `primary`, `secondary`, `destructive`, `ghost`. Pick by visual weight and intent, not by colour. Variants are visual treatments — the underlying element is always `<button>`. For navigation, use a link, not a button styled as one.
+
+<h3 class="gw-heading-s">Writing button text</h3>
+
+Write the button text in sentence case, naming the action that runs when the user activates it. Avoid generic labels like `Submit` or `OK` — they tell the user nothing about what happens next, and screen-reader users navigating by button hear the label out of context, so the text alone must answer "what happens if I press this?".
+
+- `Start now` — at the start of a service or transaction.
+- `Sign in` — for returning users with an existing account.
+- `Continue` — when the page does not persist the user's input.
+- `Save and continue` — when the page persists input across steps.
+- `Save and come back later` — when input can be saved as a draft and resumed.
+- `Add another` — to add another item to a list or group.
+- `Pay` — to make a payment.
+- `Sign out` — to end an authenticated session.
+
+When the action commits a transaction, the verb encodes what the user is committing to. Use `Confirm and send` when the user is committing what they entered. Use `Accept and send` when the commit also requires the user to accept terms, a declaration, or a similar consent. The same shape applies elsewhere: `Accept and pay`, `Confirm and book`.
 
 <h3 class="gw-heading-s">Primary</h3>
 
@@ -103,8 +118,6 @@ Users can submit twice for three different reasons, each of which needs a differ
 <h3 class="gw-heading-s">Accessibility</h3>
 
 Focus is a 3px solid yellow ring. It is loud on purpose and identical across every interactive element in Groundwork — that consistency is what makes it unmissable.
-
-Write button text that describes the action specifically. `Save address` beats `Submit`; `Delete account` beats `Continue`. Screen-reader users navigating by buttons hear the text out of context, so the text alone must answer "what happens if I press this?".
 
 Destructive variants do not rely on colour alone. The text must make the action's seriousness clear, because users who cannot see the red treatment — colour-blind users, users on monochrome devices, users with high-contrast OS themes — only have the words.
 
