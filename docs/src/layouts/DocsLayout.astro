@@ -59,6 +59,18 @@ const currentPath = Astro.url.pathname;
     display: block;
   }
 
+  /*
+   * Astro injects an inline `astro-island { display: contents }` rule per
+   * page when hydrating client:load components. That rule beats the
+   * stylesheet rule above on tied specificity + document order, so margin
+   * selectors targeting astro-island have no visual effect. Bump
+   * specificity here so prose spacing applies through the hydration
+   * wrapper.
+   */
+  .gw-prose > astro-island {
+    display: block;
+  }
+
   .docs-header {
     border-bottom: var(--border-width-thin) solid var(--border);
   }
