@@ -12,6 +12,7 @@ import {
   ButtonGhostDemo,
   ButtonDisabledDemo,
 } from '../../components/button-demos';
+import { ButtonPreventDoubleClickDemo } from '../../components/ButtonPreventDoubleClickDemo';
 
 <section class="gw-section">
 <div class="gw-width gw-prose">
@@ -79,6 +80,16 @@ The `disabled` HTML attribute applies to every variant. Use it only when the rea
 If the reason is not obvious, leave the button enabled and explain the constraint in error copy after the user activates it. Disabled buttons hide reasons; visible errors do not.
 
 <ButtonDisabledDemo />
+
+<h3 class="gw-heading-s">Prevent accidental double submission</h3>
+
+Users can submit twice for three different reasons, each of which needs a different fix:
+
+- **Fast double-clicks** within a few hundred milliseconds — motor impairments such as hand tremors, or habituated double-clicks from desktop operating systems. Pass `preventDoubleClick` to ignore clicks that fire within 500ms of the previous accepted click. The demo below sends one invitation per slow click, no matter how fast you double-click.
+- **Slow-connection resubmits** seconds later, where the user clicks again because they got no feedback. `preventDoubleClick` does not catch this case and should not — the user genuinely intends the second click. Manage a loading state in the consumer and pass `disabled` while the request is in flight.
+- **Server-side dedupe** is needed regardless of the client. Use an idempotency key or equivalent so a duplicate request cannot commit a duplicate transaction even if it reaches the server.
+
+<ButtonPreventDoubleClickDemo client:load />
 
 <h3 class="gw-heading-s">Accessibility</h3>
 

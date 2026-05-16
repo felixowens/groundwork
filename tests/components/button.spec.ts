@@ -14,3 +14,21 @@ test('button docs exercise every variant and disabled semantics', async ({ page 
   await expect(disabledButton).toHaveCSS('cursor', 'not-allowed');
   await expect(disabledButton).toHaveCSS('pointer-events', 'auto');
 });
+
+test('preventDoubleClick suppresses rapid duplicate clicks within 500ms', async ({ page }) => {
+  await page.goto('/components/button/');
+  await page.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
+
+  const button = page.getByRole('button', { name: 'Send invitation' });
+
+  await button.click();
+  await button.click();
+  await button.click();
+
+  await expect(page.getByText('Sent 1 invitation.')).toBeVisible();
+
+  await page.waitForTimeout(600);
+  await button.click();
+
+  await expect(page.getByText('Sent 2 invitations.')).toBeVisible();
+});
