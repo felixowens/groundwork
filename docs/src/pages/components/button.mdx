@@ -22,7 +22,9 @@ import { ButtonPreventDoubleClickDemo } from '../../components/ButtonPreventDoub
 
 Use buttons for actions. Use links for navigation. There is one primary action per decision area.
 
+<div class="gw-card">
 <ButtonHeroDemo />
+</div>
 
 <h2 class="gw-heading-m">When to use Button</h2>
 
@@ -63,7 +65,9 @@ The default. Use it for the action that completes what the user came here to do 
 
 `primary` is the default value of the `variant` prop; you do not pass it explicitly.
 
+<div class="gw-card">
 <ButtonPrimaryDemo />
+</div>
 
 <h3 class="gw-heading-s">Secondary</h3>
 
@@ -71,7 +75,9 @@ A supporting action that sits alongside a primary, like `Save as draft` next to 
 
 If a secondary action would only ever be used by a small fraction of users, consider a ghost button or a link instead — keep the visual weight low.
 
+<div class="gw-card">
 <ButtonSecondaryDemo />
+</div>
 
 <h3 class="gw-heading-s">Destructive</h3>
 
@@ -79,7 +85,9 @@ For irreversible actions — deleting an account, discarding draft work, cancell
 
 Always provide an escape. Pair a destructive button with a ghost `Cancel` so the user can back out without committing.
 
+<div class="gw-card">
 <ButtonDestructiveDemo />
+</div>
 
 <h3 class="gw-heading-s">Ghost</h3>
 
@@ -87,7 +95,9 @@ A tertiary action with low visual weight. Use for `Cancel`, `Back`, `Close`, or 
 
 A page or dialog with only ghost buttons has no primary action. That is usually a sign the page is asking the user to navigate, not act — use links instead.
 
+<div class="gw-card">
 <ButtonGhostDemo />
+</div>
 
 <h3 class="gw-heading-s">Grouping buttons</h3>
 
@@ -95,7 +105,9 @@ When two or more buttons sit together, wrap them in a `<div class="gw-button-gro
 
 A plain link (`<a class="gw-link">`) inside the group aligns with adjacent buttons, so a `Cancel` link reads as part of the same decision area as the action button it sits next to — useful when the cancel path is genuinely a navigation away from the current screen, not a no-op cancel of the in-page action.
 
+<div class="gw-card">
 <ButtonGroupDemo />
+</div>
 
 <h3 class="gw-heading-s">Disabled state</h3>
 
@@ -103,7 +115,9 @@ The `disabled` HTML attribute applies to every variant. Use it only when the rea
 
 If the reason is not obvious, leave the button enabled and explain the constraint in error copy after the user activates it. Disabled buttons hide reasons; visible errors do not.
 
+<div class="gw-card">
 <ButtonDisabledDemo />
+</div>
 
 <h3 class="gw-heading-s">Prevent accidental double submission</h3>
 
@@ -113,7 +127,9 @@ Users can submit twice for three different reasons, each of which needs a differ
 - **Slow-connection resubmits** seconds later, where the user clicks again because they got no feedback. `preventDoubleClick` does not catch this case and should not — the user genuinely intends the second click. Manage a loading state in the consumer and pass `disabled` while the request is in flight.
 - **Server-side dedupe** is needed regardless of the client. Use an idempotency key or equivalent so a duplicate request cannot commit a duplicate transaction even if it reaches the server.
 
+<div class="gw-card">
 <ButtonPreventDoubleClickDemo client:load />
+</div>
 
 <h3 class="gw-heading-s">Accessibility</h3>
 
