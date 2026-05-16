@@ -38,6 +38,7 @@ export const docsNavSections = [
     heading: 'Get started',
     links: [
       { href: '/', label: 'Overview' },
+      { href: '/get-started/why-groundwork/', label: 'Why Groundwork' },
       { href: '/get-started/architecture/', label: 'Architecture overview' },
     ],
   },
@@ -61,6 +62,8 @@ export const docsNavSections = [
     heading: 'Reference',
     links: [
       { href: '/reference/', label: 'Overview' },
+      { href: '/reference/principles/', label: 'Principles' },
+      { href: '/reference/glossary/', label: 'Glossary' },
       { href: '/reference/adr/', label: 'Architecture decisions' },
       { href: '/reference/api/', label: 'API reference' },
       { href: '/reference/conventions/flows-as-tests/', label: 'Flows as tests' },

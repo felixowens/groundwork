@@ -1,0 +1,150 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Glossary" description="Canonical terms used across Groundwork's API, documentation, and patterns">
+  <section class="gw-section">
+    <div class="gw-width gw-prose">
+      <h1 class="gw-heading-l">Glossary</h1>
+      <p>
+        Groundwork uses a small canonical vocabulary across its API, documentation, and patterns. The terms
+        below define the concepts in four groups; the section after that shows how the terms compose.
+      </p>
+
+      <h2 class="gw-heading-m">Form controls</h2>
+
+      <h3 class="gw-heading-s" id="field">Field</h3>
+      <p>
+        A labelled form control with optional hint and error. Two shapes:
+        <code class="gw-mono">&lt;Field&gt;</code> (a <code class="gw-mono">&lt;div&gt;</code> +
+        <code class="gw-mono">&lt;label&gt;</code> shell wrapping one control) and a
+        <a class="gw-link" href="#choice-group">Choice group</a> (a
+        <code class="gw-mono">&lt;fieldset&gt;</code> + <code class="gw-mono">&lt;legend&gt;</code> shell
+        wrapping multiple option inputs).
+      </p>
+
+      <h3 class="gw-heading-s" id="field-consumer">Field consumer</h3>
+      <p>
+        The form-control element rendered inside a <a class="gw-link" href="#field">Field</a> — receives
+        ARIA props from the Field and applies them. Examples: Input, Textarea, Select; for a Choice group,
+        the individual radio and checkbox inputs.
+      </p>
+
+      <h3 class="gw-heading-s" id="choice-group">Choice group</h3>
+      <p>
+        A <code class="gw-mono">&lt;fieldset&gt;</code>-backed <a class="gw-link" href="#field">Field</a> for
+        picking from a short, visible list. RadioGroup (single-select) and CheckboxGroup (multi-select) are
+        the two public shapes.
+      </p>
+
+      <h3 class="gw-heading-s" id="field-description">Field description</h3>
+      <p>
+        The bundle that wires a <a class="gw-link" href="#field">Field</a>'s label,
+        <a class="gw-link" href="#hint">Hint</a>, and <a class="gw-link" href="#field-error">Field error</a>
+        to its <a class="gw-link" href="#field-consumer">Field consumer</a>: the derived IDs, the ARIA
+        attribute bundles (input-style and fieldset-style), and the rendered hint and error nodes. Produced
+        by <code class="gw-mono">describeField()</code>.
+      </p>
+
+      <h3 class="gw-heading-s" id="hint">Hint</h3>
+      <p>
+        Short supplementary copy explaining what the user should enter. Shown before the control; referenced
+        by <code class="gw-mono">aria-describedby</code>.
+      </p>
+
+      <h3 class="gw-heading-s" id="field-error">Field error</h3>
+      <p>
+        Structured error copy with <code class="gw-mono">{`{ problem, fix }`}</code> — problem names what is
+        wrong, fix tells the user how to correct it. Both Field and ErrorSummary format it consistently.
+      </p>
+
+      <h2 class="gw-heading-m">Tokens</h2>
+
+      <h3 class="gw-heading-s" id="primitive-token">Primitive token</h3>
+      <p>
+        A raw value on a closed scale, prefixed <code class="gw-mono">--_gw-</code>. Private — component CSS
+        must not reference these directly.
+      </p>
+
+      <h3 class="gw-heading-s" id="semantic-token">Semantic token</h3>
+      <p>
+        A public CSS custom property naming a decision
+        (<code class="gw-mono">--ink-secondary</code>, <code class="gw-mono">--action</code>). References a
+        <a class="gw-link" href="#primitive-token">Primitive token</a>. The only tokens component CSS is
+        allowed to reference.
+      </p>
+
+      <h2 class="gw-heading-m">Composition</h2>
+
+      <h3 class="gw-heading-s" id="decision-area">Decision area</h3>
+      <p>
+        A bounded region of UI in which the user is being asked to commit to an action — a form, a dialog, a
+        card, or a focused page section. At most one primary Button per Decision area; secondary and ghost
+        buttons support the primary. A single page may contain multiple Decision areas, each with its own
+        primary action.
+      </p>
+
+      <h3 class="gw-heading-s" id="transaction">Transaction</h3>
+      <p>
+        A user atomically submitting structured information through the UI — all the answers committed
+        together, in one UI step or across several. Small or medium transactions fit one screen; large
+        transactions span sections.
+      </p>
+
+      <h2 class="gw-heading-m">Documentation</h2>
+
+      <h3 class="gw-heading-s" id="pattern">Pattern</h3>
+      <p>
+        A reusable recipe documented in <a class="gw-link" href="/patterns/">/patterns/</a>: when to use it,
+        when not to use it, and how to assemble Groundwork components to apply it. Patterns are
+        usage-shaped, not component-shaped — a single pattern may compose many components, and a single
+        component may participate in many patterns. Larger patterns embed a
+        <a class="gw-link" href="#flow">Flow</a> as the interactive demo and test surface.
+      </p>
+
+      <h3 class="gw-heading-s" id="flow">Flow</h3>
+      <p>
+        A full interactive journey embedded within a <a class="gw-link" href="#pattern">Pattern</a> page:
+        shows components working together in a realistic task, paired with a visible human test script and
+        Playwright coverage. Not a public export — a doc and test artifact. See
+        <a class="gw-link" href="/reference/conventions/flows-as-tests/">Flows as human-testable documentation</a>
+        for the convention.
+      </p>
+
+      <h2 class="gw-heading-m">How these terms compose</h2>
+      <ul class="gw-list">
+        <li>
+          A <a class="gw-link" href="#field">Field</a> owns one
+          <a class="gw-link" href="#field-description">Field description</a>, which wires its label,
+          <a class="gw-link" href="#hint">Hint</a>, and <a class="gw-link" href="#field-error">Field error</a>
+          to its <a class="gw-link" href="#field-consumer">Field consumer</a>.
+        </li>
+        <li>
+          A <a class="gw-link" href="#choice-group">Choice group</a> is a
+          <a class="gw-link" href="#field">Field</a> whose consumers are the choice inputs.
+        </li>
+        <li>
+          A <a class="gw-link" href="#field-description">Field description</a> is produced by
+          <code class="gw-mono">describeField(id, &#123; hint, error &#125;)</code> and consumed by both
+          <code class="gw-mono">&lt;Field&gt;</code> and the Choice group module.
+        </li>
+        <li>
+          Component CSS references <a class="gw-link" href="#semantic-token">Semantic tokens</a> only;
+          Semantic tokens reference <a class="gw-link" href="#primitive-token">Primitive tokens</a>.
+        </li>
+        <li>
+          A <a class="gw-link" href="#pattern">Pattern</a> may embed one
+          <a class="gw-link" href="#flow">Flow</a> as its interactive demo; small patterns may have no Flow.
+        </li>
+      </ul>
+
+      <h2 class="gw-heading-m">A note on the word "Field"</h2>
+      <p>
+        "Field" names both the domain concept (any labelled form control) and the specific
+        <code class="gw-mono">&lt;Field&gt;</code> React component. Context almost always disambiguates;
+        when it does not, the docs say "the Field component" or "a labelled field" to keep the two senses
+        apart.
+      </p>
+    </div>
+  </section>
+</DocsLayout>
