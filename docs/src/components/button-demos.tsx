@@ -46,3 +46,20 @@ export function ButtonGhostDemo() {
 export function ButtonDisabledDemo() {
   return <Button disabled={true}>Processing…</Button>;
 }
+
+export function ButtonGroupDemo() {
+  return (
+    <div className="gw-stack">
+      <div className="gw-button-group">
+        <Button>Save and continue</Button>
+        <Button variant="secondary">Save as draft</Button>
+      </div>
+      <div className="gw-button-group">
+        <Button>Continue</Button>
+        <a className="gw-link" href="#button-group-demo-cancel">
+          Cancel
+        </a>
+      </div>
+    </div>
+  );
+}

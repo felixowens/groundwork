@@ -11,6 +11,7 @@ import {
   ButtonDestructiveDemo,
   ButtonGhostDemo,
   ButtonDisabledDemo,
+  ButtonGroupDemo,
 } from '../../components/button-demos';
 import { ButtonPreventDoubleClickDemo } from '../../components/ButtonPreventDoubleClickDemo';
 
@@ -72,6 +73,14 @@ A tertiary action with low visual weight. Use for `Cancel`, `Back`, `Close`, or 
 A page or dialog with only ghost buttons has no primary action. That is usually a sign the page is asking the user to navigate, not act — use links instead.
 
 <ButtonGhostDemo />
+
+<h3 class="gw-heading-s">Grouping buttons</h3>
+
+When two or more buttons sit together, wrap them in a `<div class="gw-button-group">`. The wrapper lays them out horizontally with consistent spacing and wraps individual buttons to the next line on narrow viewports rather than overflowing.
+
+A plain link (`<a class="gw-link">`) inside the group aligns with adjacent buttons, so a `Cancel` link reads as part of the same decision area as the action button it sits next to — useful when the cancel path is genuinely a navigation away from the current screen, not a no-op cancel of the in-page action.
+
+<ButtonGroupDemo />
 
 <h3 class="gw-heading-s">Disabled state</h3>
 
