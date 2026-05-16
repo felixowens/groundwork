@@ -32,6 +32,11 @@ test('check-answers demo groups answers and preserves them across edits', async 
 
   await expect(demo.getByText('Ada Lovelace')).toBeVisible();
 
+  await demo.getByRole('button', { name: 'Change reason for contact' }).click();
+  await expect(demo.getByRole('group', { name: 'Reason for contact' })).toBeVisible();
+  await demo.getByRole('radio', { name: 'Technical support' }).check();
+  await demo.getByRole('button', { name: 'Cancel' }).click();
+
   await demo.getByRole('button', { name: 'Accept and send' }).click();
   await expect(demo.getByText('Application submitted')).toBeVisible();
 });

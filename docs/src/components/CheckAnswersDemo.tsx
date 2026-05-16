@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from 'react';
-import { Banner, Button, Field, type FieldRenderProps, Input, Select, SummaryList, Textarea } from '../../../src';
+import { Banner, Button, Field, type FieldRenderProps, Input, RadioGroup, SummaryList, Textarea } from '../../../src';
 
 type AnswerKey = 'fullName' | 'email' | 'reason' | 'notes';
 
@@ -133,9 +133,20 @@ function EditScreen({ field, value, onSave, onCancel }: EditScreenProps) {
 
   return (
     <form className="gw-stack" onSubmit={handleSubmit} noValidate={true}>
-      <Field id={`check-answers-edit-${field}`} label={FIELD_LABEL[field]}>
-        {({ inputProps }) => renderControl(field, draft, setDraft, inputProps)}
-      </Field>
+      {field === 'reason' ? (
+        <RadioGroup
+          id={`check-answers-edit-${field}`}
+          name={field}
+          legend={FIELD_LABEL[field]}
+          value={draft}
+          onChange={(event) => setDraft(event.currentTarget.value)}
+          options={REASON_OPTIONS}
+        />
+      ) : (
+        <Field id={`check-answers-edit-${field}`} label={FIELD_LABEL[field]}>
+          {({ inputProps }) => renderControl(field, draft, setDraft, inputProps)}
+        </Field>
+      )}
       <div className="gw-button-group">
         <Button type="submit">Save and return</Button>
         <Button type="button" variant="ghost" onClick={onCancel}>
@@ -152,18 +163,6 @@ function renderControl(
   setDraft: (value: string) => void,
   inputProps: FieldRenderProps['inputProps'],
 ) {
-  if (field === 'reason') {
-    return (
-      <Select {...inputProps} value={draft} onChange={(event) => setDraft(event.target.value)}>
-        {REASON_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
-    );
-  }
-
   if (field === 'notes') {
     return <Textarea {...inputProps} value={draft} onChange={(event) => setDraft(event.target.value)} rows={4} />;
   }
