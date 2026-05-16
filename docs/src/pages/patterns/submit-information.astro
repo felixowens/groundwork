@@ -1,0 +1,87 @@
+---
+import { ContactDetailsFlow } from '../../components/ContactDetailsFlow';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Help users submit information correctly" description="Pattern: validate as the user submits, review what they have entered, and confirm the submission">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--xl">
+      <div class="gw-prose">
+        <p class="gw-caption">Pattern</p>
+        <h1 class="gw-heading-l">Help users submit information correctly</h1>
+        <p>When users commit a transaction, let them validate as they go, review what they have entered, and confirm before the transaction is submitted.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">When to use this pattern</h2>
+        <p>Use this pattern for any transaction the user cannot easily undo, such as opening an account, applying for something, or making a claim. The pattern fits small and medium transactions on a single page; for very large transactions split into sections, apply the pattern per section.</p>
+
+        <h2 class="gw-heading-m">How it works</h2>
+        <p>The Flow below demonstrates the full journey: data entry with <a class="gw-link" href="/components/field/">Field</a>, validation that routes through <a class="gw-link" href="/components/error-summary/">ErrorSummary</a>, review with <a class="gw-link" href="/components/summary-list/">SummaryList</a>, and confirmation with <a class="gw-link" href="/components/banner/">Banner</a>.</p>
+
+        <h3 class="gw-heading-s">Validate as the user submits</h3>
+        <p>When the form is invalid, surface an <a class="gw-link" href="/components/error-summary/">ErrorSummary</a> at the top of the page. Each item in the summary links to its matching field. This means users do not have to scroll through the page to find the next mistake.</p>
+        <p>Use a Field error with <code class="gw-mono">{`{ problem, fix }`}</code> structure: <em>problem</em> names what's wrong, <em>fix</em> tells the user how to correct it. Both the ErrorSummary and the Field render the same error consistently.</p>
+
+        <h3 class="gw-heading-s">Let users review before they commit</h3>
+        <p>After a valid submission, show a check-your-answers screen with a <a class="gw-link" href="/components/summary-list/">SummaryList</a>. Each row carries a <strong>Change</strong> action that returns the user to the matching field with their previous answer preserved.</p>
+        <p>The review step is its own first-class pattern. See <a class="gw-link" href="/patterns/check-answers/">Help users check their answers</a> for the design decisions that belong to that screen specifically.</p>
+
+        <h3 class="gw-heading-s">Confirm the submission was received</h3>
+        <p>After the user confirms, replace the form with a <a class="gw-link" href="/components/banner/">Banner</a> in the <code class="gw-mono">success</code> variant. Make the new status clear and announce it to assistive technology by setting <code class="gw-mono">announcement="polite"</code>.</p>
+        <p>Do not return the user to the same form view with a success message inline — a separate confirmation screen makes the journey's completion unambiguous.</p>
+      </div>
+
+      <div class="docs-flow-grid">
+        <div class="gw-card gw-stack">
+          <h2 class="gw-heading-m">Human test script</h2>
+          <ol class="gw-list">
+            <li>Submit the empty form and confirm the error summary appears.</li>
+            <li>Use each summary link and confirm it moves to the matching field or grouped control.</li>
+            <li>Select a radio option and one or more checkbox options with the keyboard.</li>
+            <li>Fill valid details and continue to the review step.</li>
+            <li>Use a Change link and confirm your previous answers, including grouped choices, are preserved.</li>
+            <li>Confirm and check that the success state is clear.</li>
+            <li>Repeat with keyboard only.</li>
+          </ol>
+        </div>
+
+        <section class="gw-card gw-stack--lg" aria-labelledby="flow-demo-heading">
+          <h2 class="gw-heading-m" id="flow-demo-heading">Interactive demo</h2>
+          <div>
+            <ContactDetailsFlow client:load />
+          </div>
+        </section>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/patterns/check-answers/">Help users check their answers</a> — the narrower review-and-change moment, with its own focused demo.</li>
+        </ul>
+
+        <h2 class="gw-heading-m">Background</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/reference/adr/0002-patterns-absorb-flows/">ADR-0002</a> — Patterns absorb Flows; large patterns embed a Flow as their interactive demo.</li>
+          <li><a class="gw-link" href="/reference/adr/0005-submit-and-check-answers-as-peer-patterns/">ADR-0005</a> — why this pattern and check-answers are split rather than merged.</li>
+          <li><a class="gw-link" href="/reference/conventions/flows-as-tests/">Flows as human-testable documentation</a> — why Groundwork pairs every Flow with a visible test script.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .docs-flow-grid {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.9fr) minmax(20rem, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .docs-flow-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

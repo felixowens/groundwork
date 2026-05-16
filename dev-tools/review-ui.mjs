@@ -176,9 +176,9 @@ try {
 
   const report = [];
   report.push(await capturePage(page, '/', 'overview.png'));
-  report.push(await capturePage(page, '/tokens/', 'tokens.png'));
-  report.push(await capturePage(page, '/flows/', 'flows.png'));
-  report.push(await capturePage(page, '/flows/contact-details/', 'contact-details-initial.png'));
+  report.push(await capturePage(page, '/get-started/architecture/', 'architecture.png'));
+  report.push(await capturePage(page, '/patterns/', 'patterns.png'));
+  report.push(await capturePage(page, '/patterns/submit-information/', 'submit-information-initial.png'));
 
   await page.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
   const lists = await listMetrics(page);
@@ -210,7 +210,7 @@ try {
   const confirmationStackViolations = await stackMetrics(page);
 
   const darkPage = await browser.newPage({ colorScheme: 'dark', viewport: { width: 1280, height: 900 } });
-  await darkPage.goto(`${baseUrl}/flows/contact-details/`);
+  await darkPage.goto(`${baseUrl}/patterns/submit-information/`);
   await darkPage.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
   await darkPage.getByRole('button', { name: 'Continue' }).click();
   await darkPage.screenshot({ path: `${outputDirectory}/dark-contact-details-errors.png`, fullPage: true });
@@ -218,9 +218,11 @@ try {
 
   const mobilePage = await browser.newPage({ viewport: { width: 390, height: 900 }, isMobile: true });
   const mobileReport = [];
-  mobileReport.push(await capturePage(mobilePage, '/flows/', 'mobile-flows.png'));
+  mobileReport.push(await capturePage(mobilePage, '/patterns/', 'mobile-patterns.png'));
   const interactiveCards = await interactiveCardMetrics(mobilePage);
-  mobileReport.push(await capturePage(mobilePage, '/flows/contact-details/', 'mobile-contact-details-initial.png'));
+  mobileReport.push(
+    await capturePage(mobilePage, '/patterns/submit-information/', 'mobile-submit-information-initial.png'),
+  );
   await mobilePage.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
   await mobilePage.getByRole('button', { name: 'Continue' }).click();
   await mobilePage.screenshot({ path: `${outputDirectory}/mobile-contact-details-errors.png`, fullPage: true });

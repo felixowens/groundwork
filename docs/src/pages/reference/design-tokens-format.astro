@@ -1,0 +1,31 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Design Tokens Community Group reference" description="How Groundwork's token source files map to the DTCG format">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <p class="gw-caption">Reference</p>
+        <h1 class="gw-heading-l">Design Tokens Community Group reference</h1>
+
+        <p>Groundwork token source files use the Design Tokens Community Group (DTCG) shape:</p>
+        <ul class="gw-list">
+          <li>token values are stored in <code class="gw-mono">$value</code></li>
+          <li>token types are stored in <code class="gw-mono">$type</code></li>
+          <li>token references use curly-brace paths, for example <code class="gw-mono">{`{primitives.color.blue.60}`}</code></li>
+        </ul>
+
+        <p>Primary reference:</p>
+        <ul class="gw-list">
+          <li>DTCG Format Module, editors' draft snapshot for 2025.10: <a class="gw-link" href="https://www.designtokens.org/tr/2025.10/format/">designtokens.org/tr/2025.10/format/</a></li>
+          <li>Community Group draft: <a class="gw-link" href="https://design-tokens.github.io/community-group/format/">design-tokens.github.io/community-group/format/</a></li>
+        </ul>
+
+        <h2 class="gw-heading-m">JSON Schema status</h2>
+        <p>As of the 2025.10 format document, the DTCG does not publish an official JSON Schema for token files. The spec includes an editor's note that the group is exploring adding one to support the format.</p>
+        <p>Do not add a repo-local schema unless we intentionally choose to maintain our own partial validation rules. Prefer validating architectural constraints in dedicated checks, such as <code class="gw-mono">scripts/check-css-architecture.mjs</code>, rather than pretending to implement the full DTCG spec.</p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

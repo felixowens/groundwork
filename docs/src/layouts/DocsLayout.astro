@@ -2,7 +2,9 @@
 import '../../../css/groundwork.css';
 import { docsNavSections } from '../docs-registry';
 
-const { title, description } = Astro.props;
+const { title: directTitle, description: directDescription, frontmatter } = Astro.props;
+const title = directTitle ?? frontmatter?.title;
+const description = directDescription ?? frontmatter?.description;
 const currentPath = Astro.url.pathname;
 ---
 

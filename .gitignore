@@ -6,6 +6,7 @@ dist/
 docs/dist/
 docs/.astro/
 src/styles/generated/
+docs/src/pages/reference/api/
 
 # Test output
 test-results/

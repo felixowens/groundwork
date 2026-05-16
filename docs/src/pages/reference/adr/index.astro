@@ -1,0 +1,45 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+
+interface AdrModule {
+  rawContent?: () => string;
+}
+
+const adrModules = import.meta.glob<AdrModule>('../../../../adr/*.md', { eager: true });
+const adrs = Object.entries(adrModules)
+  .map(([path, mod]) => {
+    const slug = path.replace(/.*\/adr\//u, '').replace(/\.md$/u, '');
+    const rawContent = typeof mod.rawContent === 'function' ? mod.rawContent() : '';
+    const firstH1Match = rawContent.match(/^#\s+(.+)$/mu);
+    const title = firstH1Match ? firstH1Match[1] : slug;
+    const number = slug.match(/^(\d+)/u)?.[1] ?? '';
+    return { slug, title, number };
+  })
+  .sort((a, b) => a.number.localeCompare(b.number));
+---
+
+<DocsLayout title="Architecture decision records" description="Load-bearing decisions, with the alternatives that were rejected">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Architecture decision records</h1>
+        <p>Each ADR records a load-bearing decision in Groundwork — what was chosen, what was rejected, and what would prompt a re-evaluation.</p>
+      </div>
+
+      <div class="gw-stack">
+        {
+          adrs.map((adr) => (
+            <article class="gw-card gw-stack--sm">
+              <p class="gw-caption">ADR-{adr.number}</p>
+              <h2 class="gw-heading-s">
+                <a class="gw-link" href={`/reference/adr/${adr.slug}/`}>
+                  {adr.title}
+                </a>
+              </h2>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</DocsLayout>
