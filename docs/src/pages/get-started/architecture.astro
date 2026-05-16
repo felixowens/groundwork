@@ -10,15 +10,15 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <p>Groundwork uses two layers. Components reference semantic tokens only. Dark mode remaps semantic tokens to different primitives.</p>
       </div>
 
-      <div class="gw-card gw-stack">
+      <section class="gw-card gw-stack">
         <h2 class="gw-heading-m">Layer 1: primitives</h2>
         <p class="gw-body--sm">Private raw values prefixed <code class="gw-mono">--_gw-</code>: neutral scale, brand blue, status colours, spacing, type, borders, and radii.</p>
-      </div>
+      </section>
 
-      <div class="gw-card gw-stack">
+      <section class="gw-card gw-stack">
         <h2 class="gw-heading-m">Layer 2: semantic tokens</h2>
         <p class="gw-body--sm">Public decisions such as <code class="gw-mono">--ink</code>, <code class="gw-mono">--surface-raised</code>, <code class="gw-mono">--action</code>, and <code class="gw-mono">--focus-ring-color</code>. Components are only allowed to reference these.</p>
-      </div>
+      </section>
 
       <div class="gw-grid">
         <div class="gw-card gw-stack--sm"><span class="gw-caption">Ink</span><span class="gw-heading-s">--ink</span><p class="gw-body--sm">Primary text, headings, body.</p></div>
