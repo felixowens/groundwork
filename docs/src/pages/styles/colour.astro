@@ -97,13 +97,13 @@ const groups: readonly GroupSpec[] = [
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
-        <h1 class="gw-heading-l">Colour</h1>
+        <h1>Colour</h1>
         <p>Groundwork's public colour palette is a closed set of semantic tokens. Each token has a paired dark-mode value — the chip on the left is light mode, the chip on the right is dark. Components reference these tokens by name, never by underlying value: a confirmation Banner uses <code class="gw-mono">--success</code> because it signals success, not because it's green.</p>
         <p>Values are written in <code class="gw-mono">oklch()</code> for perceptual uniformity. The <a class="gw-link" href="/get-started/architecture/">architecture overview</a> explains how semantic tokens remap to primitives between modes.</p>
       </div>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Accessibility</h2>
+        <h2>Accessibility</h2>
         <p>Every paired token is tuned for at least 4.5:1 contrast in its paired use — <code class="gw-mono">--action-text</code> on <code class="gw-mono">--action</code>, <code class="gw-mono">--ink</code> on <code class="gw-mono">--surface</code>, and so on. If you compose tokens outside these pairings, verify contrast manually against <a class="gw-link" href="https://www.w3.org/TR/WCAG22/#contrast-minimum">WCAG 2.2 SC 1.4.3</a>.</p>
         <p>Colour is never the only signal. Status banners include an icon and a heading; destructive buttons include the verb in their label; form errors include text describing the problem. The colour reinforces information that is already legible without it.</p>
       </div>
@@ -111,7 +111,7 @@ const groups: readonly GroupSpec[] = [
       {
         groups.map((group) => (
           <section class="gw-stack" aria-labelledby={`colour-${group.id}`}>
-            <h2 class="gw-heading-m" id={`colour-${group.id}`}>
+            <h2 id={`colour-${group.id}`}>
               {group.heading}
             </h2>
             <p class="gw-body--sm" set:html={group.intro} />
@@ -125,7 +125,7 @@ const groups: readonly GroupSpec[] = [
       }
 
       <section class="gw-stack" aria-labelledby="colour-usage">
-        <h2 class="gw-heading-m" id="colour-usage">Using a colour token</h2>
+        <h2 id="colour-usage">Using a colour token</h2>
         <p class="gw-body--sm">Reference tokens by name in CSS via custom properties. The dark-mode value resolves automatically when the user's system is in dark mode.</p>
         <CodeBlock>{`.notification {
   background: var(--success-surface);
@@ -135,19 +135,19 @@ const groups: readonly GroupSpec[] = [
       </section>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Guidance</h2>
-        <h3 class="gw-heading-s">Distinguish destructive from error</h3>
+        <h2>Guidance</h2>
+        <h3>Distinguish destructive from error</h3>
         <p><code class="gw-mono">--destructive</code> belongs on Buttons that remove data or reverse an action — places where the user intentionally pushes the button knowing the consequence. <code class="gw-mono">--error</code> belongs on validation surfaces — places where the system tells the user something is wrong with their input. The two should not appear together in the same control.</p>
 
-        <h3 class="gw-heading-s">Layer surfaces, don't stack them</h3>
+        <h3>Layer surfaces, don't stack them</h3>
         <p>Use <code class="gw-mono">--surface</code> for the page, <code class="gw-mono">--surface-raised</code> for cards, and <code class="gw-mono">--surface-sunken</code> for inset regions or input fields. Nesting a raised card inside another raised card flattens the hierarchy — pick one elevation per region.</p>
 
-        <h3 class="gw-heading-s">If a colour you need isn't here</h3>
+        <h3>If a colour you need isn't here</h3>
         <p>The semantic palette is intentionally narrow. Off-palette colours — chart series, illustration accents, marketing surfaces — currently have no documented escape hatch. If you find yourself reaching outside the palette, that's a signal to discuss the gap rather than inline a hex value.</p>
       </div>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Related</h2>
+        <h2>Related</h2>
         <ul class="gw-list">
           <li><a class="gw-link" href="/styles/focus/">Focus</a> — the 3px yellow ring that pairs with <code class="gw-mono">--focus-text</code>.</li>
           <li><a class="gw-link" href="/components/banner/">Banner</a> — primary consumer of the status surfaces.</li>

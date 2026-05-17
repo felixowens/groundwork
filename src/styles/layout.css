@@ -47,17 +47,29 @@
   margin-top: var(--space-4);
 }
 
-.gw-prose > h2 + *,
-.gw-prose > h3 + * {
-  margin-top: var(--space-2);
-}
-
+.gw-stack > * + h2,
 .gw-prose > * + h2 {
   margin-top: var(--space-10);
 }
 
+.gw-stack > * + h3,
 .gw-prose > * + h3 {
   margin-top: var(--space-8);
+}
+
+.gw-stack > h1 + *,
+.gw-prose > h1 + * {
+  margin-top: var(--space-12);
+}
+
+.gw-stack > h2 + *,
+.gw-prose > h2 + * {
+  margin-top: var(--space-8);
+}
+
+.gw-stack > h3 + *,
+.gw-prose > h3 + * {
+  margin-top: var(--space-5);
 }
 
 .gw-grid {

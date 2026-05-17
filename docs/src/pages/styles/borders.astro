@@ -31,12 +31,12 @@ const shadows: readonly BorderTokenSpec[] = [
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
-        <h1 class="gw-heading-l">Borders</h1>
+        <h1>Borders</h1>
         <p>Groundwork uses a small set of border weights and two corner radii. Together they keep surface treatment consistent across components — a card and a Banner look like the same kind of object because they share the same radius and stroke. Shadow tokens are listed here too; they share the same "how a surface is finished" purpose.</p>
       </div>
 
       <section class="gw-stack" aria-labelledby="border-widths">
-        <h2 class="gw-heading-m" id="border-widths">Width</h2>
+        <h2 id="border-widths">Width</h2>
         <p class="gw-body--sm">Four widths cover everything from a hairline divider to the focus ring.</p>
         <ul class="gw-grid" role="list">
           {
@@ -50,7 +50,7 @@ const shadows: readonly BorderTokenSpec[] = [
       </section>
 
       <section class="gw-stack" aria-labelledby="border-radius">
-        <h2 class="gw-heading-m" id="border-radius">Corner radius</h2>
+        <h2 id="border-radius">Corner radius</h2>
         <p class="gw-body--sm">Two radii. There is no <code class="gw-mono">--radius-lg</code> — larger curves would visually compete with the components themselves.</p>
         <ul class="gw-grid" role="list">
           {
@@ -64,7 +64,7 @@ const shadows: readonly BorderTokenSpec[] = [
       </section>
 
       <section class="gw-stack" aria-labelledby="border-shadow">
-        <h2 class="gw-heading-m" id="border-shadow">Shadow</h2>
+        <h2 id="border-shadow">Shadow</h2>
         <p class="gw-body--sm">Two shadow tokens for surface elevation. Both remap to a darker, more visible variant in dark mode.</p>
         <ul class="gw-grid" role="list">
           {
@@ -78,7 +78,7 @@ const shadows: readonly BorderTokenSpec[] = [
       </section>
 
       <section class="gw-stack" aria-labelledby="borders-usage">
-        <h2 class="gw-heading-m" id="borders-usage">Using a border or radius token</h2>
+        <h2 id="borders-usage">Using a border or radius token</h2>
         <p class="gw-body--sm">Reference border width, radius, and shadow tokens directly via custom properties. The border colour comes from the <a class="gw-link" href="/styles/colour/#colour-border">colour tokens</a>; pair them explicitly.</p>
         <CodeBlock>{`.card {
   border: var(--border-width-thin) solid var(--border);
@@ -88,19 +88,19 @@ const shadows: readonly BorderTokenSpec[] = [
       </section>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Guidance</h2>
-        <h3 class="gw-heading-s">Prefer borders to shadows for default surfaces</h3>
+        <h2>Guidance</h2>
+        <h3>Prefer borders to shadows for default surfaces</h3>
         <p>Groundwork's default cards and banners use a <code class="gw-mono">--border-width-thin</code> stroke rather than a shadow. Borders are more reliable across rendering contexts (printed, screenshot, dark mode) and don't introduce a fake light source. Reach for shadow when a surface needs to <em>visibly float</em> — dialogs, tooltips — not for general elevation.</p>
 
-        <h3 class="gw-heading-s">Match radius to the parent</h3>
+        <h3>Match radius to the parent</h3>
         <p>A pill-shaped Button inside a card with a 6px radius looks deliberate. A Button with a 12px radius inside the same card looks accidental. When in doubt, use <code class="gw-mono">--radius-sm</code> for inner controls and <code class="gw-mono">--radius-md</code> for outer containers.</p>
 
-        <h3 class="gw-heading-s">Border width carries weight, not decoration</h3>
+        <h3>Border width carries weight, not decoration</h3>
         <p>Thicker borders draw the eye. Reserve <code class="gw-mono">--border-width-medium</code> for form controls (which need the visual heft to look interactive) and <code class="gw-mono">--border-width-thick</code> for the focus ring. Decorating an idle card with a heavy stroke makes it look interactive when it isn't.</p>
       </div>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Related</h2>
+        <h2>Related</h2>
         <ul class="gw-list">
           <li><a class="gw-link" href="/styles/focus/">Focus</a> — uses <code class="gw-mono">--border-width-thick</code> for the 3px yellow ring.</li>
           <li><a class="gw-link" href="/styles/colour/#colour-border">Colour</a> — the border colour tokens that pair with these widths.</li>
