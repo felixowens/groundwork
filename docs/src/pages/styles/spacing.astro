@@ -29,7 +29,7 @@ const scale: readonly SpaceSpec[] = [
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
-        <h1 class="gw-heading-l">Spacing</h1>
+        <h1>Spacing</h1>
         <p>Groundwork uses one spacing scale. Components reference these tokens; designers choose from the same closed set. The scale is non-linear past <code class="gw-mono">--space-6</code> — gaps double rather than continuing in 4px increments — and skips numbers deliberately (there is no <code class="gw-mono">--space-7</code> or <code class="gw-mono">--space-9</code>). Each step is a chosen value, not an oversight.</p>
         <p>Every value is expressed in <code class="gw-mono">rem</code>; pixel equivalents assume the browser's default 16px root font size.</p>
       </div>
@@ -41,7 +41,7 @@ const scale: readonly SpaceSpec[] = [
       </div>
 
       <section class="gw-stack" aria-labelledby="spacing-usage">
-        <h2 class="gw-heading-m" id="spacing-usage">Using a spacing token</h2>
+        <h2 id="spacing-usage">Using a spacing token</h2>
         <p class="gw-body--sm">Reach for the layout primitives first — <a class="gw-link" href="/styles/layout/#layout-stack"><code class="gw-mono">gw-stack</code></a> for vertical rhythm and <a class="gw-link" href="/styles/layout/#layout-cluster"><code class="gw-mono">gw-cluster</code></a> for horizontal groups — both of which already pull from this scale. Use raw tokens in component CSS only when the primitives don't fit.</p>
         <CodeBlock>{`.gw-field {
   display: flex;
@@ -55,19 +55,19 @@ const scale: readonly SpaceSpec[] = [
       </section>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Guidance</h2>
-        <h3 class="gw-heading-s">Pick from the scale, never a custom value</h3>
+        <h2>Guidance</h2>
+        <h3>Pick from the scale, never a custom value</h3>
         <p>If a layout looks like it needs <code class="gw-mono">14px</code>, snap to <code class="gw-mono">--space-3</code> (12px) or <code class="gw-mono">--space-4</code> (16px). Custom values break the visual rhythm and the closed-scale guarantee — a designer cannot trust that all spacings come from the same set.</p>
 
-        <h3 class="gw-heading-s">Use larger steps for layout, smaller for type</h3>
+        <h3>Use larger steps for layout, smaller for type</h3>
         <p>As a rule of thumb: <code class="gw-mono">--space-1</code> through <code class="gw-mono">--space-3</code> are typographic gaps. <code class="gw-mono">--space-4</code> through <code class="gw-mono">--space-6</code> are component-internal padding. <code class="gw-mono">--space-8</code> and above are layout-level — gaps between sections of a page.</p>
 
-        <h3 class="gw-heading-s">No override utilities yet</h3>
+        <h3>No override utilities yet</h3>
         <p>Groundwork does not ship spacing utility classes — there is no <code class="gw-mono">.gw-margin-top-4</code> or equivalent. Layout responsibilities belong in the template via <code class="gw-mono">gw-stack</code> / <code class="gw-mono">gw-cluster</code>, or inside a component's own CSS. If the absence becomes painful enough, the question is worth re-opening as a system feature.</p>
       </div>
 
       <div class="gw-prose">
-        <h2 class="gw-heading-m">Related</h2>
+        <h2>Related</h2>
         <ul class="gw-list">
           <li><a class="gw-link" href="/styles/layout/">Layout</a> — the stack and cluster primitives that consume the spacing scale.</li>
           <li><a class="gw-link" href="/styles/typography/">Typography</a> — line-height tokens that pair with vertical spacing.</li>

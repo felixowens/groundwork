@@ -55,13 +55,13 @@
   --_gw-space-12: 3rem;
   --_gw-space-16: 4rem;
   --_gw-space-20: 5rem;
-  --_gw-text-xs: 0.8125rem;
-  --_gw-text-sm: 0.875rem;
-  --_gw-text-base: 1rem;
-  --_gw-text-lg: 1.25rem;
-  --_gw-text-xl: 1.5rem;
-  --_gw-text-2xl: 2rem;
-  --_gw-text-3xl: 2.5rem;
+  --_gw-text-xs: 0.875rem;
+  --_gw-text-sm: 1rem;
+  --_gw-text-base: 1.1875rem;
+  --_gw-text-lg: 1.5rem;
+  --_gw-text-xl: 2.25rem;
+  --_gw-text-2xl: 3rem;
+  --_gw-text-3xl: 4rem;
   --_gw-border-thin: 1px;
   --_gw-border-medium: 2px;
   --_gw-border-thick: 3px;
@@ -85,8 +85,8 @@
   --space-12: var(--_gw-space-12);
   --space-16: var(--_gw-space-16);
   --space-20: var(--_gw-space-20);
-  --font-sans: 'Söhne', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'Söhne Mono', 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
   --text-caption: var(--_gw-text-xs);
   --text-secondary: var(--_gw-text-sm);
   --text-body: var(--_gw-text-base);
@@ -95,7 +95,7 @@
   --text-title: var(--_gw-text-2xl);
   --text-display: var(--_gw-text-3xl);
   --leading-tight: 1.25;
-  --leading-normal: 1.6;
+  --leading-normal: 1.32;
   --measure: 66ch;
   --ink: var(--_gw-neutral-800);
   --ink-secondary: var(--_gw-neutral-600);
@@ -267,17 +267,29 @@ body {
   margin-top: var(--space-4);
 }
 
-.gw-prose > h2 + *,
-.gw-prose > h3 + * {
-  margin-top: var(--space-2);
-}
-
+.gw-stack > * + h2,
 .gw-prose > * + h2 {
   margin-top: var(--space-10);
 }
 
+.gw-stack > * + h3,
 .gw-prose > * + h3 {
   margin-top: var(--space-8);
+}
+
+.gw-stack > h1 + *,
+.gw-prose > h1 + * {
+  margin-top: var(--space-12);
+}
+
+.gw-stack > h2 + *,
+.gw-prose > h2 + * {
+  margin-top: var(--space-8);
+}
+
+.gw-stack > h3 + *,
+.gw-prose > h3 + * {
+  margin-top: var(--space-5);
 }
 
 .gw-grid {
@@ -289,26 +301,26 @@ body {
 .gw-heading-xl {
   font-size: var(--text-display);
   font-weight: 700;
-  line-height: var(--leading-tight);
+  line-height: 1.05;
   letter-spacing: -0.02em;
 }
 
 .gw-heading-l {
   font-size: var(--text-title);
   font-weight: 700;
-  line-height: var(--leading-tight);
+  line-height: 1.05;
   letter-spacing: -0.01em;
 }
 
 .gw-heading-m {
   font-size: var(--text-heading);
-  font-weight: 600;
-  line-height: var(--leading-tight);
+  font-weight: 700;
+  line-height: 1.12;
 }
 
 .gw-heading-s {
   font-size: var(--text-subheading);
-  font-weight: 600;
+  font-weight: 700;
   line-height: var(--leading-tight);
 }
 
@@ -360,22 +372,30 @@ body {
   margin-top: var(--space-2);
 }
 
-.gw-prose h1:not([class]) {
+h1 {
   font-size: var(--text-title);
   font-weight: 700;
-  line-height: var(--leading-tight);
+  line-height: 1.05;
   letter-spacing: -0.01em;
 }
 
-.gw-prose h2:not([class]) {
+h2 {
   font-size: var(--text-heading);
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+h3 {
+  font-size: var(--text-subheading);
+  font-weight: 700;
   line-height: var(--leading-tight);
 }
 
-.gw-prose h3:not([class]) {
-  font-size: var(--text-subheading);
-  font-weight: 600;
+h4,
+h5,
+h6 {
+  font-size: var(--text-body);
+  font-weight: 700;
   line-height: var(--leading-tight);
 }
 

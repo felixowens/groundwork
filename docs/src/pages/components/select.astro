@@ -8,23 +8,23 @@ import { meta } from './_meta/select';
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
-        <h1 class="gw-heading-l">Select</h1>
+        <h1>Select</h1>
         <p>Use Select when the user must choose one option from a short, known list.</p>
-        <h2 class="gw-heading-m">When to use</h2>
+        <h2>When to use</h2>
         <p>Use Select inside Field so the label, hint, error copy, and ARIA relationships stay consistent with other form controls.</p>
         <p>Include a clear empty option such as “Select a country” when there is no safe default.</p>
-        <h2 class="gw-heading-m">When not to use</h2>
+        <h2>When not to use</h2>
         <p>Do not use Select for a short, visible list of prominent choices — use <a class="gw-link" href="/components/radio-group/">RadioGroup</a> instead, so users can see every option at once.</p>
         <p>Do not use Select for very long or searchable datasets; build a dedicated autocomplete pattern instead.</p>
       </div>
 
       <section class="gw-card gw-stack">
-        <h2 class="gw-heading-m">Demo</h2>
+        <h2>Demo</h2>
         <SelectDemo />
       </section>
 
       <section class="gw-card gw-stack">
-        <h2 class="gw-heading-m">Accessibility notes</h2>
+        <h2>Accessibility notes</h2>
         <p class="gw-body--sm">Select requires an accessible name through <code class="gw-mono">aria-label</code> or <code class="gw-mono">aria-labelledby</code>. Prefer using Field to provide the visible label and ARIA wiring.</p>
         <p class="gw-body--sm">Keep option labels short and specific. The selected value should make sense when read with the field label.</p>
       </section>
