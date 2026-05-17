@@ -44,7 +44,15 @@ export const docsNavSections = [
   },
   {
     heading: 'Styles',
-    links: [{ href: '/styles/', label: 'All styles' }],
+    links: [
+      { href: '/styles/', label: 'All styles' },
+      { href: '/styles/colour/', label: 'Colour' },
+      { href: '/styles/spacing/', label: 'Spacing' },
+      { href: '/styles/typography/', label: 'Typography' },
+      { href: '/styles/layout/', label: 'Layout' },
+      { href: '/styles/borders/', label: 'Borders' },
+      { href: '/styles/focus/', label: 'Focus' },
+    ],
   },
   {
     heading: 'Components',

@@ -1,0 +1,119 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+interface SpaceSpec {
+  readonly token: string;
+  readonly rem: string;
+  readonly px: string;
+}
+
+const scale: readonly SpaceSpec[] = [
+  { token: '--space-1', rem: '0.25rem', px: '4px' },
+  { token: '--space-2', rem: '0.5rem', px: '8px' },
+  { token: '--space-3', rem: '0.75rem', px: '12px' },
+  { token: '--space-4', rem: '1rem', px: '16px' },
+  { token: '--space-5', rem: '1.25rem', px: '20px' },
+  { token: '--space-6', rem: '1.5rem', px: '24px' },
+  { token: '--space-8', rem: '2rem', px: '32px' },
+  { token: '--space-10', rem: '2.5rem', px: '40px' },
+  { token: '--space-12', rem: '3rem', px: '48px' },
+  { token: '--space-16', rem: '4rem', px: '64px' },
+  { token: '--space-20', rem: '5rem', px: '80px' },
+];
+---
+
+<DocsLayout title="Spacing" description="The single scale of spacing tokens that backs every margin, padding, and gap in Groundwork">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Spacing</h1>
+        <p>Groundwork uses one spacing scale. Components reference these tokens; designers choose from the same closed set. The scale is non-linear past <code class="gw-mono">--space-6</code> — gaps double rather than continuing in 4px increments, which keeps the choices distinct at larger sizes.</p>
+        <p>Every value is expressed in <code class="gw-mono">rem</code>; the pixel equivalents assume the browser's default 16px root font size.</p>
+      </div>
+
+      <ul class="gw-space-scale" role="list">
+        {
+          scale.map((step) => (
+            <li class="gw-space-step">
+              <div class="gw-space-step__bar" style={`inline-size: var(${step.token})`} aria-hidden="true" />
+              <div class="gw-space-step__meta">
+                <code class="gw-mono gw-space-step__token">{step.token}</code>
+                <span class="gw-space-step__value">{step.rem} / {step.px}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Guidance</h2>
+        <h3 class="gw-heading-s">Pick from the scale, never a custom value</h3>
+        <p>If a layout looks like it needs <code class="gw-mono">14px</code>, snap to <code class="gw-mono">--space-3</code> (12px) or <code class="gw-mono">--space-4</code> (16px). Custom values break the visual rhythm and the closed-scale guarantee — a designer cannot trust that all spacings come from the same set.</p>
+
+        <h3 class="gw-heading-s">Reach for layout primitives, not raw margins</h3>
+        <p>Most vertical rhythm should come from <a class="gw-link" href="/styles/layout/#gw-stack"><code class="gw-mono">gw-stack</code></a> and horizontal rhythm from <a class="gw-link" href="/styles/layout/#gw-cluster"><code class="gw-mono">gw-cluster</code></a>, both of which set their gaps from the spacing scale. Reach for raw <code class="gw-mono">--space-N</code> values only when the primitive doesn't apply.</p>
+
+        <h3 class="gw-heading-s">Why the scale skips numbers</h3>
+        <p>The tokens go 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20. There is no <code class="gw-mono">--space-7</code> or <code class="gw-mono">--space-9</code>. Each step is a deliberate choice; a missing number is not an oversight. Adding intermediate values would dilute the scale's usefulness as a closed set.</p>
+
+        <h3 class="gw-heading-s">Use larger steps for layout, smaller for type</h3>
+        <p>As a rule of thumb: <code class="gw-mono">--space-1</code> through <code class="gw-mono">--space-3</code> are typographic gaps (between a label and its input, between a list item and the next). <code class="gw-mono">--space-4</code> through <code class="gw-mono">--space-6</code> are component-internal padding. <code class="gw-mono">--space-8</code> and above are layout-level — gaps between sections of a page.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/styles/layout/">Layout</a> — the stack and cluster primitives that consume the spacing scale.</li>
+          <li><a class="gw-link" href="/styles/typography/">Typography</a> — line-height tokens that pair with vertical spacing.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .gw-space-scale {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background: var(--surface-raised);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  .gw-space-step {
+    display: grid;
+    grid-template-columns: minmax(160px, 1fr) auto;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .gw-space-step__bar {
+    block-size: 24px;
+    background: var(--action);
+    border-radius: var(--radius-sm);
+    min-inline-size: 4px;
+  }
+
+  .gw-space-step__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    text-align: end;
+  }
+
+  .gw-space-step__token {
+    font-size: var(--text-body);
+    color: var(--ink);
+  }
+
+  .gw-space-step__value {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    font-family: var(--font-mono);
+  }
+</style>

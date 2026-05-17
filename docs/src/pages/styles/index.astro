@@ -1,14 +1,66 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+
+interface StyleLink {
+  readonly href: string;
+  readonly label: string;
+  readonly description: string;
+}
+
+const styles: readonly StyleLink[] = [
+  {
+    href: '/styles/colour/',
+    label: 'Colour',
+    description: 'Semantic colour tokens with paired light and dark values, grouped by purpose.',
+  },
+  {
+    href: '/styles/spacing/',
+    label: 'Spacing',
+    description: 'The single scale of spacing tokens behind every gap, margin, and padding.',
+  },
+  {
+    href: '/styles/typography/',
+    label: 'Typography',
+    description: 'Heading and body utilities, type scale, leading, measure, and font stacks.',
+  },
+  {
+    href: '/styles/layout/',
+    label: 'Layout',
+    description: 'Width, stack, cluster, prose, and grid primitives — and the recommended widths for patterns.',
+  },
+  {
+    href: '/styles/borders/',
+    label: 'Borders',
+    description: 'Border widths, corner radii, and shadow tokens for surface treatment.',
+  },
+  {
+    href: '/styles/focus/',
+    label: 'Focus',
+    description: 'The 3px yellow focus ring and the tokens that compose it.',
+  },
+];
 ---
 
-<DocsLayout title="Styles" description="Visual style guidance and the tokens that back it">
+<DocsLayout title="Styles" description="Visual style guidance and the semantic tokens that back each decision">
   <section class="gw-section">
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
         <h1 class="gw-heading-l">Styles</h1>
-        <p>Styles combine usage guidance with the semantic tokens that back each visual decision. Components reference these tokens; designers use them as the closed scale of choices available.</p>
-        <p>Per-style pages (colour, spacing, type, layout) are not yet written. See the <a class="gw-link" href="/get-started/architecture/">architecture overview</a> for how tokens are layered.</p>
+        <p>Each style page combines a reference view of the available tokens with the guidance that explains when and why to reach for them. Components compose these tokens; designers choose from the same closed set.</p>
+        <p>See the <a class="gw-link" href="/get-started/architecture/">architecture overview</a> for how primitive and semantic tokens are layered.</p>
+      </div>
+
+      <div class="gw-grid">
+        {
+          styles.map((style) => (
+            <article class="gw-card gw-stack--sm">
+              <h2 class="gw-heading-s">
+                <a class="gw-link" href={style.href}>{style.label}</a>
+              </h2>
+              <p class="gw-body--sm">{style.description}</p>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>

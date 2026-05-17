@@ -1,0 +1,205 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+interface TypeSpec {
+  readonly className: string;
+  readonly token: string;
+  readonly value: string;
+  readonly description: string;
+}
+
+const headingScale: readonly TypeSpec[] = [
+  { className: 'gw-heading-xl', token: '--text-display', value: '2.5rem / 40px', description: 'Display — reserved for marketing or hero copy.' },
+  { className: 'gw-heading-l', token: '--text-title', value: '2rem / 32px', description: 'Page title — used once per page as the H1.' },
+  { className: 'gw-heading-m', token: '--text-heading', value: '1.5rem / 24px', description: 'Section heading — typically the H2 inside a page section.' },
+  { className: 'gw-heading-s', token: '--text-subheading', value: '1.25rem / 20px', description: 'Subheading — typically the H3 inside a section.' },
+];
+
+const bodyScale: readonly TypeSpec[] = [
+  { className: 'gw-body', token: '--text-body', value: '1rem / 16px', description: 'Body — default reading size for paragraph copy.' },
+  { className: 'gw-body--sm', token: '--text-secondary', value: '0.875rem / 14px', description: 'Secondary — for supporting copy, hints, and metadata.' },
+  { className: 'gw-body--xs', token: '--text-caption', value: '0.8125rem / 13px', description: 'Caption — for labels, eyebrow text, and the smallest legible copy.' },
+];
+---
+
+<DocsLayout title="Typography" description="Type scale, utility classes, and the leading and measure tokens that back readable prose">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Typography</h1>
+        <p>Groundwork ships one type scale built on seven size tokens and two leading values. Every component derives its sizes from this scale; designers and developers reach for the named utility classes (<code class="gw-mono">.gw-heading-*</code>, <code class="gw-mono">.gw-body</code>) rather than raw size tokens.</p>
+        <p>The sans-serif stack falls back through system fonts; the mono stack is reserved for code, token names, and tabular values.</p>
+      </div>
+
+      <section class="gw-stack" aria-labelledby="typography-headings">
+        <h2 class="gw-heading-m" id="typography-headings">Headings</h2>
+        <p class="gw-body--sm">Each heading utility bundles a size, weight, and leading. Pair them with semantic HTML — <code class="gw-mono">&lt;h1&gt;</code> with <code class="gw-mono">.gw-heading-l</code>, <code class="gw-mono">&lt;h2&gt;</code> with <code class="gw-mono">.gw-heading-m</code>, and so on.</p>
+        <ul class="gw-type-specimens" role="list">
+          {
+            headingScale.map((spec) => (
+              <li class="gw-type-specimen">
+                <span class={spec.className}>The quick brown fox</span>
+                <div class="gw-type-specimen__meta">
+                  <code class="gw-mono gw-type-specimen__class">.{spec.className}</code>
+                  <span class="gw-type-specimen__value">{spec.token} — {spec.value}</span>
+                  <span class="gw-type-specimen__description">{spec.description}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="typography-body">
+        <h2 class="gw-heading-m" id="typography-body">Body text</h2>
+        <p class="gw-body--sm">Body utilities cover paragraph, secondary, and caption sizes. They share the same line-height (<code class="gw-mono">--leading-normal</code>) so they stack cleanly inside <code class="gw-mono">.gw-prose</code>.</p>
+        <ul class="gw-type-specimens" role="list">
+          {
+            bodyScale.map((spec) => (
+              <li class="gw-type-specimen">
+                <span class={spec.className}>The quick brown fox jumps over the lazy dog</span>
+                <div class="gw-type-specimen__meta">
+                  <code class="gw-mono gw-type-specimen__class">.{spec.className}</code>
+                  <span class="gw-type-specimen__value">{spec.token} — {spec.value}</span>
+                  <span class="gw-type-specimen__description">{spec.description}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="typography-supporting">
+        <h2 class="gw-heading-m" id="typography-supporting">Supporting tokens</h2>
+        <p class="gw-body--sm">Two leading values, one ideal line length, and two font stacks.</p>
+        <dl class="gw-type-table">
+          <div class="gw-type-table__row">
+            <dt><code class="gw-mono">--leading-tight</code></dt>
+            <dd>1.25 — headings and any text where compact vertical rhythm matters.</dd>
+          </div>
+          <div class="gw-type-table__row">
+            <dt><code class="gw-mono">--leading-normal</code></dt>
+            <dd>1.6 — body copy and any prose longer than a single line.</dd>
+          </div>
+          <div class="gw-type-table__row">
+            <dt><code class="gw-mono">--measure</code></dt>
+            <dd>66ch — the maximum line length for comfortable reading. <code class="gw-mono">.gw-prose</code> applies this automatically.</dd>
+          </div>
+          <div class="gw-type-table__row">
+            <dt><code class="gw-mono">--font-sans</code></dt>
+            <dd>Söhne, system sans-serif fallbacks. Used for every default surface.</dd>
+          </div>
+          <div class="gw-type-table__row">
+            <dt><code class="gw-mono">--font-mono</code></dt>
+            <dd>Söhne Mono, system monospace fallbacks. Used for code, token names, and the <code class="gw-mono">.gw-mono</code> utility.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Guidance</h2>
+        <h3 class="gw-heading-s">Use heading utilities, not raw <code class="gw-mono">--text-*</code> tokens</h3>
+        <p>The <code class="gw-mono">.gw-heading-*</code> utilities exist because a heading is a size <em>and</em> a weight <em>and</em> a leading, applied together. Reaching for <code class="gw-mono">font-size: var(--text-heading)</code> in component CSS skips the weight and leading — the result looks similar but breaks visual rhythm.</p>
+
+        <h3 class="gw-heading-s">One H1 per page, ranked by importance below</h3>
+        <p>Use <code class="gw-mono">.gw-heading-l</code> exactly once per page on the <code class="gw-mono">&lt;h1&gt;</code>. Section headings (<code class="gw-mono">&lt;h2&gt;</code>) use <code class="gw-mono">.gw-heading-m</code>. Subheadings (<code class="gw-mono">&lt;h3&gt;</code>) use <code class="gw-mono">.gw-heading-s</code>. The visual hierarchy and the document outline should agree.</p>
+
+        <h3 class="gw-heading-s">Respect the measure</h3>
+        <p>Lines longer than 66 characters become harder to track. Wrap prose in <code class="gw-mono">.gw-prose</code> or otherwise constrain the container to <code class="gw-mono">--measure</code>. Tables, code blocks, and figures are exempt.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Accessibility</h2>
+        <p>The minimum body size is <code class="gw-mono">--text-caption</code> (13px). Do not render text smaller than this; it falls below the threshold for comfortable reading on small displays.</p>
+        <p>The type scale uses <code class="gw-mono">rem</code> units, so user browser zoom and root-font-size preferences scale every component proportionally. Avoid setting <code class="gw-mono">font-size</code> in fixed pixels.</p>
+        <p>Heading weight provides hierarchy on top of size, but the document outline must work without visual styles. Use the correct heading level (<code class="gw-mono">h1</code>, <code class="gw-mono">h2</code>, <code class="gw-mono">h3</code>) for the section's depth — not for how big it should look.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/styles/spacing/">Spacing</a> — vertical rhythm tokens that pair with leading.</li>
+          <li><a class="gw-link" href="/styles/layout/">Layout</a> — <code class="gw-mono">.gw-prose</code> applies the measure and stacks typographic blocks.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .gw-type-specimens {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: var(--space-5);
+    margin: 0;
+    list-style: none;
+    background: var(--surface-raised);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .gw-type-specimen {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .gw-type-specimen__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    align-items: baseline;
+  }
+
+  .gw-type-specimen__class {
+    color: var(--ink);
+  }
+
+  .gw-type-specimen__value {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .gw-type-specimen__description {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+    flex-basis: 100%;
+  }
+
+  .gw-type-table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    margin: 0;
+    background: var(--surface-raised);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .gw-type-table__row {
+    display: grid;
+    grid-template-columns: minmax(160px, 12rem) 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  .gw-type-table__row dt {
+    margin: 0;
+  }
+
+  .gw-type-table__row dd {
+    margin: 0;
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+  }
+
+  @media (max-width: 600px) {
+    .gw-type-table__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

@@ -1,0 +1,223 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+interface SwatchSpec {
+  readonly token: string;
+  readonly light: string;
+  readonly dark: string;
+}
+
+interface GroupSpec {
+  readonly id: string;
+  readonly heading: string;
+  readonly intro: string;
+  readonly swatches: readonly SwatchSpec[];
+}
+
+const groups: readonly GroupSpec[] = [
+  {
+    id: 'surface',
+    heading: 'Surface',
+    intro:
+      'Page and card backgrounds. The four surfaces give a flat hierarchy without crossing tonal boundaries between modes.',
+    swatches: [
+      { token: '--surface', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)' },
+      { token: '--surface-raised', light: 'oklch(96.96% 0.0026 106.4)', dark: 'oklch(23.46% 0.0019 106.5)' },
+      { token: '--surface-sunken', light: 'oklch(93.62% 0.0040 106.5)', dark: 'oklch(17.76% 0 0)' },
+      { token: '--surface-overlay', light: 'oklch(100% 0 0)', dark: 'oklch(35.93% 0.0034 106.6)' },
+    ],
+  },
+  {
+    id: 'ink',
+    heading: 'Ink',
+    intro: 'Foreground text. Three steps cover body text, secondary copy, and disabled state.',
+    swatches: [
+      { token: '--ink', light: 'oklch(23.46% 0.0019 106.5)', dark: 'oklch(96.96% 0.0026 106.4)' },
+      { token: '--ink-secondary', light: 'oklch(47.38% 0.0047 106.6)', dark: 'oklch(71.46% 0.0043 106.5)' },
+      { token: '--ink-disabled', light: 'oklch(63.25% 0.0044 106.5)', dark: 'oklch(53.73% 0.0046 106.6)' },
+    ],
+  },
+  {
+    id: 'action',
+    heading: 'Action',
+    intro: 'Primary action colour for Button, links, and other interactive surfaces.',
+    swatches: [
+      { token: '--action', light: 'oklch(53.47% 0.1360 249.9)', dark: 'oklch(70.69% 0.1103 243.4)' },
+      { token: '--action-hover', light: 'oklch(41.54% 0.1030 249.8)', dark: 'oklch(80.91% 0.0956 251.8)' },
+      { token: '--action-text', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)' },
+    ],
+  },
+  {
+    id: 'destructive',
+    heading: 'Destructive',
+    intro: 'Irreversible or potentially harmful actions. Visually distinct from <code class="gw-mono">--error</code>, which signals validation problems rather than user-initiated deletion.',
+    swatches: [
+      { token: '--destructive', light: 'oklch(50.16% 0.1887 27.5)', dark: 'oklch(68.75% 0.1420 21.5)' },
+      { token: '--destructive-hover', light: 'oklch(41.16% 0.1524 27.2)', dark: 'oklch(82.19% 0.0811 19.0)' },
+      { token: '--destructive-text', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)' },
+    ],
+  },
+  {
+    id: 'status',
+    heading: 'Status',
+    intro: 'Success, warning, and error states. Each ships with a paired <code class="gw-mono">-surface</code> for Banner backgrounds and similar muted treatments.',
+    swatches: [
+      { token: '--success', light: 'oklch(47.84% 0.1205 154.1)', dark: 'oklch(71.85% 0.1417 144.9)' },
+      { token: '--success-surface', light: 'oklch(95.71% 0.0210 147.6)', dark: 'oklch(17.76% 0 0)' },
+      { token: '--warning', light: 'oklch(52.26% 0.1057 85.5)', dark: 'oklch(86.22% 0.1681 88.3)' },
+      { token: '--warning-surface', light: 'oklch(96.40% 0.0509 92.6)', dark: 'oklch(17.76% 0 0)' },
+      { token: '--error', light: 'oklch(50.16% 0.1887 27.5)', dark: 'oklch(68.75% 0.1420 21.5)' },
+      { token: '--error-surface', light: 'oklch(93.83% 0.0264 17.6)', dark: 'oklch(17.76% 0 0)' },
+    ],
+  },
+  {
+    id: 'border',
+    heading: 'Border',
+    intro: 'Two border weights: subtle separation between regions, and stronger separation for cards or focused elements.',
+    swatches: [
+      { token: '--border', light: 'oklch(86.88% 0.0054 106.5)', dark: 'oklch(35.93% 0.0034 106.6)' },
+      { token: '--border-strong', light: 'oklch(71.46% 0.0043 106.5)', dark: 'oklch(53.73% 0.0046 106.6)' },
+    ],
+  },
+  {
+    id: 'focus',
+    heading: 'Focus',
+    intro: 'Text colour that pairs with the focus ring. See <a class="gw-link" href="/styles/focus/">Focus</a> for the ring itself.',
+    swatches: [{ token: '--focus-text', light: 'oklch(23.46% 0.0019 106.5)', dark: 'oklch(20.02% 0 0)' }],
+  },
+];
+---
+
+<DocsLayout title="Colour" description="The semantic colour tokens that back every component, with light and dark values side by side">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Colour</h1>
+        <p>Groundwork's public colour palette is a closed set of semantic tokens. Components reference these tokens; designers use them as the available choices. Every token below has a paired dark-mode value — the chip on the left is the value in light mode, the chip on the right is the value in dark mode.</p>
+        <p>Colour values are written in <code class="gw-mono">oklch()</code> for perceptual uniformity. The <a class="gw-link" href="/get-started/architecture/">architecture overview</a> explains how semantic tokens remap to primitives between modes.</p>
+      </div>
+
+      {
+        groups.map((group) => (
+          <section class="gw-stack" aria-labelledby={`colour-${group.id}`}>
+            <h2 class="gw-heading-m" id={`colour-${group.id}`}>{group.heading}</h2>
+            <p class="gw-body--sm" set:html={group.intro} />
+            <ul class="gw-swatch-grid" role="list">
+              {group.swatches.map((swatch) => (
+                <li class="gw-swatch">
+                  <div class="gw-swatch__chips" aria-hidden="true">
+                    <span class="gw-swatch__chip" style={`background: ${swatch.light}`} />
+                    <span class="gw-swatch__chip" style={`background: ${swatch.dark}`} />
+                  </div>
+                  <div class="gw-swatch__meta">
+                    <code class="gw-mono gw-swatch__token">{swatch.token}</code>
+                    <span class="gw-swatch__value">
+                      <span class="gw-swatch__value-label">light</span> {swatch.light}
+                    </span>
+                    <span class="gw-swatch__value">
+                      <span class="gw-swatch__value-label">dark</span> {swatch.dark}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Guidance</h2>
+        <h3 class="gw-heading-s">Reach for the semantic name, not the colour</h3>
+        <p>Choose tokens by intent. A confirmation banner uses <code class="gw-mono">--success</code> because it signals success — not because it's green. The token's underlying colour can change without affecting the meaning.</p>
+
+        <h3 class="gw-heading-s">Use status colours sparingly</h3>
+        <p>Status colours carry meaning. Reserve <code class="gw-mono">--success</code>, <code class="gw-mono">--warning</code>, and <code class="gw-mono">--error</code> for messages where the colour itself communicates state. Decorating non-status content with these tokens dilutes the signal.</p>
+
+        <h3 class="gw-heading-s">Distinguish destructive from error</h3>
+        <p><code class="gw-mono">--destructive</code> belongs on Buttons that remove data or reverse an action — places where the user intentionally pushes the button knowing the consequence. <code class="gw-mono">--error</code> belongs on validation surfaces — places where the system tells the user something is wrong with their input. The two should not appear together in the same control.</p>
+
+        <h3 class="gw-heading-s">Layer surfaces, don't stack them</h3>
+        <p>Use <code class="gw-mono">--surface</code> for the page, <code class="gw-mono">--surface-raised</code> for cards, and <code class="gw-mono">--surface-sunken</code> for inset regions or input fields. Nesting a raised card inside another raised card flattens the hierarchy — pick one elevation per region.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Accessibility</h2>
+        <p>Every paired token is tuned for at least 4.5:1 contrast in its paired use — <code class="gw-mono">--action-text</code> on <code class="gw-mono">--action</code>, <code class="gw-mono">--ink</code> on <code class="gw-mono">--surface</code>, and so on. If you compose tokens outside these pairings, verify contrast manually.</p>
+        <p>Colour is never the only signal. Status banners include an icon and a heading; destructive buttons include the verb in their label; form errors include text describing the problem. The colour reinforces information that is already legible without it.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/styles/focus/">Focus</a> — the 3px yellow ring that pairs with <code class="gw-mono">--focus-text</code>.</li>
+          <li><a class="gw-link" href="/components/banner/">Banner</a> — primary consumer of the status surfaces.</li>
+          <li><a class="gw-link" href="/components/button/">Button</a> — uses <code class="gw-mono">--action</code> and <code class="gw-mono">--destructive</code>.</li>
+          <li><a class="gw-link" href="/get-started/architecture/">Architecture overview</a> — how semantic tokens remap to primitives between light and dark modes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .gw-swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: var(--space-4);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .gw-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--surface-raised);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .gw-swatch__chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-1);
+    height: 56px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .gw-swatch__chip {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: var(--radius-sm);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .gw-swatch__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .gw-swatch__token {
+    font-size: var(--text-body);
+    color: var(--ink);
+  }
+
+  .gw-swatch__value {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .gw-swatch__value-label {
+    display: inline-block;
+    inline-size: 3.25rem;
+    color: var(--ink-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+</style>

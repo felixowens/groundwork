@@ -2,18 +2,6 @@
 
 Revisit-when triggers that don't belong inline as TODOs. Each entry names the trigger condition, the work to do, and the files most likely to need editing.
 
-## Weave layout-width guidance into patterns
-
-**Trigger:** when `/styles/layout/` exists and documents recommended widths.
-
-**What to do:** add prose to `/patterns/submit-information/` and `/patterns/check-answers/` explaining the width these flows should sit at and why. Cross-link to the layout style page.
-
-**Files most likely affected:**
-
-- `docs/src/pages/patterns/submit-information.astro`
-- `docs/src/pages/patterns/check-answers.astro`
-- the eventual `/styles/layout/` page
-
 ## Revisit Select / RadioGroup / CheckboxGroup guidance
 
 **Trigger:** when a richer single-choice picker (autocomplete-style) component lands in Groundwork.

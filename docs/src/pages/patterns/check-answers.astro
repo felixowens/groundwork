@@ -15,6 +15,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <div class="gw-prose">
         <h2 class="gw-heading-m">When to use this pattern</h2>
         <p>Use this pattern for any transaction the user cannot easily undo, where the answers are entered across several Fields, or where getting one detail wrong carries a meaningful cost — sending to the wrong address, paying the wrong amount, applying for the wrong thing.</p>
+        <p>Render the review screen at <a class="gw-link" href="/styles/layout/#layout-width"><code class="gw-mono">gw-width--narrow</code></a> (680px). Match the width of the form that produced the answers, so the user sees the same horizontal frame for entry and review.</p>
         <p>Show a single check-answers screen immediately before the confirmation screen for small or medium transactions. For very large transactions split into sections, include a check-answers screen at the end of each section so users can confirm one section's answers before moving on.</p>
         <p>This pattern is the review moment that sits inside the broader <a class="gw-link" href="/patterns/submit-information/">Help users submit information correctly</a> journey. If you are designing the whole transaction, start there.</p>
 

@@ -1,0 +1,148 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Focus" description="The 3px yellow focus ring that signals keyboard focus across every Groundwork component">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Focus</h1>
+        <p>Every interactive element in Groundwork shows the same focus ring: a 3px yellow outline with a 2px offset, drawn from <code class="gw-mono">--focus-ring-color</code>, <code class="gw-mono">--focus-ring-width</code>, and <code class="gw-mono">--focus-ring-offset</code>. The ring is not optional and is not styleable per component.</p>
+        <p>The colour is yellow because it remains highly visible against every surface, ink, and action colour in both modes. Other rings (matching the action colour, for example) fail this check.</p>
+      </div>
+
+      <section class="gw-stack" aria-labelledby="focus-anatomy">
+        <h2 class="gw-heading-m" id="focus-anatomy">Anatomy</h2>
+        <p class="gw-body--sm">The focus ring is composed of three tokens. They appear together everywhere the ring is drawn.</p>
+        <dl class="gw-focus-table">
+          <div class="gw-focus-table__row">
+            <dt><code class="gw-mono">--focus-ring-color</code></dt>
+            <dd>oklch(84.30% 0.1500 79.5) — a saturated yellow tuned for visibility against both light and dark surfaces.</dd>
+          </div>
+          <div class="gw-focus-table__row">
+            <dt><code class="gw-mono">--focus-ring-width</code></dt>
+            <dd>3px — wide enough to remain visible at small element sizes, narrow enough to avoid visual overload.</dd>
+          </div>
+          <div class="gw-focus-table__row">
+            <dt><code class="gw-mono">--focus-ring-offset</code></dt>
+            <dd>2px — pulls the ring away from the element's border so the two never visually merge.</dd>
+          </div>
+          <div class="gw-focus-table__row">
+            <dt><code class="gw-mono">--focus-text</code></dt>
+            <dd>Foreground colour for any element that uses a yellow background as its focus surface (rare; used by the focus ring on dark mode where contrast inverts).</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="focus-examples">
+        <h2 class="gw-heading-m" id="focus-examples">Applied</h2>
+        <p class="gw-body--sm">The same ring on Button, Input, and a link. The screenshots are static — tab through any component page to see the live ring respond to keyboard focus.</p>
+        <div class="gw-focus-demo">
+          <div class="gw-focus-demo__row">
+            <button type="button" class="gw-button gw-focus-demo__focused">Save and continue</button>
+            <span class="gw-body--xs">Primary Button with focus ring</span>
+          </div>
+          <div class="gw-focus-demo__row">
+            <button type="button" class="gw-button gw-button--secondary gw-focus-demo__focused">Cancel</button>
+            <span class="gw-body--xs">Secondary Button — same ring</span>
+          </div>
+          <div class="gw-focus-demo__row">
+            <input type="text" class="gw-input gw-focus-demo__focused" value="user@example.com" readonly aria-label="Email address" />
+            <span class="gw-body--xs">Input — outline pulled outside the 2px medium border</span>
+          </div>
+          <div class="gw-focus-demo__row">
+            <a class="gw-link gw-focus-demo__focused" href="#focus-anatomy">Anchor link</a>
+            <span class="gw-body--xs">Inline link</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Guidance</h2>
+        <h3 class="gw-heading-s">Never hide the focus ring</h3>
+        <p>Setting <code class="gw-mono">outline: none</code> on any focusable element is forbidden. If a custom element needs a different visual treatment, it must still show the 3px yellow ring — restyle the inner element, not the outline.</p>
+
+        <h3 class="gw-heading-s">Use <code class="gw-mono">:focus-visible</code>, not <code class="gw-mono">:focus</code></h3>
+        <p>Most components draw the ring with <code class="gw-mono">:focus-visible</code> so mouse clicks don't surface a ring the keyboard user didn't ask for. Form fields use plain <code class="gw-mono">:focus</code> because text-entry focus is always intentional and the ring confirms which field is active.</p>
+
+        <h3 class="gw-heading-s">Apply to the right element</h3>
+        <p>For composite controls like RadioGroup and CheckboxGroup, the ring is drawn on the visible item (using <code class="gw-mono">:has(input:focus-visible)</code>), not on the hidden native input. The result is that the user sees the ring around the labelled option, which is what they're acting on.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Accessibility</h2>
+        <p>The focus ring meets <a class="gw-link" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html">WCAG 2.4.7 (Focus Visible)</a>. It also satisfies <a class="gw-link" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">WCAG 2.4.11 (Focus Appearance)</a> by being at least 2px thick along its perimeter and contrasting at least 3:1 against both the unfocused element's adjacent pixels and the surrounding background.</p>
+        <p>Keyboard testing is part of every component's Playwright suite. If a contribution adds a focusable surface, that surface must show the ring under <code class="gw-mono">Tab</code> traversal.</p>
+        <p>Do not rely on the focus ring alone to communicate state. Form errors include text describing the problem; disabled buttons set <code class="gw-mono">aria-disabled</code>; required fields are labelled. The ring tells the user <em>where</em> they are, not <em>what</em> the element does.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/styles/colour/#focus">Colour</a> — the <code class="gw-mono">--focus-text</code> pairing.</li>
+          <li><a class="gw-link" href="/styles/borders/#border-widths">Borders</a> — <code class="gw-mono">--focus-ring-width</code> is the same primitive as <code class="gw-mono">--border-width-thick</code>.</li>
+          <li><a class="gw-link" href="/reference/principles/#accessibility-is-structural">Accessibility is structural</a> — why the ring is a system-wide commitment, not a per-component choice.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .gw-focus-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-6);
+    background: var(--surface-raised);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .gw-focus-demo__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .gw-focus-demo__focused {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .gw-focus-table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    margin: 0;
+    background: var(--surface-raised);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .gw-focus-table__row {
+    display: grid;
+    grid-template-columns: minmax(160px, 14rem) 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  .gw-focus-table__row dt {
+    margin: 0;
+  }
+
+  .gw-focus-table__row dd {
+    margin: 0;
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+  }
+
+  @media (max-width: 600px) {
+    .gw-focus-table__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>
