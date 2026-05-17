@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { docsPages } from '../docs-pages';
 
-interface ProseGapViolation {
+interface GapViolation {
   route: string;
-  proseIndex: number;
+  containerKind: 'gw-prose' | 'gw-stack';
+  containerIndex: number;
   previousTag: string;
   currentTag: string;
   expectedGap: number;
@@ -11,17 +12,17 @@ interface ProseGapViolation {
 }
 
 for (const { path } of docsPages) {
-  test(`${path} preserves .gw-prose adjacent-sibling spacing`, async ({ page }) => {
+  test(`${path} preserves .gw-prose and .gw-stack adjacent-sibling spacing`, async ({ page }) => {
     await page.goto(path);
     await page.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
 
-    const violations = await page.evaluate<ProseGapViolation[]>(() => {
+    const violations = await page.evaluate<GapViolation[]>(() => {
       const SPACE_2 = 8;
       const SPACE_4 = 16;
       const SPACE_8 = 32;
       const SPACE_10 = 40;
 
-      function expectedGap(prevTag: string, nextTag: string): number {
+      function expectedGap(containerKind: 'gw-prose' | 'gw-stack', prevTag: string, nextTag: string): number | undefined {
         if (nextTag === 'h2') {
           return SPACE_10;
         }
@@ -31,7 +32,10 @@ for (const { path } of docsPages) {
         if (prevTag === 'h2' || prevTag === 'h3') {
           return SPACE_2;
         }
-        return SPACE_4;
+        // Base gap (no heading involved): only assertable for .gw-prose.
+        // .gw-stack base gap depends on the --sm/--lg/--xl modifier — that
+        // path needs CSS-custom-property resolution to assert tightly.
+        return containerKind === 'gw-prose' ? SPACE_4 : undefined;
       }
 
       function visibleBox(element: Element): { top: number; bottom: number } | undefined {
@@ -65,11 +69,13 @@ for (const { path } of docsPages) {
         };
       }
 
-      const results: ProseGapViolation[] = [];
-      const proses = document.querySelectorAll('.gw-prose');
+      const results: GapViolation[] = [];
+      const containers = document.querySelectorAll('.gw-prose, .gw-stack');
 
-      proses.forEach((prose, proseIndex) => {
-        const children = Array.from(prose.children)
+      containers.forEach((container, containerIndex) => {
+        const containerKind: 'gw-prose' | 'gw-stack' = container.classList.contains('gw-prose') ? 'gw-prose' : 'gw-stack';
+
+        const children = Array.from(container.children)
           .map((element) => ({ element, box: visibleBox(element) }))
           .filter(
             (entry): entry is { element: Element; box: { top: number; bottom: number } } => entry.box !== undefined,
@@ -83,13 +89,17 @@ for (const { path } of docsPages) {
           }
           const previousTag = previous.element.tagName.toLowerCase();
           const currentTag = current.element.tagName.toLowerCase();
-          const expected = expectedGap(previousTag, currentTag);
+          const expected = expectedGap(containerKind, previousTag, currentTag);
+          if (expected === undefined) {
+            continue;
+          }
           const actual = current.box.top - previous.box.bottom;
 
           if (actual < expected - 1) {
             results.push({
               route: window.location.pathname,
-              proseIndex,
+              containerKind,
+              containerIndex,
               previousTag,
               currentTag,
               expectedGap: expected,
@@ -102,6 +112,6 @@ for (const { path } of docsPages) {
       return results;
     });
 
-    expect(violations, `prose gap violations on ${path}`).toEqual([]);
+    expect(violations, `adjacent-sibling gap violations on ${path}`).toEqual([]);
   });
 }

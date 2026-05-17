@@ -51,16 +51,6 @@ Revisit-when triggers that don't belong inline as TODOs. Each entry names the tr
 
 - `tests/visual/prose-spacing.spec.ts`
 
-## Extend prose-spacing test to cover .gw-stack heading-aware rules
-
-**Trigger:** alongside the constants-from-CSS work above, or when a `.gw-stack` heading-aware spacing rule (`.gw-stack > * + h2`, `.gw-stack > h1 + *`, etc.) breaks without the test catching it.
-
-**What to do:** `src/styles/layout.css` now defines heading-aware spacing for both `.gw-prose` and `.gw-stack` with identical pixel values, but `prose-spacing.spec.ts` only walks `.gw-prose`. Extend the selector to `.gw-prose, .gw-stack` and return `undefined` from `expectedGap` for the base "neither sibling is a heading" branch when the container is a `.gw-stack` (the base gap varies by `--sm`/`--lg`/`--xl` modifier — that part can be tackled together with the constants-from-CSS work). Heading-aware branches assert the same values for both containers.
-
-**Files most likely affected:**
-
-- `tests/visual/prose-spacing.spec.ts` (rename to `vertical-rhythm.spec.ts` if the scope generalises)
-
 ## Re-evaluate the hand-rolled API doc generator
 
 **Trigger:** when `scripts/build-api-docs.mjs` grows beyond ~300 lines (ADR-0004's stated re-eval threshold), or when its output starts diverging visibly from what TSDoc would emit (e.g. mis-formatted unions, missing `@throws`, lost overloads).
