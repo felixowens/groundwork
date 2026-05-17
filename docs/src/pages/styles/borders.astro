@@ -1,28 +1,28 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import TokenSample from '../../components/TokenSample.astro';
 
-interface WidthSpec {
+interface BorderTokenSpec {
   readonly token: string;
   readonly value: string;
   readonly usage: string;
 }
 
-interface RadiusSpec {
-  readonly token: string;
-  readonly value: string;
-  readonly usage: string;
-}
-
-const widths: readonly WidthSpec[] = [
+const widths: readonly BorderTokenSpec[] = [
   { token: '--border-width-thin', value: '1px', usage: 'Standard separators — card edges, table rules, dividers.' },
   { token: '--border-width-medium', value: '2px', usage: 'Form controls (Input, Select, Textarea) and Button borders.' },
   { token: '--border-width-thick', value: '3px', usage: 'The focus ring width — see Focus.' },
   { token: '--border-width-heavy', value: '4px', usage: 'Reserved for emphasis treatments. Not used in any default component today.' },
 ];
 
-const radii: readonly RadiusSpec[] = [
+const radii: readonly BorderTokenSpec[] = [
   { token: '--radius-sm', value: '3px', usage: 'Subtle softening — Button, Input, swatch chips.' },
   { token: '--radius-md', value: '6px', usage: 'Cards, banners, summary lists. The "visible card" radius.' },
+];
+
+const shadows: readonly BorderTokenSpec[] = [
+  { token: '--shadow-sm', value: '0 1px 2px rgba(0, 0, 0, 0.06)', usage: 'Subtle separation. Currently unused in core components — available for application surfaces.' },
+  { token: '--shadow-md', value: '0 2px 8px rgba(0, 0, 0, 0.08)', usage: 'Floating elements — dialogs, dropdowns. Not used by default surfaces, which prefer borders over elevation.' },
 ];
 ---
 
@@ -37,17 +37,12 @@ const radii: readonly RadiusSpec[] = [
       <section class="gw-stack" aria-labelledby="border-widths">
         <h2 class="gw-heading-m" id="border-widths">Width</h2>
         <p class="gw-body--sm">Four widths cover everything from a hairline divider to the focus ring.</p>
-        <ul class="gw-border-grid" role="list">
+        <ul class="gw-grid" role="list">
           {
             widths.map((spec) => (
-              <li class="gw-border-sample">
-                <div class="gw-border-sample__visual" style={`border-width: var(${spec.token})`} />
-                <div class="gw-border-sample__meta">
-                  <code class="gw-mono gw-border-sample__token">{spec.token}</code>
-                  <span class="gw-border-sample__value">{spec.value}</span>
-                  <span class="gw-border-sample__usage">{spec.usage}</span>
-                </div>
-              </li>
+              <TokenSample token={spec.token} value={spec.value} usage={spec.usage}>
+                <div class="docs-border-visual" style={`border-width: var(${spec.token})`} />
+              </TokenSample>
             ))
           }
         </ul>
@@ -56,17 +51,12 @@ const radii: readonly RadiusSpec[] = [
       <section class="gw-stack" aria-labelledby="border-radius">
         <h2 class="gw-heading-m" id="border-radius">Corner radius</h2>
         <p class="gw-body--sm">Two radii. There is no <code class="gw-mono">--radius-lg</code> — larger curves would visually compete with the components themselves.</p>
-        <ul class="gw-border-grid" role="list">
+        <ul class="gw-grid" role="list">
           {
             radii.map((spec) => (
-              <li class="gw-border-sample">
-                <div class="gw-border-sample__visual gw-border-sample__visual--filled" style={`border-radius: var(${spec.token})`} />
-                <div class="gw-border-sample__meta">
-                  <code class="gw-mono gw-border-sample__token">{spec.token}</code>
-                  <span class="gw-border-sample__value">{spec.value}</span>
-                  <span class="gw-border-sample__usage">{spec.usage}</span>
-                </div>
-              </li>
+              <TokenSample token={spec.token} value={spec.value} usage={spec.usage}>
+                <div class="docs-radius-visual" style={`border-radius: var(${spec.token})`} />
+              </TokenSample>
             ))
           }
         </ul>
@@ -75,23 +65,14 @@ const radii: readonly RadiusSpec[] = [
       <section class="gw-stack" aria-labelledby="border-shadow">
         <h2 class="gw-heading-m" id="border-shadow">Shadow</h2>
         <p class="gw-body--sm">Two shadow tokens for surface elevation. Both remap to a darker, more visible variant in dark mode.</p>
-        <ul class="gw-border-grid" role="list">
-          <li class="gw-border-sample">
-            <div class="gw-border-sample__visual gw-border-sample__visual--shadow" style="box-shadow: var(--shadow-sm)" />
-            <div class="gw-border-sample__meta">
-              <code class="gw-mono gw-border-sample__token">--shadow-sm</code>
-              <span class="gw-border-sample__value">0 1px 2px rgba(0, 0, 0, 0.06)</span>
-              <span class="gw-border-sample__usage">Subtle separation. Currently unused in core components — available for application surfaces.</span>
-            </div>
-          </li>
-          <li class="gw-border-sample">
-            <div class="gw-border-sample__visual gw-border-sample__visual--shadow" style="box-shadow: var(--shadow-md)" />
-            <div class="gw-border-sample__meta">
-              <code class="gw-mono gw-border-sample__token">--shadow-md</code>
-              <span class="gw-border-sample__value">0 2px 8px rgba(0, 0, 0, 0.08)</span>
-              <span class="gw-border-sample__usage">Floating elements — dialogs, dropdowns. Not used by default surfaces, which prefer borders over elevation.</span>
-            </div>
-          </li>
+        <ul class="gw-grid" role="list">
+          {
+            shadows.map((spec) => (
+              <TokenSample token={spec.token} value={spec.value} usage={spec.usage}>
+                <div class="docs-shadow-visual" style={`box-shadow: var(${spec.token})`} />
+              </TokenSample>
+            ))
+          }
         </ul>
       </section>
 
@@ -111,7 +92,7 @@ const radii: readonly RadiusSpec[] = [
         <h2 class="gw-heading-m">Related</h2>
         <ul class="gw-list">
           <li><a class="gw-link" href="/styles/focus/">Focus</a> — uses <code class="gw-mono">--border-width-thick</code> for the 3px yellow ring.</li>
-          <li><a class="gw-link" href="/styles/colour/#border">Colour</a> — the border colour tokens that pair with these widths.</li>
+          <li><a class="gw-link" href="/styles/colour/#colour-border">Colour</a> — the border colour tokens that pair with these widths.</li>
         </ul>
       </div>
     </div>
@@ -119,65 +100,25 @@ const radii: readonly RadiusSpec[] = [
 </DocsLayout>
 
 <style>
-  .gw-border-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-    gap: var(--space-4);
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .gw-border-sample {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-border-sample__visual {
-    block-size: 56px;
+  .docs-border-visual {
+    inline-size: 80%;
+    block-size: 40px;
     background: var(--surface);
     border-style: solid;
     border-color: var(--border-strong);
     border-radius: var(--radius-sm);
   }
 
-  .gw-border-sample__visual--filled {
+  .docs-radius-visual {
+    inline-size: 80%;
+    block-size: 40px;
     background: var(--action);
-    border: none;
-    block-size: 56px;
   }
 
-  .gw-border-sample__visual--shadow {
+  .docs-shadow-visual {
+    inline-size: 80%;
+    block-size: 40px;
     background: var(--surface);
-    border: none;
-    block-size: 56px;
     border-radius: var(--radius-md);
-  }
-
-  .gw-border-sample__meta {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-
-  .gw-border-sample__token {
-    font-size: var(--text-body);
-    color: var(--ink);
-  }
-
-  .gw-border-sample__value {
-    font-size: var(--text-caption);
-    color: var(--ink-secondary);
-    font-family: var(--font-mono);
-  }
-
-  .gw-border-sample__usage {
-    font-size: var(--text-secondary);
-    color: var(--ink-secondary);
   }
 </style>

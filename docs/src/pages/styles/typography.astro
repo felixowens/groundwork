@@ -1,24 +1,34 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import TokenList from '../../components/TokenList.astro';
+import TypeSpecimen from '../../components/TypeSpecimen.astro';
 
 interface TypeSpec {
-  readonly className: string;
+  readonly sampleClass: string;
   readonly token: string;
   readonly value: string;
   readonly description: string;
 }
 
 const headingScale: readonly TypeSpec[] = [
-  { className: 'gw-heading-xl', token: '--text-display', value: '2.5rem / 40px', description: 'Display — reserved for marketing or hero copy.' },
-  { className: 'gw-heading-l', token: '--text-title', value: '2rem / 32px', description: 'Page title — used once per page as the H1.' },
-  { className: 'gw-heading-m', token: '--text-heading', value: '1.5rem / 24px', description: 'Section heading — typically the H2 inside a page section.' },
-  { className: 'gw-heading-s', token: '--text-subheading', value: '1.25rem / 20px', description: 'Subheading — typically the H3 inside a section.' },
+  { sampleClass: 'gw-heading-xl', token: '--text-display', value: '2.5rem / 40px', description: 'Display — reserved for marketing or hero copy.' },
+  { sampleClass: 'gw-heading-l', token: '--text-title', value: '2rem / 32px', description: 'Page title — used once per page as the H1.' },
+  { sampleClass: 'gw-heading-m', token: '--text-heading', value: '1.5rem / 24px', description: 'Section heading — typically the H2 inside a page section.' },
+  { sampleClass: 'gw-heading-s', token: '--text-subheading', value: '1.25rem / 20px', description: 'Subheading — typically the H3 inside a section.' },
 ];
 
 const bodyScale: readonly TypeSpec[] = [
-  { className: 'gw-body', token: '--text-body', value: '1rem / 16px', description: 'Body — default reading size for paragraph copy.' },
-  { className: 'gw-body--sm', token: '--text-secondary', value: '0.875rem / 14px', description: 'Secondary — for supporting copy, hints, and metadata.' },
-  { className: 'gw-body--xs', token: '--text-caption', value: '0.8125rem / 13px', description: 'Caption — for labels, eyebrow text, and the smallest legible copy.' },
+  { sampleClass: 'gw-body', token: '--text-body', value: '1rem / 16px', description: 'Body — default reading size for paragraph copy.' },
+  { sampleClass: 'gw-body--sm', token: '--text-secondary', value: '0.875rem / 14px', description: 'Secondary — for supporting copy, hints, and metadata.' },
+  { sampleClass: 'gw-body--xs', token: '--text-caption', value: '0.8125rem / 13px', description: 'Caption — for labels, eyebrow text, and the smallest legible copy.' },
+];
+
+const supportingTokens = [
+  { term: '<code class="gw-mono">--leading-tight</code>', description: '1.25 — headings and any text where compact vertical rhythm matters.' },
+  { term: '<code class="gw-mono">--leading-normal</code>', description: '1.6 — body copy and any prose longer than a single line.' },
+  { term: '<code class="gw-mono">--measure</code>', description: '66ch — the maximum line length for comfortable reading. <code class="gw-mono">.gw-prose</code> applies this automatically.' },
+  { term: '<code class="gw-mono">--font-sans</code>', description: 'Söhne, system sans-serif fallbacks. Used for every default surface.' },
+  { term: '<code class="gw-mono">--font-mono</code>', description: 'Söhne Mono, system monospace fallbacks. Used for code, token names, and the <code class="gw-mono">.gw-mono</code> utility.' },
 ];
 ---
 
@@ -34,66 +44,31 @@ const bodyScale: readonly TypeSpec[] = [
       <section class="gw-stack" aria-labelledby="typography-headings">
         <h2 class="gw-heading-m" id="typography-headings">Headings</h2>
         <p class="gw-body--sm">Each heading utility bundles a size, weight, and leading. Pair them with semantic HTML — <code class="gw-mono">&lt;h1&gt;</code> with <code class="gw-mono">.gw-heading-l</code>, <code class="gw-mono">&lt;h2&gt;</code> with <code class="gw-mono">.gw-heading-m</code>, and so on.</p>
-        <ul class="gw-type-specimens" role="list">
-          {
-            headingScale.map((spec) => (
-              <li class="gw-type-specimen">
-                <span class={spec.className}>The quick brown fox</span>
-                <div class="gw-type-specimen__meta">
-                  <code class="gw-mono gw-type-specimen__class">.{spec.className}</code>
-                  <span class="gw-type-specimen__value">{spec.token} — {spec.value}</span>
-                  <span class="gw-type-specimen__description">{spec.description}</span>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
+        <div class="gw-card">
+          <ul class="docs-type-specimens gw-stack--lg" role="list">
+            {headingScale.map((spec) => (
+              <TypeSpecimen sampleClass={spec.sampleClass} sample="The quick brown fox" token={spec.token} value={spec.value} description={spec.description} />
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section class="gw-stack" aria-labelledby="typography-body">
         <h2 class="gw-heading-m" id="typography-body">Body text</h2>
         <p class="gw-body--sm">Body utilities cover paragraph, secondary, and caption sizes. They share the same line-height (<code class="gw-mono">--leading-normal</code>) so they stack cleanly inside <code class="gw-mono">.gw-prose</code>.</p>
-        <ul class="gw-type-specimens" role="list">
-          {
-            bodyScale.map((spec) => (
-              <li class="gw-type-specimen">
-                <span class={spec.className}>The quick brown fox jumps over the lazy dog</span>
-                <div class="gw-type-specimen__meta">
-                  <code class="gw-mono gw-type-specimen__class">.{spec.className}</code>
-                  <span class="gw-type-specimen__value">{spec.token} — {spec.value}</span>
-                  <span class="gw-type-specimen__description">{spec.description}</span>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
+        <div class="gw-card">
+          <ul class="docs-type-specimens gw-stack--lg" role="list">
+            {bodyScale.map((spec) => (
+              <TypeSpecimen sampleClass={spec.sampleClass} sample="The quick brown fox jumps over the lazy dog" token={spec.token} value={spec.value} description={spec.description} />
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section class="gw-stack" aria-labelledby="typography-supporting">
         <h2 class="gw-heading-m" id="typography-supporting">Supporting tokens</h2>
         <p class="gw-body--sm">Two leading values, one ideal line length, and two font stacks.</p>
-        <dl class="gw-type-table">
-          <div class="gw-type-table__row">
-            <dt><code class="gw-mono">--leading-tight</code></dt>
-            <dd>1.25 — headings and any text where compact vertical rhythm matters.</dd>
-          </div>
-          <div class="gw-type-table__row">
-            <dt><code class="gw-mono">--leading-normal</code></dt>
-            <dd>1.6 — body copy and any prose longer than a single line.</dd>
-          </div>
-          <div class="gw-type-table__row">
-            <dt><code class="gw-mono">--measure</code></dt>
-            <dd>66ch — the maximum line length for comfortable reading. <code class="gw-mono">.gw-prose</code> applies this automatically.</dd>
-          </div>
-          <div class="gw-type-table__row">
-            <dt><code class="gw-mono">--font-sans</code></dt>
-            <dd>Söhne, system sans-serif fallbacks. Used for every default surface.</dd>
-          </div>
-          <div class="gw-type-table__row">
-            <dt><code class="gw-mono">--font-mono</code></dt>
-            <dd>Söhne Mono, system monospace fallbacks. Used for code, token names, and the <code class="gw-mono">.gw-mono</code> utility.</dd>
-          </div>
-        </dl>
+        <TokenList entries={supportingTokens} />
       </section>
 
       <div class="gw-prose">
@@ -127,79 +102,9 @@ const bodyScale: readonly TypeSpec[] = [
 </DocsLayout>
 
 <style>
-  .gw-type-specimens {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    padding: var(--space-5);
-    margin: 0;
+  .docs-type-specimens {
     list-style: none;
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-type-specimen {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  .gw-type-specimen__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1) var(--space-4);
-    align-items: baseline;
-  }
-
-  .gw-type-specimen__class {
-    color: var(--ink);
-  }
-
-  .gw-type-specimen__value {
-    font-size: var(--text-caption);
-    color: var(--ink-secondary);
-    font-family: var(--font-mono);
-  }
-
-  .gw-type-specimen__description {
-    font-size: var(--text-secondary);
-    color: var(--ink-secondary);
-    flex-basis: 100%;
-  }
-
-  .gw-type-table {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
+    padding: 0;
     margin: 0;
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-type-table__row {
-    display: grid;
-    grid-template-columns: minmax(160px, 12rem) 1fr;
-    gap: var(--space-4);
-    align-items: baseline;
-  }
-
-  .gw-type-table__row dt {
-    margin: 0;
-  }
-
-  .gw-type-table__row dd {
-    margin: 0;
-    font-size: var(--text-secondary);
-    color: var(--ink-secondary);
-  }
-
-  @media (max-width: 600px) {
-    .gw-type-table__row {
-      grid-template-columns: 1fr;
-      gap: var(--space-1);
-    }
   }
 </style>

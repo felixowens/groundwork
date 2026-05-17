@@ -1,5 +1,13 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
+import TokenList from '../../components/TokenList.astro';
+
+const anatomy = [
+  { term: '<code class="gw-mono">--focus-ring-color</code>', description: 'oklch(84.30% 0.1500 79.5) — a saturated yellow tuned for visibility against both light and dark surfaces.' },
+  { term: '<code class="gw-mono">--focus-ring-width</code>', description: '3px — wide enough to remain visible at small element sizes, narrow enough to avoid visual overload.' },
+  { term: '<code class="gw-mono">--focus-ring-offset</code>', description: '2px — pulls the ring away from the element\'s border so the two never visually merge.' },
+  { term: '<code class="gw-mono">--focus-text</code>', description: 'Foreground colour for any element that uses a yellow background as its focus surface (rare; used by the focus ring on dark mode where contrast inverts).' },
+];
 ---
 
 <DocsLayout title="Focus" description="The 3px yellow focus ring that signals keyboard focus across every Groundwork component">
@@ -14,44 +22,27 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <section class="gw-stack" aria-labelledby="focus-anatomy">
         <h2 class="gw-heading-m" id="focus-anatomy">Anatomy</h2>
         <p class="gw-body--sm">The focus ring is composed of three tokens. They appear together everywhere the ring is drawn.</p>
-        <dl class="gw-focus-table">
-          <div class="gw-focus-table__row">
-            <dt><code class="gw-mono">--focus-ring-color</code></dt>
-            <dd>oklch(84.30% 0.1500 79.5) — a saturated yellow tuned for visibility against both light and dark surfaces.</dd>
-          </div>
-          <div class="gw-focus-table__row">
-            <dt><code class="gw-mono">--focus-ring-width</code></dt>
-            <dd>3px — wide enough to remain visible at small element sizes, narrow enough to avoid visual overload.</dd>
-          </div>
-          <div class="gw-focus-table__row">
-            <dt><code class="gw-mono">--focus-ring-offset</code></dt>
-            <dd>2px — pulls the ring away from the element's border so the two never visually merge.</dd>
-          </div>
-          <div class="gw-focus-table__row">
-            <dt><code class="gw-mono">--focus-text</code></dt>
-            <dd>Foreground colour for any element that uses a yellow background as its focus surface (rare; used by the focus ring on dark mode where contrast inverts).</dd>
-          </div>
-        </dl>
+        <TokenList entries={anatomy} />
       </section>
 
       <section class="gw-stack" aria-labelledby="focus-examples">
         <h2 class="gw-heading-m" id="focus-examples">Applied</h2>
         <p class="gw-body--sm">The same ring on Button, Input, and a link. The screenshots are static — tab through any component page to see the live ring respond to keyboard focus.</p>
-        <div class="gw-focus-demo">
-          <div class="gw-focus-demo__row">
-            <button type="button" class="gw-button gw-focus-demo__focused">Save and continue</button>
+        <div class="gw-card gw-stack--lg">
+          <div class="docs-focus-row">
+            <button type="button" class="gw-button docs-focus-applied">Save and continue</button>
             <span class="gw-body--xs">Primary Button with focus ring</span>
           </div>
-          <div class="gw-focus-demo__row">
-            <button type="button" class="gw-button gw-button--secondary gw-focus-demo__focused">Cancel</button>
+          <div class="docs-focus-row">
+            <button type="button" class="gw-button gw-button--secondary docs-focus-applied">Cancel</button>
             <span class="gw-body--xs">Secondary Button — same ring</span>
           </div>
-          <div class="gw-focus-demo__row">
-            <input type="text" class="gw-input gw-focus-demo__focused" value="user@example.com" readonly aria-label="Email address" />
+          <div class="docs-focus-row">
+            <input type="text" class="gw-input docs-focus-applied" value="user@example.com" readonly aria-label="Email address" />
             <span class="gw-body--xs">Input — outline pulled outside the 2px medium border</span>
           </div>
-          <div class="gw-focus-demo__row">
-            <a class="gw-link gw-focus-demo__focused" href="#focus-anatomy">Anchor link</a>
+          <div class="docs-focus-row">
+            <a class="gw-link docs-focus-applied" href="#focus-anatomy">Anchor link</a>
             <span class="gw-body--xs">Inline link</span>
           </div>
         </div>
@@ -79,7 +70,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <div class="gw-prose">
         <h2 class="gw-heading-m">Related</h2>
         <ul class="gw-list">
-          <li><a class="gw-link" href="/styles/colour/#focus">Colour</a> — the <code class="gw-mono">--focus-text</code> pairing.</li>
+          <li><a class="gw-link" href="/styles/colour/#colour-focus">Colour</a> — the <code class="gw-mono">--focus-text</code> pairing.</li>
           <li><a class="gw-link" href="/styles/borders/#border-widths">Borders</a> — <code class="gw-mono">--focus-ring-width</code> is the same primitive as <code class="gw-mono">--border-width-thick</code>.</li>
           <li><a class="gw-link" href="/reference/principles/#accessibility-is-structural">Accessibility is structural</a> — why the ring is a system-wide commitment, not a per-component choice.</li>
         </ul>
@@ -89,60 +80,15 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 </DocsLayout>
 
 <style>
-  .gw-focus-demo {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    padding: var(--space-6);
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-focus-demo__row {
+  .docs-focus-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--space-4);
   }
 
-  .gw-focus-demo__focused {
+  .docs-focus-applied {
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
     outline-offset: var(--focus-ring-offset);
-  }
-
-  .gw-focus-table {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
-    margin: 0;
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-focus-table__row {
-    display: grid;
-    grid-template-columns: minmax(160px, 14rem) 1fr;
-    gap: var(--space-4);
-    align-items: baseline;
-  }
-
-  .gw-focus-table__row dt {
-    margin: 0;
-  }
-
-  .gw-focus-table__row dd {
-    margin: 0;
-    font-size: var(--text-secondary);
-    color: var(--ink-secondary);
-  }
-
-  @media (max-width: 600px) {
-    .gw-focus-table__row {
-      grid-template-columns: 1fr;
-      gap: var(--space-1);
-    }
   }
 </style>

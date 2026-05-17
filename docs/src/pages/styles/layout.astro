@@ -14,10 +14,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <section class="gw-stack" aria-labelledby="layout-width">
         <h2 class="gw-heading-m" id="layout-width">gw-width</h2>
         <p class="gw-body--sm">Constrains a region to a maximum horizontal extent and centres it within its parent. Three preset widths cover most cases.</p>
-        <div class="gw-layout-demo">
-          <div class="gw-layout-demo__ruler gw-layout-demo__ruler--narrow">680px — <code class="gw-mono">.gw-width--narrow</code></div>
-          <div class="gw-layout-demo__ruler gw-layout-demo__ruler--default">960px — <code class="gw-mono">.gw-width</code> (default)</div>
-          <div class="gw-layout-demo__ruler gw-layout-demo__ruler--wide">1200px — <code class="gw-mono">.gw-width--wide</code></div>
+        <div class="gw-card gw-stack--sm">
+          <div class="docs-width-ruler docs-width-ruler--narrow">680px — <code class="gw-mono">.gw-width--narrow</code></div>
+          <div class="docs-width-ruler docs-width-ruler--default">960px — <code class="gw-mono">.gw-width</code> (default)</div>
+          <div class="docs-width-ruler docs-width-ruler--wide">1200px — <code class="gw-mono">.gw-width--wide</code></div>
         </div>
         <h3 class="gw-heading-s">Recommended widths</h3>
         <ul class="gw-list">
@@ -30,41 +30,43 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <section class="gw-stack" aria-labelledby="layout-stack">
         <h2 class="gw-heading-m" id="layout-stack">gw-stack</h2>
         <p class="gw-body--sm">Adds vertical space between adjacent children. Four sizes derived from the spacing scale.</p>
-        <div class="gw-layout-demo gw-layout-demo--stack-grid">
-          <div>
-            <code class="gw-mono gw-body--sm">.gw-stack--sm</code>
-            <span class="gw-body--xs">--space-2 / 8px</span>
-            <div class="gw-stack--sm gw-layout-demo__stack-host">
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
+        <div class="gw-card">
+          <div class="docs-stack-grid">
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack--sm</code>
+              <span class="gw-body--xs">--space-2 / 8px</span>
+              <div class="gw-stack--sm docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
             </div>
-          </div>
-          <div>
-            <code class="gw-mono gw-body--sm">.gw-stack</code>
-            <span class="gw-body--xs">--space-4 / 16px (default)</span>
-            <div class="gw-stack gw-layout-demo__stack-host">
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack</code>
+              <span class="gw-body--xs">--space-4 / 16px (default)</span>
+              <div class="gw-stack docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
             </div>
-          </div>
-          <div>
-            <code class="gw-mono gw-body--sm">.gw-stack--lg</code>
-            <span class="gw-body--xs">--space-8 / 32px</span>
-            <div class="gw-stack--lg gw-layout-demo__stack-host">
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack--lg</code>
+              <span class="gw-body--xs">--space-8 / 32px</span>
+              <div class="gw-stack--lg docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
             </div>
-          </div>
-          <div>
-            <code class="gw-mono gw-body--sm">.gw-stack--xl</code>
-            <span class="gw-body--xs">--space-12 / 48px</span>
-            <div class="gw-stack--xl gw-layout-demo__stack-host">
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
-              <div class="gw-layout-demo__block">Item</div>
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack--xl</code>
+              <span class="gw-body--xs">--space-12 / 48px</span>
+              <div class="gw-stack--xl docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
             </div>
           </div>
         </div>
@@ -73,13 +75,13 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <section class="gw-stack" aria-labelledby="layout-cluster">
         <h2 class="gw-heading-m" id="layout-cluster">gw-cluster</h2>
         <p class="gw-body--sm">Horizontal group of items that wraps if it runs out of width. Useful for button groups, tag rows, and any horizontally-flowing collection.</p>
-        <div class="gw-layout-demo">
-          <div class="gw-cluster gw-layout-demo__cluster">
-            <span class="gw-layout-demo__pill">First</span>
-            <span class="gw-layout-demo__pill">Second</span>
-            <span class="gw-layout-demo__pill">Third</span>
-            <span class="gw-layout-demo__pill">Fourth</span>
-            <span class="gw-layout-demo__pill">Fifth</span>
+        <div class="gw-card gw-stack--sm">
+          <div class="gw-cluster">
+            <span class="docs-pill">First</span>
+            <span class="docs-pill">Second</span>
+            <span class="docs-pill">Third</span>
+            <span class="docs-pill">Fourth</span>
+            <span class="docs-pill">Fifth</span>
           </div>
           <p class="gw-body--xs">Default gap is <code class="gw-mono">--space-4</code>. The <code class="gw-mono">.gw-cluster--sm</code> modifier drops to <code class="gw-mono">--space-2</code> for tighter groupings.</p>
         </div>
@@ -88,27 +90,29 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <section class="gw-stack" aria-labelledby="layout-prose">
         <h2 class="gw-heading-m" id="layout-prose">gw-prose</h2>
         <p class="gw-body--sm">Sets the typographic measure (66ch) and applies heading-aware vertical rhythm to unclassed HTML inside. Use it for long-form documentation, marketing copy, and any region where you want the browser to render raw <code class="gw-mono">&lt;h1&gt;</code>/<code class="gw-mono">&lt;p&gt;</code>/<code class="gw-mono">&lt;ul&gt;</code> with sensible spacing.</p>
-        <div class="gw-prose gw-layout-demo gw-layout-demo--prose">
-          <h2>Section heading</h2>
-          <p>The prose primitive constrains line length to 66 characters and stacks elements with extra space above each new heading, so the document outline reads cleanly without manual margin overrides.</p>
-          <h3>Subheading</h3>
-          <p>It also styles unclassed children — paragraphs, lists, code, links — so an MDX page or a rich-text rendering surface stays consistent with the rest of the system.</p>
-          <ul>
-            <li>Lists pick up the spacing scale automatically.</li>
-            <li>Subsequent items have <code>--space-2</code> between them.</li>
-          </ul>
+        <div class="gw-card">
+          <div class="gw-prose docs-prose-demo">
+            <h2>Section heading</h2>
+            <p>The prose primitive constrains line length to 66 characters and stacks elements with extra space above each new heading, so the document outline reads cleanly without manual margin overrides.</p>
+            <h3>Subheading</h3>
+            <p>It also styles unclassed children — paragraphs, lists, code, links — so an MDX page or a rich-text rendering surface stays consistent with the rest of the system.</p>
+            <ul>
+              <li>Lists pick up the spacing scale automatically.</li>
+              <li>Subsequent items have <code>--space-2</code> between them.</li>
+            </ul>
+          </div>
         </div>
       </section>
 
       <section class="gw-stack" aria-labelledby="layout-grid">
         <h2 class="gw-heading-m" id="layout-grid">gw-grid</h2>
         <p class="gw-body--sm">Auto-fitting grid of equal-width cells, minimum 280px each. Cells wrap onto new rows as the container narrows. Used for card galleries, link tiles, and equivalent collections.</p>
-        <div class="gw-layout-demo">
+        <div class="gw-card">
           <div class="gw-grid">
-            <div class="gw-card gw-layout-demo__grid-card">Cell one</div>
-            <div class="gw-card gw-layout-demo__grid-card">Cell two</div>
-            <div class="gw-card gw-layout-demo__grid-card">Cell three</div>
-            <div class="gw-card gw-layout-demo__grid-card">Cell four</div>
+            <div class="gw-card docs-grid-cell">Cell one</div>
+            <div class="gw-card docs-grid-cell">Cell two</div>
+            <div class="gw-card docs-grid-cell">Cell three</div>
+            <div class="gw-card docs-grid-cell">Cell four</div>
           </div>
         </div>
       </section>
@@ -138,22 +142,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 </DocsLayout>
 
 <style>
-  .gw-layout-demo {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-5);
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-layout-demo--prose {
-    /* gw-prose sets its own max-width — let the demo card host it directly */
-    max-width: none;
-  }
-
-  .gw-layout-demo__ruler {
+  .docs-width-ruler {
     block-size: 32px;
     background: var(--surface-sunken);
     border-radius: var(--radius-sm);
@@ -164,35 +153,35 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     color: var(--ink-secondary);
   }
 
-  .gw-layout-demo__ruler--narrow {
+  .docs-width-ruler--narrow {
     max-width: min(680px, 100%);
   }
 
-  .gw-layout-demo__ruler--default {
+  .docs-width-ruler--default {
     max-width: min(960px, 100%);
   }
 
-  .gw-layout-demo__ruler--wide {
+  .docs-width-ruler--wide {
     max-width: 100%;
   }
 
-  .gw-layout-demo--stack-grid {
+  .docs-stack-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
     gap: var(--space-6);
   }
 
-  .gw-layout-demo--stack-grid > div {
+  .docs-stack-grid > div {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
   }
 
-  .gw-layout-demo__stack-host {
+  .docs-stack-grid__host {
     margin-top: var(--space-2);
   }
 
-  .gw-layout-demo__block {
+  .docs-block {
     padding: var(--space-3);
     background: var(--surface-sunken);
     border-radius: var(--radius-sm);
@@ -201,11 +190,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     text-align: center;
   }
 
-  .gw-layout-demo__cluster {
-    align-items: center;
-  }
-
-  .gw-layout-demo__pill {
+  .docs-pill {
     padding: var(--space-1) var(--space-3);
     background: var(--surface-sunken);
     border-radius: 999px;
@@ -213,8 +198,11 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     color: var(--ink);
   }
 
-  .gw-layout-demo__grid-card {
-    padding: var(--space-4);
+  .docs-prose-demo {
+    max-width: none;
+  }
+
+  .docs-grid-cell {
     font-size: var(--text-secondary);
     color: var(--ink-secondary);
     text-align: center;

@@ -1,4 +1,5 @@
 ---
+import Swatch from '../../components/Swatch.astro';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 interface SwatchSpec {
@@ -100,26 +101,12 @@ const groups: readonly GroupSpec[] = [
       {
         groups.map((group) => (
           <section class="gw-stack" aria-labelledby={`colour-${group.id}`}>
-            <h2 class="gw-heading-m" id={`colour-${group.id}`}>{group.heading}</h2>
+            <h2 class="gw-heading-m" id={`colour-${group.id}`}>
+              {group.heading}
+            </h2>
             <p class="gw-body--sm" set:html={group.intro} />
-            <ul class="gw-swatch-grid" role="list">
-              {group.swatches.map((swatch) => (
-                <li class="gw-swatch">
-                  <div class="gw-swatch__chips" aria-hidden="true">
-                    <span class="gw-swatch__chip" style={`background: ${swatch.light}`} />
-                    <span class="gw-swatch__chip" style={`background: ${swatch.dark}`} />
-                  </div>
-                  <div class="gw-swatch__meta">
-                    <code class="gw-mono gw-swatch__token">{swatch.token}</code>
-                    <span class="gw-swatch__value">
-                      <span class="gw-swatch__value-label">light</span> {swatch.light}
-                    </span>
-                    <span class="gw-swatch__value">
-                      <span class="gw-swatch__value-label">dark</span> {swatch.dark}
-                    </span>
-                  </div>
-                </li>
-              ))}
+            <ul class="gw-grid" role="list">
+              {group.swatches.map((swatch) => <Swatch token={swatch.token} light={swatch.light} dark={swatch.dark} />)}
             </ul>
           </section>
         ))
@@ -158,66 +145,3 @@ const groups: readonly GroupSpec[] = [
     </div>
   </section>
 </DocsLayout>
-
-<style>
-  .gw-swatch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-    gap: var(--space-4);
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
-  .gw-swatch {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-  }
-
-  .gw-swatch__chips {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-1);
-    height: 56px;
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-  }
-
-  .gw-swatch__chip {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-    border-radius: var(--radius-sm);
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
-  }
-
-  .gw-swatch__meta {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-
-  .gw-swatch__token {
-    font-size: var(--text-body);
-    color: var(--ink);
-  }
-
-  .gw-swatch__value {
-    font-size: var(--text-caption);
-    color: var(--ink-secondary);
-    font-family: var(--font-mono);
-  }
-
-  .gw-swatch__value-label {
-    display: inline-block;
-    inline-size: 3.25rem;
-    color: var(--ink-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-</style>

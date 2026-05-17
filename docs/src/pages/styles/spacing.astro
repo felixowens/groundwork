@@ -1,4 +1,5 @@
 ---
+import SpacingStep from '../../components/SpacingStep.astro';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 interface SpaceSpec {
@@ -31,19 +32,11 @@ const scale: readonly SpaceSpec[] = [
         <p>Every value is expressed in <code class="gw-mono">rem</code>; the pixel equivalents assume the browser's default 16px root font size.</p>
       </div>
 
-      <ul class="gw-space-scale" role="list">
-        {
-          scale.map((step) => (
-            <li class="gw-space-step">
-              <div class="gw-space-step__bar" style={`inline-size: var(${step.token})`} aria-hidden="true" />
-              <div class="gw-space-step__meta">
-                <code class="gw-mono gw-space-step__token">{step.token}</code>
-                <span class="gw-space-step__value">{step.rem} / {step.px}</span>
-              </div>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="gw-card">
+        <ul class="docs-spacing-scale gw-stack--sm" role="list">
+          {scale.map((step) => <SpacingStep token={step.token} rem={step.rem} px={step.px} />)}
+        </ul>
+      </div>
 
       <div class="gw-prose">
         <h2 class="gw-heading-m">Guidance</h2>
@@ -51,7 +44,7 @@ const scale: readonly SpaceSpec[] = [
         <p>If a layout looks like it needs <code class="gw-mono">14px</code>, snap to <code class="gw-mono">--space-3</code> (12px) or <code class="gw-mono">--space-4</code> (16px). Custom values break the visual rhythm and the closed-scale guarantee — a designer cannot trust that all spacings come from the same set.</p>
 
         <h3 class="gw-heading-s">Reach for layout primitives, not raw margins</h3>
-        <p>Most vertical rhythm should come from <a class="gw-link" href="/styles/layout/#gw-stack"><code class="gw-mono">gw-stack</code></a> and horizontal rhythm from <a class="gw-link" href="/styles/layout/#gw-cluster"><code class="gw-mono">gw-cluster</code></a>, both of which set their gaps from the spacing scale. Reach for raw <code class="gw-mono">--space-N</code> values only when the primitive doesn't apply.</p>
+        <p>Most vertical rhythm should come from <a class="gw-link" href="/styles/layout/#layout-stack"><code class="gw-mono">gw-stack</code></a> and horizontal rhythm from <a class="gw-link" href="/styles/layout/#layout-cluster"><code class="gw-mono">gw-cluster</code></a>, both of which set their gaps from the spacing scale. Reach for raw <code class="gw-mono">--space-N</code> values only when the primitive doesn't apply.</p>
 
         <h3 class="gw-heading-s">Why the scale skips numbers</h3>
         <p>The tokens go 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20. There is no <code class="gw-mono">--space-7</code> or <code class="gw-mono">--space-9</code>. Each step is a deliberate choice; a missing number is not an oversight. Adding intermediate values would dilute the scale's usefulness as a closed set.</p>
@@ -72,48 +65,9 @@ const scale: readonly SpaceSpec[] = [
 </DocsLayout>
 
 <style>
-  .gw-space-scale {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
+  .docs-spacing-scale {
+    list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
-    background: var(--surface-raised);
-    border: var(--border-width-thin) solid var(--border);
-    border-radius: var(--radius-md);
-    padding: var(--space-5);
-  }
-
-  .gw-space-step {
-    display: grid;
-    grid-template-columns: minmax(160px, 1fr) auto;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .gw-space-step__bar {
-    block-size: 24px;
-    background: var(--action);
-    border-radius: var(--radius-sm);
-    min-inline-size: 4px;
-  }
-
-  .gw-space-step__meta {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    text-align: end;
-  }
-
-  .gw-space-step__token {
-    font-size: var(--text-body);
-    color: var(--ink);
-  }
-
-  .gw-space-step__value {
-    font-size: var(--text-caption);
-    color: var(--ink-secondary);
-    font-family: var(--font-mono);
   }
 </style>
