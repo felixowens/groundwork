@@ -3,9 +3,10 @@ interface Props {
   token: string;
   rem: string;
   px: string;
+  usage: string;
 }
 
-const { token, rem, px } = Astro.props;
+const { token, rem, px, usage } = Astro.props;
 ---
 
 <li class="docs-spacing-step">
@@ -14,15 +15,26 @@ const { token, rem, px } = Astro.props;
     <code class="gw-mono docs-spacing-step__token">{token}</code>
     <span class="docs-spacing-step__value">{rem} / {px}</span>
   </div>
+  <span class="docs-spacing-step__usage">{usage}</span>
 </li>
 
 <style>
   .docs-spacing-step {
     display: grid;
-    grid-template-columns: minmax(160px, 1fr) auto;
+    grid-template-columns: minmax(160px, 1fr) auto minmax(140px, 1.5fr);
     align-items: center;
     gap: var(--space-4);
     list-style: none;
+  }
+
+  @media (max-width: 600px) {
+    .docs-spacing-step {
+      grid-template-columns: minmax(80px, 1fr) auto;
+    }
+
+    .docs-spacing-step__usage {
+      grid-column: 1 / -1;
+    }
   }
 
   .docs-spacing-step__bar {
@@ -48,5 +60,10 @@ const { token, rem, px } = Astro.props;
     font-size: var(--text-caption);
     color: var(--ink-secondary);
     font-family: var(--font-mono);
+  }
+
+  .docs-spacing-step__usage {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
   }
 </style>

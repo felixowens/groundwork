@@ -3,9 +3,10 @@ interface Props {
   token: string;
   light: string;
   dark: string;
+  usage: string;
 }
 
-const { token, light, dark } = Astro.props;
+const { token, light, dark, usage } = Astro.props;
 ---
 
 <li class="docs-swatch gw-card gw-stack--sm">
@@ -14,6 +15,7 @@ const { token, light, dark } = Astro.props;
     <span class="docs-swatch__chip" style={`background: ${dark}`} />
   </div>
   <code class="gw-mono docs-swatch__token">{token}</code>
+  <span class="docs-swatch__usage">{usage}</span>
   <span class="docs-swatch__value">
     <span class="docs-swatch__label">light</span>
     {light}
@@ -49,6 +51,11 @@ const { token, light, dark } = Astro.props;
   .docs-swatch__token {
     font-size: var(--text-body);
     color: var(--ink);
+  }
+
+  .docs-swatch__usage {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
   }
 
   .docs-swatch__value {

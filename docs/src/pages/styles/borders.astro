@@ -1,4 +1,5 @@
 ---
+import CodeBlock from '../../components/CodeBlock.astro';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import TokenSample from '../../components/TokenSample.astro';
 
@@ -74,6 +75,16 @@ const shadows: readonly BorderTokenSpec[] = [
             ))
           }
         </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="borders-usage">
+        <h2 class="gw-heading-m" id="borders-usage">Using a border or radius token</h2>
+        <p class="gw-body--sm">Reference border width, radius, and shadow tokens directly via custom properties. The border colour comes from the <a class="gw-link" href="/styles/colour/#colour-border">colour tokens</a>; pair them explicitly.</p>
+        <CodeBlock>{`.card {
+  border: var(--border-width-thin) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}`}</CodeBlock>
       </section>
 
       <div class="gw-prose">

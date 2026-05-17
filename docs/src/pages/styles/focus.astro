@@ -1,4 +1,5 @@
 ---
+import CodeBlock from '../../components/CodeBlock.astro';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import TokenList from '../../components/TokenList.astro';
 
@@ -17,6 +18,13 @@ const anatomy = [
         <h1 class="gw-heading-l">Focus</h1>
         <p>Every interactive element in Groundwork shows the same focus ring: a 3px yellow outline with a 2px offset, drawn from <code class="gw-mono">--focus-ring-color</code>, <code class="gw-mono">--focus-ring-width</code>, and <code class="gw-mono">--focus-ring-offset</code>. The ring is not optional and is not styleable per component.</p>
         <p>The colour is yellow because it remains highly visible against every surface, ink, and action colour in both modes. Other rings (matching the action colour, for example) fail this check.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Accessibility</h2>
+        <p>The focus ring meets <a class="gw-link" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html">WCAG 2.4.7 (Focus Visible)</a>. It also satisfies <a class="gw-link" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">WCAG 2.4.11 (Focus Appearance)</a> by being at least 2px thick along its perimeter and contrasting at least 3:1 against both the unfocused element's adjacent pixels and the surrounding background.</p>
+        <p>Keyboard testing is part of every component's Playwright suite. If a contribution adds a focusable surface, that surface must show the ring under <code class="gw-mono">Tab</code> traversal.</p>
+        <p>Do not rely on the focus ring alone to communicate state. Form errors include text describing the problem; disabled buttons set <code class="gw-mono">aria-disabled</code>; required fields are labelled. The ring tells the user <em>where</em> they are, not <em>what</em> the element does.</p>
       </div>
 
       <section class="gw-stack" aria-labelledby="focus-anatomy">
@@ -48,6 +56,15 @@ const anatomy = [
         </div>
       </section>
 
+      <section class="gw-stack" aria-labelledby="focus-usage">
+        <h2 class="gw-heading-m" id="focus-usage">Drawing the focus ring</h2>
+        <p class="gw-body--sm">Every component CSS rule that handles focus pulls from the same three tokens. Use <code class="gw-mono">outline</code>, not <code class="gw-mono">box-shadow</code>, so the ring renders consistently against borders.</p>
+        <CodeBlock>{`.my-control:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}`}</CodeBlock>
+      </section>
+
       <div class="gw-prose">
         <h2 class="gw-heading-m">Guidance</h2>
         <h3 class="gw-heading-s">Never hide the focus ring</h3>
@@ -58,13 +75,6 @@ const anatomy = [
 
         <h3 class="gw-heading-s">Apply to the right element</h3>
         <p>For composite controls like RadioGroup and CheckboxGroup, the ring is drawn on the visible item (using <code class="gw-mono">:has(input:focus-visible)</code>), not on the hidden native input. The result is that the user sees the ring around the labelled option, which is what they're acting on.</p>
-      </div>
-
-      <div class="gw-prose">
-        <h2 class="gw-heading-m">Accessibility</h2>
-        <p>The focus ring meets <a class="gw-link" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html">WCAG 2.4.7 (Focus Visible)</a>. It also satisfies <a class="gw-link" href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html">WCAG 2.4.11 (Focus Appearance)</a> by being at least 2px thick along its perimeter and contrasting at least 3:1 against both the unfocused element's adjacent pixels and the surrounding background.</p>
-        <p>Keyboard testing is part of every component's Playwright suite. If a contribution adds a focusable surface, that surface must show the ring under <code class="gw-mono">Tab</code> traversal.</p>
-        <p>Do not rely on the focus ring alone to communicate state. Form errors include text describing the problem; disabled buttons set <code class="gw-mono">aria-disabled</code>; required fields are labelled. The ring tells the user <em>where</em> they are, not <em>what</em> the element does.</p>
       </div>
 
       <div class="gw-prose">

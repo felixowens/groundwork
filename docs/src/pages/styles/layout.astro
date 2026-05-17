@@ -1,4 +1,5 @@
 ---
+import CodeBlock from '../../components/CodeBlock.astro';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 ---
 
@@ -115,6 +116,30 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
             <div class="gw-card docs-grid-cell">Cell four</div>
           </div>
         </div>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="layout-usage">
+        <h2 class="gw-heading-m" id="layout-usage">Composing a page</h2>
+        <p class="gw-body--sm">The primitives are designed to compose. A typical page wrapper combines width and stack; richer pages add prose and grid inside.</p>
+        <CodeBlock label="Standard page wrapper">{`<section class="gw-section">
+  <div class="gw-width gw-stack--lg">
+    <div class="gw-prose">
+      <h1 class="gw-heading-l">Page title</h1>
+      <p>Page intro paragraph.</p>
+    </div>
+
+    <div class="gw-grid">
+      <article class="gw-card">…</article>
+      <article class="gw-card">…</article>
+    </div>
+  </div>
+</section>`}</CodeBlock>
+        <CodeBlock label="Narrow form layout">{`<section class="gw-section">
+  <div class="gw-width gw-width--narrow gw-stack">
+    <h1 class="gw-heading-l">Apply for a permit</h1>
+    <form class="gw-stack">…</form>
+  </div>
+</section>`}</CodeBlock>
       </section>
 
       <div class="gw-prose">
