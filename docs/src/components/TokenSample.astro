@@ -1,0 +1,47 @@
+---
+interface Props {
+  token: string;
+  value: string;
+  usage: string;
+}
+
+const { token, value, usage } = Astro.props;
+---
+
+<li class="docs-token-sample gw-card gw-stack--sm">
+  <div class="docs-token-sample__visual">
+    <slot />
+  </div>
+  <code class="gw-mono docs-token-sample__token">{token}</code>
+  <span class="docs-token-sample__value">{value}</span>
+  <span class="docs-token-sample__usage">{usage}</span>
+</li>
+
+<style>
+  .docs-token-sample {
+    list-style: none;
+  }
+
+  .docs-token-sample__visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 56px;
+  }
+
+  .docs-token-sample__token {
+    font-size: var(--text-body);
+    color: var(--ink);
+  }
+
+  .docs-token-sample__value {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .docs-token-sample__usage {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+  }
+</style>

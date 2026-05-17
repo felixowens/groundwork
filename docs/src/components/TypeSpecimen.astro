@@ -1,0 +1,52 @@
+---
+interface Props {
+  sampleClass: string;
+  sample: string;
+  token: string;
+  value: string;
+  description: string;
+}
+
+const { sampleClass, sample, token, value, description } = Astro.props;
+---
+
+<li class="docs-type-specimen">
+  <span class={sampleClass}>{sample}</span>
+  <div class="docs-type-specimen__meta">
+    <code class="gw-mono docs-type-specimen__class">.{sampleClass}</code>
+    <span class="docs-type-specimen__value">{token} — {value}</span>
+    <span class="docs-type-specimen__description">{description}</span>
+  </div>
+</li>
+
+<style>
+  .docs-type-specimen {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    list-style: none;
+  }
+
+  .docs-type-specimen__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    align-items: baseline;
+  }
+
+  .docs-type-specimen__class {
+    color: var(--ink);
+  }
+
+  .docs-type-specimen__value {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .docs-type-specimen__description {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+    flex-basis: 100%;
+  }
+</style>

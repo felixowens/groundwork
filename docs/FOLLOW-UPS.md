@@ -2,18 +2,6 @@
 
 Revisit-when triggers that don't belong inline as TODOs. Each entry names the trigger condition, the work to do, and the files most likely to need editing.
 
-## Weave layout-width guidance into patterns
-
-**Trigger:** when `/styles/layout/` exists and documents recommended widths.
-
-**What to do:** add prose to `/patterns/submit-information/` and `/patterns/check-answers/` explaining the width these flows should sit at and why. Cross-link to the layout style page.
-
-**Files most likely affected:**
-
-- `docs/src/pages/patterns/submit-information.astro`
-- `docs/src/pages/patterns/check-answers.astro`
-- the eventual `/styles/layout/` page
-
 ## Revisit Select / RadioGroup / CheckboxGroup guidance
 
 **Trigger:** when a richer single-choice picker (autocomplete-style) component lands in Groundwork.
@@ -79,6 +67,37 @@ Also: `classifyKind()` returns `'other'` and `kindOrder()` uses a `default: 9` f
 
 - `scripts/build-api-docs.mjs`
 - `docs/adr/0004-api-reference-as-typedoc.md` (update or supersede)
+
+## Promote DefinitionList to the library
+
+**Trigger:** when an application surface (or a third docs surface) wants a simple read-only key-value display — metadata panels, system info, configuration readouts, glossary-style content.
+
+**What to do:** the docs-internal `TokenList` Astro component (`docs/src/components/TokenList.astro`) is a styled two-column `<dl>`. Promote a React equivalent (`<DefinitionList>` with `Array<{ term, description }>`) into `src/components/`. It complements `SummaryList`, which covers the richer "review-with-Change-actions" transaction case — `DefinitionList` is the read-only counterpart with no per-row interactions.
+
+**Files most likely affected:**
+
+- new `src/components/DefinitionList.tsx`
+- new `.gw-definition-list` rules in `src/styles/components.css`
+- migrate `docs/src/components/TokenList.astro` to consume the library component (or delete it, depending on Astro/React interop choices for static pages)
+
+## Decide whether to expose primitives on the colour style page
+
+**Trigger:** when an application surface needs an off-palette colour — chart series, illustration accents, marketing surfaces, organisation branding — and the semantic palette doesn't cover the case.
+
+**What to do:** today, primitives are private (`--_gw-*` prefix) and the colour style page documents only semantic tokens. gov.uk takes the opposite approach: they expose both their functional palette and their full web palette (Blue, Red, Green, etc. with tints and shades) so applications can reach for off-palette colours when needed. Re-evaluate:
+
+- expose primitives publicly via a renamed prefix and document them on `/styles/colour/`, or
+- keep primitives private and add a documented mechanism for extending the semantic palette per-application, or
+- leave the system as-is and let applications inline the rare off-palette colour.
+
+Write an ADR with the decision; right now the colour page hints at the gap ("If a colour you need isn't here") but doesn't resolve it.
+
+**Files most likely affected:**
+
+- `docs/src/pages/styles/colour.astro`
+- `tokens/primitives.json` / `tokens/semantic.json`
+- new ADR
+- `CLAUDE.md` (the "two-tier only" rule may need refining)
 
 ## Audit visual regression diff threshold
 

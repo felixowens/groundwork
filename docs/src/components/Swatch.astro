@@ -1,0 +1,74 @@
+---
+interface Props {
+  token: string;
+  light: string;
+  dark: string;
+  usage: string;
+}
+
+const { token, light, dark, usage } = Astro.props;
+---
+
+<li class="docs-swatch gw-card gw-stack--sm">
+  <div class="docs-swatch__chips" aria-hidden="true">
+    <span class="docs-swatch__chip" style={`background: ${light}`} />
+    <span class="docs-swatch__chip" style={`background: ${dark}`} />
+  </div>
+  <code class="gw-mono docs-swatch__token">{token}</code>
+  <span class="docs-swatch__usage">{usage}</span>
+  <span class="docs-swatch__value">
+    <span class="docs-swatch__label">light</span>
+    {light}
+  </span>
+  <span class="docs-swatch__value">
+    <span class="docs-swatch__label">dark</span>
+    {dark}
+  </span>
+</li>
+
+<style>
+  .docs-swatch {
+    list-style: none;
+  }
+
+  .docs-swatch__chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-1);
+    height: 56px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .docs-swatch__chip {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    border-radius: var(--radius-sm);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .docs-swatch__token {
+    font-size: var(--text-body);
+    color: var(--ink);
+  }
+
+  .docs-swatch__usage {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+  }
+
+  .docs-swatch__value {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    font-family: var(--font-mono);
+  }
+
+  .docs-swatch__label {
+    display: inline-block;
+    inline-size: 3.25rem;
+    color: var(--ink-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import CodeBlock from '../../components/CodeBlock.astro';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import TokenSample from '../../components/TokenSample.astro';
+
+interface BorderTokenSpec {
+  readonly token: string;
+  readonly value: string;
+  readonly usage: string;
+}
+
+const widths: readonly BorderTokenSpec[] = [
+  { token: '--border-width-thin', value: '1px', usage: 'Standard separators — card edges, table rules, dividers.' },
+  { token: '--border-width-medium', value: '2px', usage: 'Form controls (Input, Select, Textarea) and Button borders.' },
+  { token: '--border-width-thick', value: '3px', usage: 'The focus ring width — see Focus.' },
+  { token: '--border-width-heavy', value: '4px', usage: 'Reserved for emphasis treatments. Not used in any default component today.' },
+];
+
+const radii: readonly BorderTokenSpec[] = [
+  { token: '--radius-sm', value: '3px', usage: 'Subtle softening — Button, Input, swatch chips.' },
+  { token: '--radius-md', value: '6px', usage: 'Cards, banners, summary lists. The "visible card" radius.' },
+];
+
+const shadows: readonly BorderTokenSpec[] = [
+  { token: '--shadow-sm', value: '0 1px 2px rgba(0, 0, 0, 0.06)', usage: 'Subtle separation. Currently unused in core components — available for application surfaces.' },
+  { token: '--shadow-md', value: '0 2px 8px rgba(0, 0, 0, 0.08)', usage: 'Floating elements — dialogs, dropdowns. Not used by default surfaces, which prefer borders over elevation.' },
+];
+---
+
+<DocsLayout title="Borders" description="Border widths, corner radii, and shadow tokens for surface treatment">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Borders</h1>
+        <p>Groundwork uses a small set of border weights and two corner radii. Together they keep surface treatment consistent across components — a card and a Banner look like the same kind of object because they share the same radius and stroke. Shadow tokens are listed here too; they share the same "how a surface is finished" purpose.</p>
+      </div>
+
+      <section class="gw-stack" aria-labelledby="border-widths">
+        <h2 class="gw-heading-m" id="border-widths">Width</h2>
+        <p class="gw-body--sm">Four widths cover everything from a hairline divider to the focus ring.</p>
+        <ul class="gw-grid" role="list">
+          {
+            widths.map((spec) => (
+              <TokenSample token={spec.token} value={spec.value} usage={spec.usage}>
+                <div class="docs-border-visual" style={`border-width: var(${spec.token})`} />
+              </TokenSample>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="border-radius">
+        <h2 class="gw-heading-m" id="border-radius">Corner radius</h2>
+        <p class="gw-body--sm">Two radii. There is no <code class="gw-mono">--radius-lg</code> — larger curves would visually compete with the components themselves.</p>
+        <ul class="gw-grid" role="list">
+          {
+            radii.map((spec) => (
+              <TokenSample token={spec.token} value={spec.value} usage={spec.usage}>
+                <div class="docs-radius-visual" style={`border-radius: var(${spec.token})`} />
+              </TokenSample>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="border-shadow">
+        <h2 class="gw-heading-m" id="border-shadow">Shadow</h2>
+        <p class="gw-body--sm">Two shadow tokens for surface elevation. Both remap to a darker, more visible variant in dark mode.</p>
+        <ul class="gw-grid" role="list">
+          {
+            shadows.map((spec) => (
+              <TokenSample token={spec.token} value={spec.value} usage={spec.usage}>
+                <div class="docs-shadow-visual" style={`box-shadow: var(${spec.token})`} />
+              </TokenSample>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="borders-usage">
+        <h2 class="gw-heading-m" id="borders-usage">Using a border or radius token</h2>
+        <p class="gw-body--sm">Reference border width, radius, and shadow tokens directly via custom properties. The border colour comes from the <a class="gw-link" href="/styles/colour/#colour-border">colour tokens</a>; pair them explicitly.</p>
+        <CodeBlock>{`.card {
+  border: var(--border-width-thin) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}`}</CodeBlock>
+      </section>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Guidance</h2>
+        <h3 class="gw-heading-s">Prefer borders to shadows for default surfaces</h3>
+        <p>Groundwork's default cards and banners use a <code class="gw-mono">--border-width-thin</code> stroke rather than a shadow. Borders are more reliable across rendering contexts (printed, screenshot, dark mode) and don't introduce a fake light source. Reach for shadow when a surface needs to <em>visibly float</em> — dialogs, tooltips — not for general elevation.</p>
+
+        <h3 class="gw-heading-s">Match radius to the parent</h3>
+        <p>A pill-shaped Button inside a card with a 6px radius looks deliberate. A Button with a 12px radius inside the same card looks accidental. When in doubt, use <code class="gw-mono">--radius-sm</code> for inner controls and <code class="gw-mono">--radius-md</code> for outer containers.</p>
+
+        <h3 class="gw-heading-s">Border width carries weight, not decoration</h3>
+        <p>Thicker borders draw the eye. Reserve <code class="gw-mono">--border-width-medium</code> for form controls (which need the visual heft to look interactive) and <code class="gw-mono">--border-width-thick</code> for the focus ring. Decorating an idle card with a heavy stroke makes it look interactive when it isn't.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/styles/focus/">Focus</a> — uses <code class="gw-mono">--border-width-thick</code> for the 3px yellow ring.</li>
+          <li><a class="gw-link" href="/styles/colour/#colour-border">Colour</a> — the border colour tokens that pair with these widths.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .docs-border-visual {
+    inline-size: 80%;
+    block-size: 40px;
+    background: var(--surface);
+    border-style: solid;
+    border-color: var(--border-strong);
+    border-radius: var(--radius-sm);
+  }
+
+  .docs-radius-visual {
+    inline-size: 80%;
+    block-size: 40px;
+    background: var(--action);
+  }
+
+  .docs-shadow-visual {
+    inline-size: 80%;
+    block-size: 40px;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+  }
+</style>

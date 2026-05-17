@@ -1,0 +1,235 @@
+---
+import CodeBlock from '../../components/CodeBlock.astro';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Layout" description="The width, stack, cluster, prose, and grid primitives that build every page in Groundwork">
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1 class="gw-heading-l">Layout</h1>
+        <p>Five primitives handle almost every layout decision in Groundwork. They are deliberately small and orthogonal: width constrains the horizontal extent, stack adds vertical rhythm, cluster handles horizontal groups, prose sets the typographic measure, and grid lays out a uniform set of cards.</p>
+        <p>Reach for these before you write custom flex or grid CSS. They are not exhaustive — bespoke layouts still call for component-specific CSS — but they cover the cases that appear on almost every page.</p>
+      </div>
+
+      <section class="gw-stack" aria-labelledby="layout-width">
+        <h2 class="gw-heading-m" id="layout-width">gw-width</h2>
+        <p class="gw-body--sm">Constrains a region to a maximum horizontal extent and centres it within its parent. Three preset widths cover most cases.</p>
+        <div class="gw-card gw-stack--sm">
+          <div class="docs-width-ruler docs-width-ruler--narrow">680px — <code class="gw-mono">.gw-width--narrow</code></div>
+          <div class="docs-width-ruler docs-width-ruler--default">960px — <code class="gw-mono">.gw-width</code> (default)</div>
+          <div class="docs-width-ruler docs-width-ruler--wide">1200px — <code class="gw-mono">.gw-width--wide</code></div>
+        </div>
+        <h3 class="gw-heading-s">Recommended widths</h3>
+        <ul class="gw-list">
+          <li><strong>Default (960px)</strong> — every component reference page, dashboards, and most application screens. The standard choice unless the content has a reason to deviate.</li>
+          <li><strong>Narrow (680px)</strong> — single-column forms, the <a class="gw-link" href="/patterns/submit-information/">submit-information</a> journey, the <a class="gw-link" href="/patterns/check-answers/">check-answers</a> review screen, and any other transaction where every line counts as something the user is committing to.</li>
+          <li><strong>Wide (1200px)</strong> — data-heavy dashboards, tables with many columns, side-by-side comparisons. Default to narrower; only widen when narrower demonstrably fails.</li>
+        </ul>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="layout-stack">
+        <h2 class="gw-heading-m" id="layout-stack">gw-stack</h2>
+        <p class="gw-body--sm">Adds vertical space between adjacent children. Four sizes derived from the spacing scale.</p>
+        <div class="gw-card">
+          <div class="docs-stack-grid">
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack--sm</code>
+              <span class="gw-body--xs">--space-2 / 8px</span>
+              <div class="gw-stack--sm docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
+            </div>
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack</code>
+              <span class="gw-body--xs">--space-4 / 16px (default)</span>
+              <div class="gw-stack docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
+            </div>
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack--lg</code>
+              <span class="gw-body--xs">--space-8 / 32px</span>
+              <div class="gw-stack--lg docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
+            </div>
+            <div>
+              <code class="gw-mono gw-body--sm">.gw-stack--xl</code>
+              <span class="gw-body--xs">--space-12 / 48px</span>
+              <div class="gw-stack--xl docs-stack-grid__host">
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+                <div class="docs-block">Item</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="layout-cluster">
+        <h2 class="gw-heading-m" id="layout-cluster">gw-cluster</h2>
+        <p class="gw-body--sm">Horizontal group of items that wraps if it runs out of width. Useful for button groups, tag rows, and any horizontally-flowing collection.</p>
+        <div class="gw-card gw-stack--sm">
+          <div class="gw-cluster">
+            <span class="docs-pill">First</span>
+            <span class="docs-pill">Second</span>
+            <span class="docs-pill">Third</span>
+            <span class="docs-pill">Fourth</span>
+            <span class="docs-pill">Fifth</span>
+          </div>
+          <p class="gw-body--xs">Default gap is <code class="gw-mono">--space-4</code>. The <code class="gw-mono">.gw-cluster--sm</code> modifier drops to <code class="gw-mono">--space-2</code> for tighter groupings.</p>
+        </div>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="layout-prose">
+        <h2 class="gw-heading-m" id="layout-prose">gw-prose</h2>
+        <p class="gw-body--sm">Sets the typographic measure (66ch) and applies heading-aware vertical rhythm to unclassed HTML inside. Use it for long-form documentation, marketing copy, and any region where you want the browser to render raw <code class="gw-mono">&lt;h1&gt;</code>/<code class="gw-mono">&lt;p&gt;</code>/<code class="gw-mono">&lt;ul&gt;</code> with sensible spacing.</p>
+        <div class="gw-card">
+          <div class="gw-prose docs-prose-demo">
+            <h2>Section heading</h2>
+            <p>The prose primitive constrains line length to 66 characters and stacks elements with extra space above each new heading, so the document outline reads cleanly without manual margin overrides.</p>
+            <h3>Subheading</h3>
+            <p>It also styles unclassed children — paragraphs, lists, code, links — so an MDX page or a rich-text rendering surface stays consistent with the rest of the system.</p>
+            <ul>
+              <li>Lists pick up the spacing scale automatically.</li>
+              <li>Subsequent items have <code>--space-2</code> between them.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="layout-grid">
+        <h2 class="gw-heading-m" id="layout-grid">gw-grid</h2>
+        <p class="gw-body--sm">Auto-fitting grid of equal-width cells, minimum 280px each. Cells wrap onto new rows as the container narrows. Used for card galleries, link tiles, and equivalent collections.</p>
+        <div class="gw-card">
+          <div class="gw-grid">
+            <div class="gw-card docs-grid-cell">Cell one</div>
+            <div class="gw-card docs-grid-cell">Cell two</div>
+            <div class="gw-card docs-grid-cell">Cell three</div>
+            <div class="gw-card docs-grid-cell">Cell four</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gw-stack" aria-labelledby="layout-usage">
+        <h2 class="gw-heading-m" id="layout-usage">Composing a page</h2>
+        <p class="gw-body--sm">The primitives are designed to compose. A typical page wrapper combines width and stack; richer pages add prose and grid inside.</p>
+        <CodeBlock label="Standard page wrapper">{`<section class="gw-section">
+  <div class="gw-width gw-stack--lg">
+    <div class="gw-prose">
+      <h1 class="gw-heading-l">Page title</h1>
+      <p>Page intro paragraph.</p>
+    </div>
+
+    <div class="gw-grid">
+      <article class="gw-card">…</article>
+      <article class="gw-card">…</article>
+    </div>
+  </div>
+</section>`}</CodeBlock>
+        <CodeBlock label="Narrow form layout">{`<section class="gw-section">
+  <div class="gw-width gw-width--narrow gw-stack">
+    <h1 class="gw-heading-l">Apply for a permit</h1>
+    <form class="gw-stack">…</form>
+  </div>
+</section>`}</CodeBlock>
+      </section>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Guidance</h2>
+        <h3 class="gw-heading-s">Compose primitives, don't nest layouts</h3>
+        <p>The five primitives are designed to be combined: a <code class="gw-mono">.gw-width</code> wrapping a <code class="gw-mono">.gw-stack--lg</code> wrapping a <code class="gw-mono">.gw-grid</code> handles most page templates. Avoid wrapping a stack inside another stack, or a width inside another width — the result is usually a sign the page wants a different primitive, not a deeper hierarchy.</p>
+
+        <h3 class="gw-heading-s">Reach for primitives before component CSS</h3>
+        <p>When a component needs vertical spacing between its parts, give it <code class="gw-mono">.gw-stack</code> in the markup rather than writing <code class="gw-mono">margin-top</code> rules in component CSS. Layout responsibilities live in the template; component CSS handles the component's own internal structure.</p>
+
+        <h3 class="gw-heading-s">Custom layouts go in component-specific CSS</h3>
+        <p>If the primitives don't fit (a two-column flow demo, a card with a sidebar), write the bespoke grid or flex rules in the page's scoped <code class="gw-mono">&lt;style&gt;</code> block. Do not add modifiers to the layout primitives for one-off cases.</p>
+      </div>
+
+      <div class="gw-prose">
+        <h2 class="gw-heading-m">Related</h2>
+        <ul class="gw-list">
+          <li><a class="gw-link" href="/styles/spacing/">Spacing</a> — the scale that backs every stack and cluster gap.</li>
+          <li><a class="gw-link" href="/styles/typography/">Typography</a> — <code class="gw-mono">.gw-prose</code> uses <code class="gw-mono">--measure</code> from this page.</li>
+          <li><a class="gw-link" href="/patterns/submit-information/">Submit information</a> — the canonical narrow-width transaction journey.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DocsLayout>
+
+<style>
+  .docs-width-ruler {
+    block-size: 32px;
+    background: var(--surface-sunken);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+  }
+
+  .docs-width-ruler--narrow {
+    max-width: min(680px, 100%);
+  }
+
+  .docs-width-ruler--default {
+    max-width: min(960px, 100%);
+  }
+
+  .docs-width-ruler--wide {
+    max-width: 100%;
+  }
+
+  .docs-stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+    gap: var(--space-6);
+  }
+
+  .docs-stack-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .docs-stack-grid__host {
+    margin-top: var(--space-2);
+  }
+
+  .docs-block {
+    padding: var(--space-3);
+    background: var(--surface-sunken);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    text-align: center;
+  }
+
+  .docs-pill {
+    padding: var(--space-1) var(--space-3);
+    background: var(--surface-sunken);
+    border-radius: 999px;
+    font-size: var(--text-caption);
+    color: var(--ink);
+  }
+
+  .docs-prose-demo {
+    max-width: none;
+  }
+
+  .docs-grid-cell {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+    text-align: center;
+  }
+</style>

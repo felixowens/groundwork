@@ -15,6 +15,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <div class="gw-prose">
         <h2 class="gw-heading-m">When to use this pattern</h2>
         <p>Use this pattern for any transaction the user cannot easily undo, such as opening an account, applying for something, or making a claim. The pattern fits small and medium transactions on a single page; for very large transactions split into sections, apply the pattern per section.</p>
+        <p>Render the form at <a class="gw-link" href="/styles/layout/#layout-width"><code class="gw-mono">gw-width--narrow</code></a> (680px). Narrow forms keep each line short enough to scan, signal that filling them out is a focused task, and avoid the temptation to spread fields into multi-column layouts that hide their relationship.</p>
 
         <h2 class="gw-heading-m">How it works</h2>
         <p>The Flow below demonstrates the full journey: data entry with <a class="gw-link" href="/components/field/">Field</a>, validation that routes through <a class="gw-link" href="/components/error-summary/">ErrorSummary</a>, review with <a class="gw-link" href="/components/summary-list/">SummaryList</a>, and confirmation with <a class="gw-link" href="/components/banner/">Banner</a>.</p>

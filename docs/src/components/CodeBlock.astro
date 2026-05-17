@@ -1,0 +1,42 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label } = Astro.props;
+---
+
+<figure class="docs-code-block">
+  {label !== undefined && <figcaption class="docs-code-block__caption">{label}</figcaption>}
+  <pre class="docs-code-block__pre"><code class="gw-mono"><slot /></code></pre>
+</figure>
+
+<style>
+  .docs-code-block {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .docs-code-block__caption {
+    font-size: var(--text-secondary);
+    color: var(--ink-secondary);
+  }
+
+  .docs-code-block__pre {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    background: var(--surface-sunken);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+
+  .docs-code-block__pre code {
+    font-size: var(--text-secondary);
+    line-height: var(--leading-normal);
+    color: var(--ink);
+    white-space: pre;
+  }
+</style>
