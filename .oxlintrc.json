@@ -34,5 +34,13 @@
     "test-results",
     "playwright-report",
     ".logs"
+  ],
+  "overrides": [
+    {
+      "files": ["src/components/CodeBlock.tsx"],
+      "rules": {
+        "jsx-a11y/no-noninteractive-tabindex": "off"
+      }
+    }
   ]
 }

@@ -354,6 +354,10 @@ body {
 .gw-code {
   font-family: var(--font-mono);
   font-size: 0.9em;
+  padding: 0 var(--space-1);
+  background: var(--surface-raised);
+  border: var(--border-width-thin) solid var(--border);
+  border-radius: var(--radius-sm);
 }
 
 .gw-link {
@@ -422,6 +426,10 @@ h6 {
 .gw-prose code:not([class]) {
   font-family: var(--font-mono);
   font-size: 0.9em;
+  padding: 0 var(--space-1);
+  background: var(--surface-raised);
+  border: var(--border-width-thin) solid var(--border);
+  border-radius: var(--radius-sm);
 }
 
 :where(.gw-code-block),

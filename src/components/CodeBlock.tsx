@@ -36,12 +36,6 @@ export function CodeBlock({ children, caption, language, ref }: CodeBlockProps):
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const attachPre = useCallback((pre: HTMLPreElement | null) => {
-    if (pre !== null) {
-      pre.setAttribute('tabindex', '0');
-    }
-  }, []);
-
   useEffect(() => {
     return () => {
       if (timeoutRef.current !== null) {
@@ -68,7 +62,8 @@ export function CodeBlock({ children, caption, language, ref }: CodeBlockProps):
     <figure className="gw-code-block-figure" ref={ref}>
       {caption === undefined ? null : <figcaption className="gw-code-block-caption">{caption}</figcaption>}
       <div className="gw-code-block-shell">
-        <pre className="gw-code-block" ref={attachPre}>
+        {/* biome-ignore lint/a11y/noNoninteractiveTabindex: The <pre> has overflow-x:auto and long code lines must remain scrollable for keyboard-only users (WCAG 2.1.1, axe scrollable-region-focusable). The lint rule's default reasoning — don't randomly add non-interactive elements to tab order — doesn't account for the scrollable-region exception. */}
+        <pre className="gw-code-block" tabIndex={0}>
           <code className={codeClass}>{children}</code>
         </pre>
         <button className="gw-code-block-copy" onClick={copy} type="button">
