@@ -1,18 +1,4 @@
-import { CheckboxGroup, Field, Input, RadioGroup, Select, Textarea } from '../../../src';
-
-export function InputDemo() {
-  return (
-    <form className="gw-stack--lg">
-      <Field id="national-insurance-number" label="National Insurance number" hint="For example, QQ 12 34 56 C">
-        {({ inputProps }) => <Input {...inputProps} name="nationalInsuranceNumber" autoComplete="off" width="w20" />}
-      </Field>
-
-      <Field id="postcode" label="Postcode" hint="Use the short width when the expected answer is short.">
-        {({ inputProps }) => <Input {...inputProps} name="postcode" autoComplete="postal-code" width="w10" />}
-      </Field>
-    </form>
-  );
-}
+import { CheckboxGroup, Field, RadioGroup, Select, Textarea } from '../../../src';
 
 export function SelectDemo() {
   return (

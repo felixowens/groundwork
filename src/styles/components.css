@@ -324,7 +324,7 @@
   margin-top: var(--space-2);
 }
 
-.gw-error-summary a {
+.gw-error-summary a:not([class]) {
   color: var(--error);
   font-weight: 600;
 }

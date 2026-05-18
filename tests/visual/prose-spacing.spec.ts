@@ -22,7 +22,11 @@ for (const { path } of docsPages) {
       const SPACE_8 = 32;
       const SPACE_10 = 40;
 
-      function expectedGap(containerKind: 'gw-prose' | 'gw-stack', prevTag: string, nextTag: string): number | undefined {
+      function expectedGap(
+        containerKind: 'gw-prose' | 'gw-stack',
+        prevTag: string,
+        nextTag: string,
+      ): number | undefined {
         if (nextTag === 'h2') {
           return SPACE_10;
         }
@@ -73,7 +77,9 @@ for (const { path } of docsPages) {
       const containers = document.querySelectorAll('.gw-prose, .gw-stack');
 
       containers.forEach((container, containerIndex) => {
-        const containerKind: 'gw-prose' | 'gw-stack' = container.classList.contains('gw-prose') ? 'gw-prose' : 'gw-stack';
+        const containerKind: 'gw-prose' | 'gw-stack' = container.classList.contains('gw-prose')
+          ? 'gw-prose'
+          : 'gw-stack';
 
         const children = Array.from(container.children)
           .map((element) => ({ element, box: visibleBox(element) }))

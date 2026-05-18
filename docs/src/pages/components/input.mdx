@@ -1,0 +1,118 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Input
+description: Single-line answers with width hints for expected answer length.
+---
+
+import {
+  InputHeroDemo,
+  InputWidthsDemo,
+  InputTypeDemo,
+  InputDisabledDemo,
+} from '../../components/input-demos';
+
+<section class="gw-section">
+<div class="gw-width gw-prose">
+
+<h1>Input</h1>
+
+Use Input for short, single-line answers — names, reference numbers, postcodes, telephone numbers, email addresses.
+
+<figure class="gw-card">
+<InputHeroDemo />
+</figure>
+
+<h2>When to use Input</h2>
+
+Use Input inside Field for almost every single-line answer in a form. Field renders the visible label, the hint, the error copy, and the ARIA wiring; Input renders the control with Groundwork sizing and styling.
+
+Pick the narrowest width that comfortably fits the expected answer. Width is a hint, not a hard limit — it tells the user roughly how long their answer should be, and signals to anyone scanning the form what kind of data each input takes.
+
+<h2>When not to use Input</h2>
+
+Do not use Input for long free-text answers — anything where the user might type more than a single line. Use `Textarea` instead. A multi-line answer in a single-line input is hard to review and impossible to edit on a phone.
+
+Do not use Input for fixed choices that fit on the screen. Two to five short options are clearer as `RadioGroup`; a longer list of named choices belongs in `Select`. Forcing the user to type a value they could have picked is slower and more error-prone.
+
+Do not render a standalone Input outside Field unless a visible label and description are already provided by surrounding markup. The standalone case is rare; the common case is wrong.
+
+<h2>How it works</h2>
+
+Input renders a styled `<input>`. It accepts every native HTML attribute — `type`, `name`, `value`, `autoComplete`, `maxLength`, `pattern`, `disabled`, and the rest — and adds one Groundwork-specific prop: `width`. Reach for the native attribute when you want native browser behaviour.
+
+<h3>Choosing a width</h3>
+
+`width` is a closed union: `w5`, `w10`, `w20`, `w30`, `two-thirds`, `full`. The number suffixes are character-width hints — the rendered widths fit roughly that many characters of typed text. `two-thirds` and `full` fill the available container.
+
+<figure class="gw-card">
+<InputWidthsDemo />
+</figure>
+
+The width is a signal about expected answer length, not a hard constraint. A telephone number ends up in `w20` because phone numbers are short and uniform — making the field wider would suggest the user might paste a paragraph. An address line ends up in `full` because addresses vary in length and the available space helps the user check what they typed.
+
+Width is not the same as `maxLength`. If you have a real character limit — a National Insurance number is exactly nine characters — set `maxLength` so the browser enforces it. Width changes what the user expects; `maxLength` changes what the input accepts.
+
+<h3>Input type and autocomplete</h3>
+
+Set the native `type` to match the answer. `type="email"` brings up the email keyboard on mobile and adds basic format validation; `type="tel"` shows the numeric keypad with no `@` key; `type="number"` adds spinner buttons and a numeric keypad on most browsers; `type="password"` masks input and triggers the browser's password manager.
+
+Set `autoComplete` to a real WHATWG token whenever the answer is a known piece of personal data. The browser fills `email`, `tel`, `postal-code`, `given-name`, `family-name`, `bday-day`, and many more out of the user's saved profile — entering these is the slowest part of any form, and `autoComplete` is the only way to make it fast for users on assistive tech.
+
+Use `autoComplete="off"` only when autofill would do the wrong thing — for example, a National Insurance number the browser would otherwise overwrite with the user's phone number. Do not turn autocomplete off as a default; the default should be a meaningful value.
+
+<figure class="gw-card">
+<InputTypeDemo />
+</figure>
+
+<h3>Standalone Input vs Field</h3>
+
+Input requires an accessible name — `aria-label` or `aria-labelledby` is a type-level requirement of the `InputProps` union. The ergonomic way to satisfy it is to put the Input inside a Field; Field passes `aria-labelledby` through the render function.
+
+```tsx
+<Field id="email" label="Email address">
+  {({ inputProps }) => <Input {...inputProps} />}
+</Field>
+```
+
+If you genuinely need a standalone Input — an inline editing cell whose label is the column header — pass `aria-labelledby` pointing at the visible label, or `aria-label` when no visible label exists. `aria-label` is a last resort: invisible to sighted users, untranslatable by browser language tools.
+
+<h3>Disabled state</h3>
+
+`disabled` is a native HTML attribute. It is supported on every variant of Input, and the visual treatment is consistent — reduced opacity, a not-allowed cursor.
+
+<figure class="gw-card">
+<InputDisabledDemo />
+</figure>
+
+Use `disabled` only when the reason the input is unavailable is visible elsewhere on the page. A disabled input hides its reason; the user sees a field they cannot edit and no explanation of why. If the reason is "the user must complete a previous step", structure the form so the field is not yet rendered. If the reason is "this value cannot be changed here", say so in the hint and consider rendering the value as plain text instead.
+
+The `Input` API does not enforce this rule, just as `Button` does not — both follow the same convention argued in [ADR-0006](/reference/adr/0006-disabled-buttons-by-prose/). The escape hatch exists because real applications occasionally need it; the prose discourages it because most uses are wrong.
+
+<h3>Accessibility</h3>
+
+Inputs without an accessible name are silent to screen readers. The `AccessibleName` type union enforces that the consumer supplies one — either `aria-label`, `aria-labelledby`, or (through Field) `aria-labelledby` derived from the visible label.
+
+Native `type` matters as much as the accessible name. A telephone-number input with `type="text"` works on a desktop but punishes a mobile user with the wrong on-screen keyboard. A password input with `type="text"` defeats the browser's password manager. Reach for the native type that matches the answer; you get keyboard hints, autofill, and validation behaviour for free.
+
+The Groundwork focus ring is a 3px solid yellow outline applied to every interactive element. The same treatment appears on Button, Input, Textarea, Select, and the choice-group controls — that consistency is what makes focus unmissable across a page.
+
+<h2>Related</h2>
+
+- [Field](/components/field/) — wraps Input with a label, hint, and error wiring. The default way to render an Input.
+- [Textarea](/components/textarea/) — for multi-line free-text answers.
+- [Select](/components/select/) — for short fixed lists where the user picks one.
+- [RadioGroup](/components/radio-group/) — for fixed choices where each option deserves its own visible label.
+- [ErrorSummary](/components/error-summary/) — paired with Field's `error` prop when a submission has more than one invalid field.
+
+<h2>Background</h2>
+
+- [ADR-0001](/reference/adr/0001-no-shared-field-shell/) — Input is the most common control inside Field; the no-shared-shell decision shapes the surface Input sits in.
+- [ADR-0006](/reference/adr/0006-disabled-buttons-by-prose/) — the same argument applies to `disabled` on Input.
+- [Principles → Accessibility is structural, not aspirational](/reference/principles/#accessibility-is-structural) — Input's `AccessibleName` requirement is a structural enforcement, not a runtime check.
+- [WCAG 2.2 SC 1.3.5](https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html) — Identify Input Purpose. The case for setting `autoComplete` to a real WHATWG token.
+- [WCAG 2.2 SC 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html) — Labels or Instructions.
+
+See the [API reference for `<Input>`](/reference/api/Input/).
+
+</div>
+</section>
