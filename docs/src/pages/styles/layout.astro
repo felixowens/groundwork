@@ -1,5 +1,5 @@
 ---
-import CodeBlock from '../../components/CodeBlock.astro';
+import { CodeBlock } from '../../../../src';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 ---
 
@@ -16,9 +16,9 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <h2 id="layout-width">gw-width</h2>
         <p class="gw-body--sm">Constrains a region to a maximum horizontal extent and centres it within its parent. Three preset widths cover most cases.</p>
         <div class="gw-card gw-stack--sm">
-          <div class="docs-width-ruler docs-width-ruler--narrow">680px — <code class="gw-mono">.gw-width--narrow</code></div>
-          <div class="docs-width-ruler docs-width-ruler--default">960px — <code class="gw-mono">.gw-width</code> (default)</div>
-          <div class="docs-width-ruler docs-width-ruler--wide">1200px — <code class="gw-mono">.gw-width--wide</code></div>
+          <div class="docs-width-ruler docs-width-ruler--narrow">680px — <code class="gw-code">.gw-width--narrow</code></div>
+          <div class="docs-width-ruler docs-width-ruler--default">960px — <code class="gw-code">.gw-width</code> (default)</div>
+          <div class="docs-width-ruler docs-width-ruler--wide">1200px — <code class="gw-code">.gw-width--wide</code></div>
         </div>
         <h3>Recommended widths</h3>
         <ul class="gw-list">
@@ -34,7 +34,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <div class="gw-card">
           <div class="docs-stack-grid">
             <div>
-              <code class="gw-mono gw-body--sm">.gw-stack--sm</code>
+              <code class="gw-code gw-body--sm">.gw-stack--sm</code>
               <span class="gw-body--xs">--space-2 / 8px</span>
               <div class="gw-stack--sm docs-stack-grid__host">
                 <div class="docs-block">Item</div>
@@ -43,7 +43,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
               </div>
             </div>
             <div>
-              <code class="gw-mono gw-body--sm">.gw-stack</code>
+              <code class="gw-code gw-body--sm">.gw-stack</code>
               <span class="gw-body--xs">--space-4 / 16px (default)</span>
               <div class="gw-stack docs-stack-grid__host">
                 <div class="docs-block">Item</div>
@@ -52,7 +52,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
               </div>
             </div>
             <div>
-              <code class="gw-mono gw-body--sm">.gw-stack--lg</code>
+              <code class="gw-code gw-body--sm">.gw-stack--lg</code>
               <span class="gw-body--xs">--space-8 / 32px</span>
               <div class="gw-stack--lg docs-stack-grid__host">
                 <div class="docs-block">Item</div>
@@ -61,7 +61,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
               </div>
             </div>
             <div>
-              <code class="gw-mono gw-body--sm">.gw-stack--xl</code>
+              <code class="gw-code gw-body--sm">.gw-stack--xl</code>
               <span class="gw-body--xs">--space-12 / 48px</span>
               <div class="gw-stack--xl docs-stack-grid__host">
                 <div class="docs-block">Item</div>
@@ -84,13 +84,13 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
             <span class="docs-pill">Fourth</span>
             <span class="docs-pill">Fifth</span>
           </div>
-          <p class="gw-body--xs">Default gap is <code class="gw-mono">--space-4</code>. The <code class="gw-mono">.gw-cluster--sm</code> modifier drops to <code class="gw-mono">--space-2</code> for tighter groupings.</p>
+          <p class="gw-body--xs">Default gap is <code class="gw-code">--space-4</code>. The <code class="gw-code">.gw-cluster--sm</code> modifier drops to <code class="gw-code">--space-2</code> for tighter groupings.</p>
         </div>
       </section>
 
       <section class="gw-stack" aria-labelledby="layout-prose">
         <h2 id="layout-prose">gw-prose</h2>
-        <p class="gw-body--sm">Sets the typographic measure (66ch) and applies heading-aware vertical rhythm to unclassed HTML inside. Use it for long-form documentation, marketing copy, and any region where you want the browser to render raw <code class="gw-mono">&lt;h1&gt;</code>/<code class="gw-mono">&lt;p&gt;</code>/<code class="gw-mono">&lt;ul&gt;</code> with sensible spacing.</p>
+        <p class="gw-body--sm">Sets the typographic measure (66ch) and applies heading-aware vertical rhythm to unclassed HTML inside. Use it for long-form documentation, marketing copy, and any region where you want the browser to render raw <code class="gw-code">&lt;h1&gt;</code>/<code class="gw-code">&lt;p&gt;</code>/<code class="gw-code">&lt;ul&gt;</code> with sensible spacing.</p>
         <div class="gw-card">
           <div class="gw-prose docs-prose-demo">
             <h2>Section heading</h2>
@@ -121,7 +121,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <section class="gw-stack" aria-labelledby="layout-usage">
         <h2 id="layout-usage">Composing a page</h2>
         <p class="gw-body--sm">The primitives are designed to compose. A typical page wrapper combines width and stack; richer pages add prose and grid inside.</p>
-        <CodeBlock label="Standard page wrapper">{`<section class="gw-section">
+        <CodeBlock client:load caption="Standard page wrapper">{`<section class="gw-section">
   <div class="gw-width gw-stack--lg">
     <div class="gw-prose">
       <h1>Page title</h1>
@@ -134,7 +134,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
     </div>
   </div>
 </section>`}</CodeBlock>
-        <CodeBlock label="Narrow form layout">{`<section class="gw-section">
+        <CodeBlock client:load caption="Narrow form layout">{`<section class="gw-section">
   <div class="gw-width gw-width--narrow gw-stack">
     <h1>Apply for a permit</h1>
     <form class="gw-stack">…</form>
@@ -145,20 +145,20 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <div class="gw-prose">
         <h2>Guidance</h2>
         <h3>Compose primitives, don't nest layouts</h3>
-        <p>The five primitives are designed to be combined: a <code class="gw-mono">.gw-width</code> wrapping a <code class="gw-mono">.gw-stack--lg</code> wrapping a <code class="gw-mono">.gw-grid</code> handles most page templates. Avoid wrapping a stack inside another stack, or a width inside another width — the result is usually a sign the page wants a different primitive, not a deeper hierarchy.</p>
+        <p>The five primitives are designed to be combined: a <code class="gw-code">.gw-width</code> wrapping a <code class="gw-code">.gw-stack--lg</code> wrapping a <code class="gw-code">.gw-grid</code> handles most page templates. Avoid wrapping a stack inside another stack, or a width inside another width — the result is usually a sign the page wants a different primitive, not a deeper hierarchy.</p>
 
         <h3>Reach for primitives before component CSS</h3>
-        <p>When a component needs vertical spacing between its parts, give it <code class="gw-mono">.gw-stack</code> in the markup rather than writing <code class="gw-mono">margin-top</code> rules in component CSS. Layout responsibilities live in the template; component CSS handles the component's own internal structure.</p>
+        <p>When a component needs vertical spacing between its parts, give it <code class="gw-code">.gw-stack</code> in the markup rather than writing <code class="gw-code">margin-top</code> rules in component CSS. Layout responsibilities live in the template; component CSS handles the component's own internal structure.</p>
 
         <h3>Custom layouts go in component-specific CSS</h3>
-        <p>If the primitives don't fit (a two-column flow demo, a card with a sidebar), write the bespoke grid or flex rules in the page's scoped <code class="gw-mono">&lt;style&gt;</code> block. Do not add modifiers to the layout primitives for one-off cases.</p>
+        <p>If the primitives don't fit (a two-column flow demo, a card with a sidebar), write the bespoke grid or flex rules in the page's scoped <code class="gw-code">&lt;style&gt;</code> block. Do not add modifiers to the layout primitives for one-off cases.</p>
       </div>
 
       <div class="gw-prose">
         <h2>Related</h2>
         <ul class="gw-list">
           <li><a class="gw-link" href="/styles/spacing/">Spacing</a> — the scale that backs every stack and cluster gap.</li>
-          <li><a class="gw-link" href="/styles/typography/">Typography</a> — <code class="gw-mono">.gw-prose</code> uses <code class="gw-mono">--measure</code> from this page.</li>
+          <li><a class="gw-link" href="/styles/typography/">Typography</a> — <code class="gw-code">.gw-prose</code> uses <code class="gw-code">--measure</code> from this page.</li>
           <li><a class="gw-link" href="/patterns/submit-information/">Submit information</a> — the canonical narrow-width transaction journey.</li>
         </ul>
       </div>

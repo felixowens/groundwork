@@ -4,6 +4,7 @@ title: Input
 description: Single-line answers with width hints for expected answer length.
 ---
 
+import { CodeBlock } from '../../../../src';
 import {
   InputHeroDemo,
   InputWidthsDemo,
@@ -68,11 +69,9 @@ Use `autoComplete="off"` only when autofill would do the wrong thing — for exa
 
 Input requires an accessible name — `aria-label` or `aria-labelledby` is a type-level requirement of the `InputProps` union. The ergonomic way to satisfy it is to put the Input inside a Field; Field passes `aria-labelledby` through the render function.
 
-```tsx
-<Field id="email" label="Email address">
+<CodeBlock client:load language="tsx">{`<Field id="email" label="Email address">
   {({ inputProps }) => <Input {...inputProps} />}
-</Field>
-```
+</Field>`}</CodeBlock>
 
 If you genuinely need a standalone Input — an inline editing cell whose label is the column header — pass `aria-labelledby` pointing at the visible label, or `aria-label` when no visible label exists. `aria-label` is a last resort: invisible to sighted users, untranslatable by browser language tools.
 

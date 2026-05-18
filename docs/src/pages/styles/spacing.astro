@@ -1,5 +1,5 @@
 ---
-import CodeBlock from '../../components/CodeBlock.astro';
+import { CodeBlock } from '../../../../src';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import SpacingStep from '../../components/SpacingStep.astro';
 
@@ -16,7 +16,7 @@ const scale: readonly SpaceSpec[] = [
   { token: '--space-3', rem: '0.75rem', px: '12px', usage: 'Within-component padding for small controls.' },
   { token: '--space-4', rem: '1rem', px: '16px', usage: 'Default stack gap. Component-internal padding.' },
   { token: '--space-5', rem: '1.25rem', px: '20px', usage: 'Card padding, comfortable in-component spacing.' },
-  { token: '--space-6', rem: '1.5rem', px: '24px', usage: 'Default <code class="gw-mono">gw-card</code> padding. Page edge padding.' },
+  { token: '--space-6', rem: '1.5rem', px: '24px', usage: 'Default <code class="gw-code">gw-card</code> padding. Page edge padding.' },
   { token: '--space-8', rem: '2rem', px: '32px', usage: 'Section-level gap between unrelated blocks.' },
   { token: '--space-10', rem: '2.5rem', px: '40px', usage: 'Above-H2 spacing inside prose. Major breaks.' },
   { token: '--space-12', rem: '3rem', px: '48px', usage: 'Stack-XL gap. Top-level page-section separation.' },
@@ -30,8 +30,8 @@ const scale: readonly SpaceSpec[] = [
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
         <h1>Spacing</h1>
-        <p>Groundwork uses one spacing scale. Components reference these tokens; designers choose from the same closed set. The scale is non-linear past <code class="gw-mono">--space-6</code> — gaps double rather than continuing in 4px increments — and skips numbers deliberately (there is no <code class="gw-mono">--space-7</code> or <code class="gw-mono">--space-9</code>). Each step is a chosen value, not an oversight.</p>
-        <p>Every value is expressed in <code class="gw-mono">rem</code>; pixel equivalents assume the browser's default 16px root font size.</p>
+        <p>Groundwork uses one spacing scale. Components reference these tokens; designers choose from the same closed set. The scale is non-linear past <code class="gw-code">--space-6</code> — gaps double rather than continuing in 4px increments — and skips numbers deliberately (there is no <code class="gw-code">--space-7</code> or <code class="gw-code">--space-9</code>). Each step is a chosen value, not an oversight.</p>
+        <p>Every value is expressed in <code class="gw-code">rem</code>; pixel equivalents assume the browser's default 16px root font size.</p>
       </div>
 
       <div class="gw-card">
@@ -42,8 +42,8 @@ const scale: readonly SpaceSpec[] = [
 
       <section class="gw-stack" aria-labelledby="spacing-usage">
         <h2 id="spacing-usage">Using a spacing token</h2>
-        <p class="gw-body--sm">Reach for the layout primitives first — <a class="gw-link" href="/styles/layout/#layout-stack"><code class="gw-mono">gw-stack</code></a> for vertical rhythm and <a class="gw-link" href="/styles/layout/#layout-cluster"><code class="gw-mono">gw-cluster</code></a> for horizontal groups — both of which already pull from this scale. Use raw tokens in component CSS only when the primitives don't fit.</p>
-        <CodeBlock>{`.gw-field {
+        <p class="gw-body--sm">Reach for the layout primitives first — <a class="gw-link" href="/styles/layout/#layout-stack"><code class="gw-code">gw-stack</code></a> for vertical rhythm and <a class="gw-link" href="/styles/layout/#layout-cluster"><code class="gw-code">gw-cluster</code></a> for horizontal groups — both of which already pull from this scale. Use raw tokens in component CSS only when the primitives don't fit.</p>
+        <CodeBlock client:load>{`.gw-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -57,13 +57,13 @@ const scale: readonly SpaceSpec[] = [
       <div class="gw-prose">
         <h2>Guidance</h2>
         <h3>Pick from the scale, never a custom value</h3>
-        <p>If a layout looks like it needs <code class="gw-mono">14px</code>, snap to <code class="gw-mono">--space-3</code> (12px) or <code class="gw-mono">--space-4</code> (16px). Custom values break the visual rhythm and the closed-scale guarantee — a designer cannot trust that all spacings come from the same set.</p>
+        <p>If a layout looks like it needs <code class="gw-code">14px</code>, snap to <code class="gw-code">--space-3</code> (12px) or <code class="gw-code">--space-4</code> (16px). Custom values break the visual rhythm and the closed-scale guarantee — a designer cannot trust that all spacings come from the same set.</p>
 
         <h3>Use larger steps for layout, smaller for type</h3>
-        <p>As a rule of thumb: <code class="gw-mono">--space-1</code> through <code class="gw-mono">--space-3</code> are typographic gaps. <code class="gw-mono">--space-4</code> through <code class="gw-mono">--space-6</code> are component-internal padding. <code class="gw-mono">--space-8</code> and above are layout-level — gaps between sections of a page.</p>
+        <p>As a rule of thumb: <code class="gw-code">--space-1</code> through <code class="gw-code">--space-3</code> are typographic gaps. <code class="gw-code">--space-4</code> through <code class="gw-code">--space-6</code> are component-internal padding. <code class="gw-code">--space-8</code> and above are layout-level — gaps between sections of a page.</p>
 
         <h3>No override utilities yet</h3>
-        <p>Groundwork does not ship spacing utility classes — there is no <code class="gw-mono">.gw-margin-top-4</code> or equivalent. Layout responsibilities belong in the template via <code class="gw-mono">gw-stack</code> / <code class="gw-mono">gw-cluster</code>, or inside a component's own CSS. If the absence becomes painful enough, the question is worth re-opening as a system feature.</p>
+        <p>Groundwork does not ship spacing utility classes — there is no <code class="gw-code">.gw-margin-top-4</code> or equivalent. Layout responsibilities belong in the template via <code class="gw-code">gw-stack</code> / <code class="gw-code">gw-cluster</code>, or inside a component's own CSS. If the absence becomes painful enough, the question is worth re-opening as a system feature.</p>
       </div>
 
       <div class="gw-prose">

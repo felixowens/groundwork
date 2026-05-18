@@ -16,10 +16,10 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <h3 id="field">Field</h3>
       <p>
         A labelled form control with optional hint and error. Two shapes:
-        <code class="gw-mono">&lt;Field&gt;</code> (a <code class="gw-mono">&lt;div&gt;</code> +
-        <code class="gw-mono">&lt;label&gt;</code> shell wrapping one control) and a
+        <code class="gw-code">&lt;Field&gt;</code> (a <code class="gw-code">&lt;div&gt;</code> +
+        <code class="gw-code">&lt;label&gt;</code> shell wrapping one control) and a
         <a class="gw-link" href="#choice-group">Choice group</a> (a
-        <code class="gw-mono">&lt;fieldset&gt;</code> + <code class="gw-mono">&lt;legend&gt;</code> shell
+        <code class="gw-code">&lt;fieldset&gt;</code> + <code class="gw-code">&lt;legend&gt;</code> shell
         wrapping multiple option inputs).
       </p>
 
@@ -32,7 +32,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
       <h3 id="choice-group">Choice group</h3>
       <p>
-        A <code class="gw-mono">&lt;fieldset&gt;</code>-backed <a class="gw-link" href="#field">Field</a> for
+        A <code class="gw-code">&lt;fieldset&gt;</code>-backed <a class="gw-link" href="#field">Field</a> for
         picking from a short, visible list. RadioGroup (single-select) and CheckboxGroup (multi-select) are
         the two public shapes.
       </p>
@@ -43,18 +43,18 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         <a class="gw-link" href="#hint">Hint</a>, and <a class="gw-link" href="#field-error">Field error</a>
         to its <a class="gw-link" href="#field-consumer">Field consumer</a>: the derived IDs, the ARIA
         attribute bundles (input-style and fieldset-style), and the rendered hint and error nodes. Produced
-        by <code class="gw-mono">describeField()</code>.
+        by <code class="gw-code">describeField()</code>.
       </p>
 
       <h3 id="hint">Hint</h3>
       <p>
         Short supplementary copy explaining what the user should enter. Shown before the control; referenced
-        by <code class="gw-mono">aria-describedby</code>.
+        by <code class="gw-code">aria-describedby</code>.
       </p>
 
       <h3 id="field-error">Field error</h3>
       <p>
-        Structured error copy with <code class="gw-mono">{`{ problem, fix }`}</code> — problem names what is
+        Structured error copy with <code class="gw-code">{`{ problem, fix }`}</code> — problem names what is
         wrong, fix tells the user how to correct it. Both Field and ErrorSummary format it consistently.
       </p>
 
@@ -62,14 +62,14 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
       <h3 id="primitive-token">Primitive token</h3>
       <p>
-        A raw value on a closed scale, prefixed <code class="gw-mono">--_gw-</code>. Private — component CSS
+        A raw value on a closed scale, prefixed <code class="gw-code">--_gw-</code>. Private — component CSS
         must not reference these directly.
       </p>
 
       <h3 id="semantic-token">Semantic token</h3>
       <p>
         A public CSS custom property naming a decision
-        (<code class="gw-mono">--ink-secondary</code>, <code class="gw-mono">--action</code>). References a
+        (<code class="gw-code">--ink-secondary</code>, <code class="gw-code">--action</code>). References a
         <a class="gw-link" href="#primitive-token">Primitive token</a>. The only tokens component CSS is
         allowed to reference.
       </p>
@@ -125,8 +125,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
         </li>
         <li>
           A <a class="gw-link" href="#field-description">Field description</a> is produced by
-          <code class="gw-mono">describeField(id, &#123; hint, error &#125;)</code> and consumed by both
-          <code class="gw-mono">&lt;Field&gt;</code> and the Choice group module.
+          <code class="gw-code">describeField(id, &#123; hint, error &#125;)</code> and consumed by both
+          <code class="gw-code">&lt;Field&gt;</code> and the Choice group module.
         </li>
         <li>
           Component CSS references <a class="gw-link" href="#semantic-token">Semantic tokens</a> only;
@@ -141,7 +141,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
       <h2>A note on the word "Field"</h2>
       <p>
         "Field" names both the domain concept (any labelled form control) and the specific
-        <code class="gw-mono">&lt;Field&gt;</code> React component. Context almost always disambiguates;
+        <code class="gw-code">&lt;Field&gt;</code> React component. Context almost always disambiguates;
         when it does not, the docs say "the Field component" or "a labelled field" to keep the two senses
         apart.
       </p>

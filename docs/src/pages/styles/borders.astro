@@ -1,5 +1,5 @@
 ---
-import CodeBlock from '../../components/CodeBlock.astro';
+import { CodeBlock } from '../../../../src';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import TokenSample from '../../components/TokenSample.astro';
 
@@ -51,7 +51,7 @@ const shadows: readonly BorderTokenSpec[] = [
 
       <section class="gw-stack" aria-labelledby="border-radius">
         <h2 id="border-radius">Corner radius</h2>
-        <p class="gw-body--sm">Two radii. There is no <code class="gw-mono">--radius-lg</code> — larger curves would visually compete with the components themselves.</p>
+        <p class="gw-body--sm">Two radii. There is no <code class="gw-code">--radius-lg</code> — larger curves would visually compete with the components themselves.</p>
         <ul class="gw-grid" role="list">
           {
             radii.map((spec) => (
@@ -80,7 +80,7 @@ const shadows: readonly BorderTokenSpec[] = [
       <section class="gw-stack" aria-labelledby="borders-usage">
         <h2 id="borders-usage">Using a border or radius token</h2>
         <p class="gw-body--sm">Reference border width, radius, and shadow tokens directly via custom properties. The border colour comes from the <a class="gw-link" href="/styles/colour/#colour-border">colour tokens</a>; pair them explicitly.</p>
-        <CodeBlock>{`.card {
+        <CodeBlock client:load>{`.card {
   border: var(--border-width-thin) solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -90,19 +90,19 @@ const shadows: readonly BorderTokenSpec[] = [
       <div class="gw-prose">
         <h2>Guidance</h2>
         <h3>Prefer borders to shadows for default surfaces</h3>
-        <p>Groundwork's default cards and banners use a <code class="gw-mono">--border-width-thin</code> stroke rather than a shadow. Borders are more reliable across rendering contexts (printed, screenshot, dark mode) and don't introduce a fake light source. Reach for shadow when a surface needs to <em>visibly float</em> — dialogs, tooltips — not for general elevation.</p>
+        <p>Groundwork's default cards and banners use a <code class="gw-code">--border-width-thin</code> stroke rather than a shadow. Borders are more reliable across rendering contexts (printed, screenshot, dark mode) and don't introduce a fake light source. Reach for shadow when a surface needs to <em>visibly float</em> — dialogs, tooltips — not for general elevation.</p>
 
         <h3>Match radius to the parent</h3>
-        <p>A pill-shaped Button inside a card with a 6px radius looks deliberate. A Button with a 12px radius inside the same card looks accidental. When in doubt, use <code class="gw-mono">--radius-sm</code> for inner controls and <code class="gw-mono">--radius-md</code> for outer containers.</p>
+        <p>A pill-shaped Button inside a card with a 6px radius looks deliberate. A Button with a 12px radius inside the same card looks accidental. When in doubt, use <code class="gw-code">--radius-sm</code> for inner controls and <code class="gw-code">--radius-md</code> for outer containers.</p>
 
         <h3>Border width carries weight, not decoration</h3>
-        <p>Thicker borders draw the eye. Reserve <code class="gw-mono">--border-width-medium</code> for form controls (which need the visual heft to look interactive) and <code class="gw-mono">--border-width-thick</code> for the focus ring. Decorating an idle card with a heavy stroke makes it look interactive when it isn't.</p>
+        <p>Thicker borders draw the eye. Reserve <code class="gw-code">--border-width-medium</code> for form controls (which need the visual heft to look interactive) and <code class="gw-code">--border-width-thick</code> for the focus ring. Decorating an idle card with a heavy stroke makes it look interactive when it isn't.</p>
       </div>
 
       <div class="gw-prose">
         <h2>Related</h2>
         <ul class="gw-list">
-          <li><a class="gw-link" href="/styles/focus/">Focus</a> — uses <code class="gw-mono">--border-width-thick</code> for the 3px yellow ring.</li>
+          <li><a class="gw-link" href="/styles/focus/">Focus</a> — uses <code class="gw-code">--border-width-thick</code> for the 3px yellow ring.</li>
           <li><a class="gw-link" href="/styles/colour/#colour-border">Colour</a> — the border colour tokens that pair with these widths.</li>
         </ul>
       </div>

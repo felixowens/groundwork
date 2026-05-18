@@ -51,6 +51,11 @@
   font-size: 0.9em;
 }
 
+.gw-code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
 .gw-link {
   color: var(--action);
   text-decoration: underline;
@@ -117,6 +122,31 @@ h6 {
 .gw-prose code:not([class]) {
   font-family: var(--font-mono);
   font-size: 0.9em;
+}
+
+:where(.gw-code-block),
+:where(.gw-prose pre:not([class])) {
+  margin: 0;
+}
+
+.gw-code-block,
+.gw-prose pre:not([class]) {
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-sunken);
+  border: var(--border-width-thin) solid var(--border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-secondary);
+  line-height: var(--leading-normal);
+  color: var(--ink);
+  white-space: pre;
+}
+
+.gw-code-block > code,
+.gw-prose pre:not([class]) > code {
+  font: inherit;
+  color: inherit;
 }
 
 .gw-prose a:not([class]) {

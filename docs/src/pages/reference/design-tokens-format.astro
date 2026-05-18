@@ -11,9 +11,9 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
         <p>Groundwork token source files use the Design Tokens Community Group (DTCG) shape:</p>
         <ul class="gw-list">
-          <li>token values are stored in <code class="gw-mono">$value</code></li>
-          <li>token types are stored in <code class="gw-mono">$type</code></li>
-          <li>token references use curly-brace paths, for example <code class="gw-mono">{`{primitives.color.blue.60}`}</code></li>
+          <li>token values are stored in <code class="gw-code">$value</code></li>
+          <li>token types are stored in <code class="gw-code">$type</code></li>
+          <li>token references use curly-brace paths, for example <code class="gw-code">{`{primitives.color.blue.60}`}</code></li>
         </ul>
 
         <p>Primary reference:</p>
@@ -24,7 +24,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
         <h2>JSON Schema status</h2>
         <p>As of the 2025.10 format document, the DTCG does not publish an official JSON Schema for token files. The spec includes an editor's note that the group is exploring adding one to support the format.</p>
-        <p>Do not add a repo-local schema unless we intentionally choose to maintain our own partial validation rules. Prefer validating architectural constraints in dedicated checks, such as <code class="gw-mono">scripts/check-css-architecture.mjs</code>, rather than pretending to implement the full DTCG spec.</p>
+        <p>Do not add a repo-local schema unless we intentionally choose to maintain our own partial validation rules. Prefer validating architectural constraints in dedicated checks, such as <code class="gw-code">scripts/check-css-architecture.mjs</code>, rather than pretending to implement the full DTCG spec.</p>
       </div>
     </div>
   </section>

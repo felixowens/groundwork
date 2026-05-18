@@ -4,6 +4,7 @@ title: Field
 description: The primary form API for labels, hints, errors, and ARIA wiring.
 ---
 
+import { CodeBlock } from '../../../../src';
 import {
   FieldHeroDemo,
   FieldHintDemo,
@@ -38,11 +39,9 @@ Do not render an `Input`, `Textarea`, or `Select` outside Field unless a visible
 
 Field takes an `id`, a `label`, optional `hint`, and optional `error`. It renders the label, the hint, the error, and calls its child as a function — passing the ARIA attributes the control needs. You spread those attributes onto whatever input you put inside.
 
-```tsx
-<Field id="email" label="Email address">
+<CodeBlock client:load language="tsx">{`<Field id="email" label="Email address">
   {({ inputProps }) => <Input {...inputProps} />}
-</Field>
-```
+</Field>`}</CodeBlock>
 
 The render-prop shape exists because the control can be an `Input`, a `Textarea`, or a `Select`. Field doesn't pick for you, and it doesn't `cloneElement` anything — the control is a real React element rendered by your code with the wiring spread on it.
 
@@ -68,8 +67,7 @@ Hints render as `<span class="gw-hint">` between the label and the control, and 
 
 The optional `error` prop is a structured `FieldError`: a `problem` string and a `fix` string.
 
-```tsx
-<Field
+<CodeBlock client:load language="tsx">{`<Field
   id="email"
   label="Email address"
   error={{
@@ -78,8 +76,7 @@ The optional `error` prop is a structured `FieldError`: a `problem` string and a
   }}
 >
   {({ inputProps }) => <Input {...inputProps} type="email" />}
-</Field>
-```
+</Field>`}</CodeBlock>
 
 The two strings are concatenated and rendered as `<span class="gw-error-message">` between the label and the control. The control's `aria-describedby` is extended to include the error id, and `aria-invalid="true"` is set on it. The `.gw-field--error` modifier draws the red left border that runs from the label down past the control.
 

@@ -4,6 +4,8 @@ export type { ButtonProps, ButtonVariant } from './components/Button';
 export { Button } from './components/Button';
 export type { CheckboxGroupOption, CheckboxGroupProps } from './components/CheckboxGroup';
 export { CheckboxGroup } from './components/CheckboxGroup';
+export type { CodeBlockProps } from './components/CodeBlock';
+export { CodeBlock } from './components/CodeBlock';
 export type { ErrorSummaryItem, ErrorSummaryProps } from './components/ErrorSummary';
 export { ErrorSummary } from './components/ErrorSummary';
 export type { FieldProps, FieldRenderProps } from './components/Field';

@@ -4,6 +4,7 @@ title: Error summary
 description: Page-level validation summary that links back to invalid fields.
 ---
 
+import { CodeBlock } from '../../../../src';
 import {
   ErrorSummaryHeroDemo,
   ErrorSummarySingleDemo,
@@ -41,8 +42,7 @@ Do not use Error summary as the only error treatment. Inline errors next to the 
 
 `<ErrorSummary>` takes a `title` and a list of `items`. Each item names a field by `id` and `label` and carries the same structured `FieldError` the matching `<Field>` carries. The component renders an `<h2>` with the title, then an unordered list of links, then nothing else. The wrapping element has `role="alert"` and `tabIndex={-1}` so the consumer can move focus to it programmatically.
 
-```tsx
-<ErrorSummary
+<CodeBlock client:load language="tsx">{`<ErrorSummary
   items={[
     {
       id: 'email',
@@ -53,8 +53,7 @@ Do not use Error summary as the only error treatment. Inline errors next to the 
       },
     },
   ]}
-/>
-```
+/>`}</CodeBlock>
 
 <h3>Writing error messages</h3>
 
@@ -79,8 +78,7 @@ Mismatched ids are the most common bug. If your `<Field id="email">` becomes `<F
 
 When the page enters the error state, focus must move to the summary so keyboard and screen-reader users hear the problem before they navigate back into the form. The summary wrapper has `tabIndex={-1}` so it can receive programmatic focus.
 
-```tsx
-const summaryRef = useRef<HTMLDivElement>(null);
+<CodeBlock client:load language="tsx">{`const summaryRef = useRef<HTMLDivElement>(null);
 
 const onSubmit = (event: FormEvent) => {
   if (errors.length > 0) {
@@ -89,8 +87,7 @@ const onSubmit = (event: FormEvent) => {
   }
 };
 
-return <ErrorSummary ref={summaryRef} items={errors} />;
-```
+return <ErrorSummary ref={summaryRef} items={errors} />;`}</CodeBlock>
 
 On a server-rendered page that responds with the summary already in the markup, set focus to it on page load when the submission was invalid — typically by including the summary near the top of the page and giving it `autoFocus`, or by running a small script that moves focus on `DOMContentLoaded`.
 

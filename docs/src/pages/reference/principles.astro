@@ -22,22 +22,22 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
       <h2 id="names-describe-decisions">Names describe decisions, not appearances</h2>
       <p>
-        <code class="gw-mono">--ink-secondary</code> tells you <em>when</em> to use it (supporting text).
-        <code class="gw-mono">--ink-muted</code> tells you what it <em>looks like</em> (muted) and leaves you
+        <code class="gw-code">--ink-secondary</code> tells you <em>when</em> to use it (supporting text).
+        <code class="gw-code">--ink-muted</code> tells you what it <em>looks like</em> (muted) and leaves you
         guessing whether it is for hints, disabled states, or metadata. Every token name should pass the
         rename test: can you change the underlying value without the name becoming a lie?
       </p>
       <p>
         The same rule applies at the component layer. A Button variant is
-        <code class="gw-mono">destructive</code>, not <code class="gw-mono">red</code>, so re-theming the
+        <code class="gw-code">destructive</code>, not <code class="gw-code">red</code>, so re-theming the
         variant is a token swap rather than a rename across every call site.
       </p>
 
       <h2 id="accessibility-is-structural">Accessibility is structural, not aspirational</h2>
       <p>
-        The React <code class="gw-mono">&lt;Field&gt;</code> component requires a label prop. It is not a
+        The React <code class="gw-code">&lt;Field&gt;</code> component requires a label prop. It is not a
         lint warning or a documentation note — it is a type error. Error messages are structured into
-        <code class="gw-mono">{`{ problem, fix }`}</code> so the component API guides you toward the pattern
+        <code class="gw-code">{`{ problem, fix }`}</code> so the component API guides you toward the pattern
         that helps users recover. The focus ring is 3px solid yellow — ugly on purpose, unmissable by design,
         and identical across every interactive element so consistency does the work attention cannot.
       </p>
@@ -52,8 +52,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
       <h2 id="progressive-disclosure">Progressive disclosure of complexity</h2>
       <p>
-        Start with <code class="gw-mono">&lt;Field&gt;</code>, <code class="gw-mono">&lt;Input&gt;</code>,
-        and <code class="gw-mono">&lt;Button&gt;</code>. That covers most forms. Add error handling when you
+        Start with <code class="gw-code">&lt;Field&gt;</code>, <code class="gw-code">&lt;Input&gt;</code>,
+        and <code class="gw-code">&lt;Button&gt;</code>. That covers most forms. Add error handling when you
         need it. Add summary lists for review pages. Add banners and choice groups as the surface grows. The
         system is designed so you can be productive on day one without holding the whole component set in
         your head.
