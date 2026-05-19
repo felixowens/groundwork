@@ -87,13 +87,23 @@ test.describe('CodeBlock', () => {
     await expect(pre).toBeFocused();
   });
 
-  test('the Copied announcement clears after the 2 second timeout', async ({ page }) => {
+  test('the Copied announcement stays long enough for a screen reader to finish reading it', async ({ page }) => {
     const heroFigure = page.locator('.gw-code-block-figure').first();
     const button = heroFigure.getByRole('button');
+    const liveRegion = heroFigure.getByText('Code copied to clipboard.');
 
     await button.click();
     await expect(button).toHaveText('Copied');
+    await expect(liveRegion).toBeAttached();
 
-    await expect(button).toHaveText('Copy', { timeout: 3000 });
+    // The live region must still hold the announcement ~2.5s in — that's
+    // roughly the bottom of VoiceOver's read time at default speech rate.
+    // If this fails, the revert is firing too early and the announcement
+    // gets cut off.
+    await page.waitForTimeout(2500);
+    await expect(button).toHaveText('Copied');
+
+    // And it must eventually clear, well within 5 seconds.
+    await expect(button).toHaveText('Copy', { timeout: 5000 });
   });
 });

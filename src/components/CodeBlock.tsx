@@ -1,5 +1,11 @@
 import { type ReactNode, type Ref, useCallback, useEffect, useRef, useState } from 'react';
 
+// Long enough for VoiceOver (and other screen readers) to finish reading
+// "Code copied to clipboard." through the aria-live region before the button
+// text reverts. At ~170wpm a 5-word sentence runs ~2.1s; we leave headroom
+// for announcement queue delay.
+const COPY_FEEDBACK_DURATION_MS = 4000;
+
 /**
  * Props for the Groundwork CodeBlock component.
  *
@@ -53,7 +59,7 @@ export function CodeBlock({ children, caption, language, ref }: CodeBlockProps):
     if (timeoutRef.current !== null) {
       clearTimeout(timeoutRef.current);
     }
-    timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+    timeoutRef.current = setTimeout(() => setCopied(false), COPY_FEEDBACK_DURATION_MS);
   }, [children]);
 
   const codeClass = language === undefined ? undefined : `language-${language}`;
