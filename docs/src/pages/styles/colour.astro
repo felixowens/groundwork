@@ -1,5 +1,5 @@
 ---
-import CodeBlock from '../../components/CodeBlock.astro';
+import { CodeBlock } from '../../../../src';
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import Swatch from '../../components/Swatch.astro';
 
@@ -47,23 +47,23 @@ const groups: readonly GroupSpec[] = [
     swatches: [
       { token: '--action', light: 'oklch(53.47% 0.1360 249.9)', dark: 'oklch(70.69% 0.1103 243.4)', usage: 'Primary Button backgrounds and link text.' },
       { token: '--action-hover', light: 'oklch(41.54% 0.1030 249.8)', dark: 'oklch(80.91% 0.0956 251.8)', usage: 'Hover state for the same surfaces.' },
-      { token: '--action-text', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)', usage: 'Foreground on top of <code class="gw-mono">--action</code> — tuned for contrast.' },
+      { token: '--action-text', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)', usage: 'Foreground on top of <code class="gw-code">--action</code> — tuned for contrast.' },
     ],
   },
   {
     id: 'destructive',
     heading: 'Destructive',
-    intro: 'For deliberate, user-initiated destruction — deleting data, cancelling an order, reversing a transaction. Visually distinct from <code class="gw-mono">--error</code>, which signals a validation problem the system is reporting back.',
+    intro: 'For deliberate, user-initiated destruction — deleting data, cancelling an order, reversing a transaction. Visually distinct from <code class="gw-code">--error</code>, which signals a validation problem the system is reporting back.',
     swatches: [
       { token: '--destructive', light: 'oklch(50.16% 0.1887 27.5)', dark: 'oklch(68.75% 0.1420 21.5)', usage: 'Destructive Button backgrounds.' },
       { token: '--destructive-hover', light: 'oklch(41.16% 0.1524 27.2)', dark: 'oklch(82.19% 0.0811 19.0)', usage: 'Hover state for destructive Buttons.' },
-      { token: '--destructive-text', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)', usage: 'Foreground on top of <code class="gw-mono">--destructive</code>.' },
+      { token: '--destructive-text', light: 'oklch(100% 0 0)', dark: 'oklch(20.02% 0 0)', usage: 'Foreground on top of <code class="gw-code">--destructive</code>.' },
     ],
   },
   {
     id: 'status',
     heading: 'Status',
-    intro: 'Success, warning, and error states. Each ships with a paired <code class="gw-mono">-surface</code> for Banner backgrounds and similar muted treatments. Reserve these for messages where colour itself communicates state — decorating non-status content dilutes the signal.',
+    intro: 'Success, warning, and error states. Each ships with a paired <code class="gw-code">-surface</code> for Banner backgrounds and similar muted treatments. Reserve these for messages where colour itself communicates state — decorating non-status content dilutes the signal.',
     swatches: [
       { token: '--success', light: 'oklch(47.84% 0.1205 154.1)', dark: 'oklch(71.85% 0.1417 144.9)', usage: 'Success indicators — icon strokes, accent lines.' },
       { token: '--success-surface', light: 'oklch(95.71% 0.0210 147.6)', dark: 'oklch(17.76% 0 0)', usage: 'Success Banner background.' },
@@ -98,13 +98,13 @@ const groups: readonly GroupSpec[] = [
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
         <h1>Colour</h1>
-        <p>Groundwork's public colour palette is a closed set of semantic tokens. Each token has a paired dark-mode value — the chip on the left is light mode, the chip on the right is dark. Components reference these tokens by name, never by underlying value: a confirmation Banner uses <code class="gw-mono">--success</code> because it signals success, not because it's green.</p>
-        <p>Values are written in <code class="gw-mono">oklch()</code> for perceptual uniformity. The <a class="gw-link" href="/get-started/architecture/">architecture overview</a> explains how semantic tokens remap to primitives between modes.</p>
+        <p>Groundwork's public colour palette is a closed set of semantic tokens. Each token has a paired dark-mode value — the chip on the left is light mode, the chip on the right is dark. Components reference these tokens by name, never by underlying value: a confirmation Banner uses <code class="gw-code">--success</code> because it signals success, not because it's green.</p>
+        <p>Values are written in <code class="gw-code">oklch()</code> for perceptual uniformity. The <a class="gw-link" href="/get-started/architecture/">architecture overview</a> explains how semantic tokens remap to primitives between modes.</p>
       </div>
 
       <div class="gw-prose">
         <h2>Accessibility</h2>
-        <p>Every paired token is tuned for at least 4.5:1 contrast in its paired use — <code class="gw-mono">--action-text</code> on <code class="gw-mono">--action</code>, <code class="gw-mono">--ink</code> on <code class="gw-mono">--surface</code>, and so on. If you compose tokens outside these pairings, verify contrast manually against <a class="gw-link" href="https://www.w3.org/TR/WCAG22/#contrast-minimum">WCAG 2.2 SC 1.4.3</a>.</p>
+        <p>Every paired token is tuned for at least 4.5:1 contrast in its paired use — <code class="gw-code">--action-text</code> on <code class="gw-code">--action</code>, <code class="gw-code">--ink</code> on <code class="gw-code">--surface</code>, and so on. If you compose tokens outside these pairings, verify contrast manually against <a class="gw-link" href="https://www.w3.org/TR/WCAG22/#contrast-minimum">WCAG 2.2 SC 1.4.3</a>.</p>
         <p>Colour is never the only signal. Status banners include an icon and a heading; destructive buttons include the verb in their label; form errors include text describing the problem. The colour reinforces information that is already legible without it.</p>
       </div>
 
@@ -127,7 +127,7 @@ const groups: readonly GroupSpec[] = [
       <section class="gw-stack" aria-labelledby="colour-usage">
         <h2 id="colour-usage">Using a colour token</h2>
         <p class="gw-body--sm">Reference tokens by name in CSS via custom properties. The dark-mode value resolves automatically when the user's system is in dark mode.</p>
-        <CodeBlock>{`.notification {
+        <CodeBlock client:load>{`.notification {
   background: var(--success-surface);
   color: var(--ink);
   border: var(--border-width-thin) solid var(--success);
@@ -137,10 +137,10 @@ const groups: readonly GroupSpec[] = [
       <div class="gw-prose">
         <h2>Guidance</h2>
         <h3>Distinguish destructive from error</h3>
-        <p><code class="gw-mono">--destructive</code> belongs on Buttons that remove data or reverse an action — places where the user intentionally pushes the button knowing the consequence. <code class="gw-mono">--error</code> belongs on validation surfaces — places where the system tells the user something is wrong with their input. The two should not appear together in the same control.</p>
+        <p><code class="gw-code">--destructive</code> belongs on Buttons that remove data or reverse an action — places where the user intentionally pushes the button knowing the consequence. <code class="gw-code">--error</code> belongs on validation surfaces — places where the system tells the user something is wrong with their input. The two should not appear together in the same control.</p>
 
         <h3>Layer surfaces, don't stack them</h3>
-        <p>Use <code class="gw-mono">--surface</code> for the page, <code class="gw-mono">--surface-raised</code> for cards, and <code class="gw-mono">--surface-sunken</code> for inset regions or input fields. Nesting a raised card inside another raised card flattens the hierarchy — pick one elevation per region.</p>
+        <p>Use <code class="gw-code">--surface</code> for the page, <code class="gw-code">--surface-raised</code> for cards, and <code class="gw-code">--surface-sunken</code> for inset regions or input fields. Nesting a raised card inside another raised card flattens the hierarchy — pick one elevation per region.</p>
 
         <h3>If a colour you need isn't here</h3>
         <p>The semantic palette is intentionally narrow. Off-palette colours — chart series, illustration accents, marketing surfaces — currently have no documented escape hatch. If you find yourself reaching outside the palette, that's a signal to discuss the gap rather than inline a hex value.</p>
@@ -149,9 +149,9 @@ const groups: readonly GroupSpec[] = [
       <div class="gw-prose">
         <h2>Related</h2>
         <ul class="gw-list">
-          <li><a class="gw-link" href="/styles/focus/">Focus</a> — the 3px yellow ring that pairs with <code class="gw-mono">--focus-text</code>.</li>
+          <li><a class="gw-link" href="/styles/focus/">Focus</a> — the 3px yellow ring that pairs with <code class="gw-code">--focus-text</code>.</li>
           <li><a class="gw-link" href="/components/banner/">Banner</a> — primary consumer of the status surfaces.</li>
-          <li><a class="gw-link" href="/components/button/">Button</a> — uses <code class="gw-mono">--action</code> and <code class="gw-mono">--destructive</code>.</li>
+          <li><a class="gw-link" href="/components/button/">Button</a> — uses <code class="gw-code">--action</code> and <code class="gw-code">--destructive</code>.</li>
           <li><a class="gw-link" href="/get-started/architecture/">Architecture overview</a> — how semantic tokens remap to primitives between light and dark modes.</li>
         </ul>
       </div>

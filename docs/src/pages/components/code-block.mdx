@@ -1,0 +1,81 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Code block
+description: A pre-formatted block of code with an optional caption and a Copy button.
+---
+
+import { CodeBlockHeroDemo, CodeBlockCaptionDemo, CodeBlockLanguageDemo } from '../../components/code-block-demos';
+
+<section class="gw-section">
+<div class="gw-width gw-prose">
+
+<h1>Code block</h1>
+
+CodeBlock renders a sample of code with a Copy button. Use it anywhere you want users to lift and paste a snippet exactly.
+
+<figure class="gw-card">
+<CodeBlockHeroDemo client:load />
+</figure>
+
+<h2>When to use CodeBlock</h2>
+
+Use CodeBlock in documentation, examples, and reference material — anywhere a reader is likely to copy the code into their own project. The visible Copy button removes the friction of selecting and copying by hand, and the surface treatment marks the snippet as something distinct from the prose around it.
+
+Use it for whole snippets, not for fragments inside a sentence. A single API name or token identifier belongs in inline `code`, not in a block.
+
+<h2>When not to use CodeBlock</h2>
+
+Do not use CodeBlock for output that the user is meant to read but not run — log lines, error messages, sample JSON responses. A Copy button on those suggests they're meant to be reused as input somewhere, which they aren't. Render them as a plain `<pre>` instead; the design system styles plain `<pre>` elements inside `.gw-prose` with the same surface treatment but without the Copy affordance.
+
+Do not nest a CodeBlock inside a flow that already has a Copy or Download action for the same code. Two copy controls for the same payload duplicate the affordance and make the page louder.
+
+<h2>How it works</h2>
+
+CodeBlock takes the code text as its child and renders a `<figure>` containing a `<pre><code>` block and a button. The code text is preserved verbatim — whitespace, indentation, line breaks, the lot. Strings passed in template literals work; multi-line content works.
+
+<h3>Caption</h3>
+
+Pass `caption` to render a small label above the code block. Use it when the snippet's role is not obvious from context — for example, when two adjacent blocks show the same shape in different languages, or when one is a Do and the other is a Don't.
+
+<figure class="gw-card">
+<CodeBlockCaptionDemo client:load />
+</figure>
+
+The caption is a `<figcaption>`, so it carries the right semantics for assistive technology — screen-reader users hear it as the figure's accessible name.
+
+<h3>Copy button</h3>
+
+The Copy button is rendered in the top-right corner of the code surface. Clicking it copies the entire child string to the clipboard through `navigator.clipboard.writeText`. The button label changes to "Copied" for two seconds, and the change is announced through a polite `aria-live` region so screen-reader users hear confirmation without losing focus.
+
+The button is always rendered, even on environments without clipboard access — if the API is unavailable the click is a no-op rather than an error. Browsers without clipboard support are rare enough in 2026 that a fallback is not worth designing.
+
+<h3>Language hint</h3>
+
+Pass `language` to add a `language-{value}` class to the inner `<code>` element. The class follows the [highlight.js](https://highlightjs.org/) and [Prism](https://prismjs.com/) conventions, so the markup is ready for any syntax-highlighting library to attach later. Groundwork does not ship a highlighter; the class is a hook for consumers who want to add one.
+
+<figure class="gw-card">
+<CodeBlockLanguageDemo client:load />
+</figure>
+
+<h3>Accessibility</h3>
+
+The block is wrapped in a `<figure>` and the optional `caption` is a `<figcaption>`, so the structural relationship between the caption and the code is in the document outline, not just visual.
+
+The code itself is rendered in `<pre><code>` — `<pre>` preserves whitespace; `<code>` flags the contents as code. Screen readers announce the language hint through the `language-*` class only if a syntax highlighter activates on it; on its own, the class is presentational.
+
+The Copy button is keyboard-reachable, focus-ring matches the rest of the design system, and the "Copied" state is announced through `aria-live="polite"`. The announcement is not noisy — it fires once per click and clears two seconds later.
+
+<h2>Related</h2>
+
+- [Typography](/styles/typography/) — the `.gw-code` inline utility for code inside prose, and the `--font-mono` token CodeBlock uses for its surface.
+
+<h2>Background</h2>
+
+- [Principles → Accessibility is structural, not aspirational](/reference/principles/#accessibility-is-structural) — the figure/figcaption pairing and the polite announcement of clipboard success are structural choices, not bolt-ons.
+- [WCAG 2.2 SC 1.3.1](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) — Info and Relationships. The visible caption/code grouping is also conveyed programmatically.
+- [WCAG 2.2 SC 4.1.3](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html) — Status Messages. The "Copied" feedback is delivered without moving focus or interrupting the user.
+
+See the [API reference for `<CodeBlock>`](/reference/api/CodeBlock/).
+
+</div>
+</section>

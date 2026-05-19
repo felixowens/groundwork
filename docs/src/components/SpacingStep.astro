@@ -12,7 +12,7 @@ const { token, rem, px, usage } = Astro.props;
 <li class="docs-spacing-step">
   <div class="docs-spacing-step__bar" style={`inline-size: var(${token})`} aria-hidden="true" />
   <div class="docs-spacing-step__meta">
-    <code class="gw-mono docs-spacing-step__token">{token}</code>
+    <code class="gw-code docs-spacing-step__token">{token}</code>
     <span class="docs-spacing-step__value">{rem} / {px}</span>
   </div>
   <span class="docs-spacing-step__usage">{usage}</span>

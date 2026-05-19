@@ -10,7 +10,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
         <h1>UI review workflow</h1>
         <p>Groundwork keeps a local UI review tool for screenshots and layout metrics:</p>
         <pre><code>npm run review:ui</code></pre>
-        <p>The script writes artifacts to <code class="gw-mono">.logs/ui-review/latest/</code>. The directory is gitignored because these are review artifacts, not baselines.</p>
+        <p>The script writes artifacts to <code class="gw-code">.logs/ui-review/latest/</code>. The directory is gitignored because these are review artifacts, not baselines.</p>
 
         <h2>What it checks today</h2>
         <ul class="gw-list">
@@ -26,7 +26,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
         <p>This tool is not a replacement for CI tests. Playwright visual snapshots are the regression baseline, axe tests catch automated accessibility violations, and flow tests assert core journeys.</p>
 
         <h2>Rule of thumb</h2>
-        <p>If a human reviewer notices a visual issue, add a cheap metric to <code class="gw-mono">review:ui</code> when possible. Screenshots are useful, but measurable checks make regressions easier for agents to catch.</p>
+        <p>If a human reviewer notices a visual issue, add a cheap metric to <code class="gw-code">review:ui</code> when possible. Screenshots are useful, but measurable checks make regressions easier for agents to catch.</p>
       </div>
     </div>
   </section>

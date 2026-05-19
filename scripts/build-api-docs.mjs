@@ -220,7 +220,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
     <div class="gw-width gw-prose">
       <p class="gw-caption">API reference</p>
       <h1 class="gw-heading-l">${escapeHtml(page.title)}</h1>
-      <p>Generated from TSDoc <code class="gw-mono">@public</code> declarations. The TypeScript types are the source of truth (see <a class="gw-link" href="/reference/adr/0004-api-reference-as-typedoc/">ADR-0004</a>).</p>
+      <p>Generated from TSDoc <code class="gw-code">@public</code> declarations. The TypeScript types are the source of truth (see <a class="gw-link" href="/reference/adr/0004-api-reference-as-typedoc/">ADR-0004</a>).</p>
 ${page.decls.map(renderDeclaration).join('\n')}
     </div>
   </section>
@@ -234,11 +234,11 @@ function renderDeclaration(decl) {
     : `      <p class="gw-caption">${decl.kind}</p>`;
   const description = decl.docs.description ? `      <p>${escapeHtml(decl.docs.description)}</p>` : '';
   const example = decl.docs.exampleText
-    ? `      <pre><code>${escapeHtml(stripCodeFence(decl.docs.exampleText))}</code></pre>`
+    ? `      <pre tabindex="0"><code>${escapeHtml(stripCodeFence(decl.docs.exampleText))}</code></pre>`
     : '';
   return `      <h2 class="gw-heading-m" id="${slugify(decl.name)}">${escapeHtml(decl.name)}</h2>
 ${tagLine}
-      <pre><code>${escapeHtml(decl.signature)}</code></pre>
+      <pre tabindex="0"><code>${escapeHtml(decl.signature)}</code></pre>
 ${description}
 ${example}`.replace(TRIPLE_NEWLINE_RE, '\n\n');
 }
@@ -253,7 +253,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
     <div class="gw-width gw-stack--lg">
       <div class="gw-prose">
         <h1 class="gw-heading-l">API reference</h1>
-        <p>Generated from TSDoc <code class="gw-mono">@public</code> declarations in <code class="gw-mono">src/index.ts</code>. The TypeScript types are the source of truth (see <a class="gw-link" href="/reference/adr/0004-api-reference-as-typedoc/">ADR-0004</a>).</p>
+        <p>Generated from TSDoc <code class="gw-code">@public</code> declarations in <code class="gw-code">src/index.ts</code>. The TypeScript types are the source of truth (see <a class="gw-link" href="/reference/adr/0004-api-reference-as-typedoc/">ADR-0004</a>).</p>
       </div>
 
       <div class="gw-grid">

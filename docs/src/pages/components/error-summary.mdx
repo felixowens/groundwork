@@ -1,0 +1,142 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Error summary
+description: Page-level validation summary that links back to invalid fields.
+---
+
+import { CodeBlock } from '../../../../src';
+import {
+  ErrorSummaryHeroDemo,
+  ErrorSummarySingleDemo,
+  ErrorSummaryMultipleDemo,
+} from '../../components/error-summary-demos';
+
+<section class="gw-section">
+<div class="gw-width gw-prose">
+
+<h1>Error summary</h1>
+
+Render an error summary at the top of a page when a form submission fails validation. Each item names the problem and links to the field that needs attention.
+
+<figure class="gw-card">
+<ErrorSummaryHeroDemo />
+</figure>
+
+<h2>When to use Error summary</h2>
+
+Use Error summary on any page where one or more form submissions can fail validation — every step in a transactional flow, the page that confirms a long list of answers, anywhere the user might submit and need to return to fix something.
+
+Render the summary as soon as the validation failure is known. On a traditional server-rendered page, that means the response to the failed `POST` includes the summary at the top of the markup. On a single-page form, render it the moment client-side validation completes.
+
+Always pair the summary with field-level errors. The summary tells the user there is a problem; the inline errors tell them what went wrong at the point in the form where they need to fix it.
+
+<h2>When not to use Error summary</h2>
+
+Do not render Error summary when there are no errors. The component returns `null` for an empty `items` array, but the more important rule is upstream: do not run the page through a state in which an empty "Errors" heading appears and then disappears.
+
+Do not use Error summary for system errors, network failures, or transient feedback. A "We could not save your form, please try again" message is `Banner` territory — it does not link to a field and the user does not navigate it the same way.
+
+Do not use Error summary as the only error treatment. Inline errors next to the field stay correct for the user who has already scrolled past the summary or who arrived back at the page mid-form on a follow-up visit.
+
+<h2>How it works</h2>
+
+`<ErrorSummary>` takes a `title` and a list of `items`. Each item names a field by `id` and `label` and carries the same structured `FieldError` the matching `<Field>` carries. The component renders an `<h2>` with the title, then an unordered list of links, then nothing else. The wrapping element has `role="alert"` and `tabIndex={-1}` so the consumer can move focus to it programmatically.
+
+<CodeBlock client:load language="tsx">{`<ErrorSummary
+  items={[
+    {
+      id: 'email',
+      label: 'Email address',
+      error: {
+        problem: 'The email address is missing a domain.',
+        fix: 'Enter an email address in the correct format, like name@example.com.',
+      },
+    },
+  ]}
+/>`}</CodeBlock>
+
+<h3>Writing error messages</h3>
+
+`FieldError` is a structured shape — a `problem` string and a `fix` string. The two render as one sentence in the summary and as one sentence inline next to the field. The same data renders in two places; the same words read in both.
+
+Write the `problem` to name the failure. Write the `fix` to tell the user what to do next.
+
+- `problem: 'The email address is missing a domain.'`
+- `fix: 'Enter an email address in the correct format, like name@example.com.'`
+
+Avoid `Invalid email address.` on its own. It tells the user what is wrong but not how to fix it. The user is already looking at the field and the value they entered; the error has to add something they don't already know.
+
+The two strings are concatenated by `formatFieldError` — call it directly when custom validation UI needs the same combined copy.
+
+<h3>Linking each item to its field</h3>
+
+Each item's `id` becomes the fragment of the link's `href`. The `id` must match the `id` you passed to the corresponding `<Field>` — that's how clicking a summary link scrolls to the right place and moves focus to the right control.
+
+Mismatched ids are the most common bug. If your `<Field id="email">` becomes `<Field id="emailAddress">` and the summary still references `id: 'email'`, the link goes nowhere. Treat the field id as the contract between the summary and the field and pass the same constant to both.
+
+<h3>Moving focus on submit</h3>
+
+When the page enters the error state, focus must move to the summary so keyboard and screen-reader users hear the problem before they navigate back into the form. The summary wrapper has `tabIndex={-1}` so it can receive programmatic focus.
+
+<CodeBlock client:load language="tsx">{`const summaryRef = useRef<HTMLDivElement>(null);
+
+const onSubmit = (event: FormEvent) => {
+  if (errors.length > 0) {
+    event.preventDefault();
+    summaryRef.current?.focus();
+  }
+};
+
+return <ErrorSummary ref={summaryRef} items={errors} />;`}</CodeBlock>
+
+On a server-rendered page that responds with the summary already in the markup, set focus to it on page load when the submission was invalid — typically by including the summary near the top of the page and giving it `autoFocus`, or by running a small script that moves focus on `DOMContentLoaded`.
+
+The summary's `role="alert"` means assistive technologies announce its appearance, but `role="alert"` alone is not a substitute for moving focus — screen-reader announcements vary by product, and keyboard users cannot tab "to the alert".
+
+<h3>Field-level errors still required</h3>
+
+The summary lists what is wrong; the field-level error tells the user how to fix it at the point they fix it.
+
+<figure class="gw-card">
+<ErrorSummaryMultipleDemo />
+</figure>
+
+A user who follows the summary link arrives at the field. They have already read the error once — they read it again, next to the field, because that's where they are now typing. Removing the inline error to avoid "duplication" punishes the user who skipped the summary or scrolled past it. The duplication is the point: the same information is correct in both places.
+
+The `error` prop on `<Field>` and the `error` property on an `ErrorSummaryItem` take the same `FieldError` shape. Pass the same object to both.
+
+<h3>Title</h3>
+
+`title` defaults to "There is a problem" — a calm phrase that names the situation without scolding. The default is appropriate for the vast majority of cases and the rendered text becomes the accessible name of the summary heading.
+
+<figure class="gw-card">
+<ErrorSummarySingleDemo />
+</figure>
+
+Override `title` only when a domain-specific phrasing reads better — for example, on a payment screen, "There is a problem with your payment" carries more information without being more verbose. Do not use the title to scold or panic the user.
+
+<h3>Accessibility</h3>
+
+The summary is rendered as a `<div role="alert">` containing an `<h2>` and a `<ul>` of links. Each link is a real anchor with an `href` to the field id — keyboard and screen-reader users navigate it the same way they navigate any list of links.
+
+Move focus to the summary on submit. `role="alert"` alone is unreliable; the user's keyboard position should be inside the summary so the next `Tab` lands inside the failed form, not somewhere ahead of it.
+
+Keep the order of items in the summary the same as the order of the fields in the form. The user reads the summary top to bottom, then follows a link, then expects to read the rest of the form top to bottom. Reordering the summary by severity or alphabetically makes that flow harder, not clearer.
+
+<h2>Related</h2>
+
+- [Field](/components/field/) — surface for inline error copy. Pair its `error` prop with the matching summary item.
+- [Input](/components/input/), [Textarea](/components/textarea/), [Select](/components/select/) — the controls inside the Fields the summary links to.
+- [Banner](/components/banner/) — the right component for system errors, network failures, and other transient messages that don't link to a field.
+- [Submit information pattern](/patterns/submit-information/) — when to render the summary inside a multi-step transactional flow.
+
+<h2>Background</h2>
+
+- [Principles → Accessibility is structural, not aspirational](/reference/principles/#accessibility-is-structural) — the summary moves focus because announcements alone are not a substitute.
+- [WCAG 2.2 SC 3.3.1](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html) — Error Identification. Errors must be identified to the user; the summary is the page-level identifier.
+- [WCAG 2.2 SC 3.3.3](https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html) — Error Suggestion. The `fix` half of `FieldError` is what satisfies this — naming the problem is not enough; the user needs to know what to do next.
+
+See the [API reference for `<ErrorSummary>`](/reference/api/ErrorSummary/).
+
+</div>
+</section>

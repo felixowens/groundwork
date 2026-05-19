@@ -1,0 +1,121 @@
+---
+layout: ../../layouts/DocsLayout.astro
+title: Field
+description: The primary form API for labels, hints, errors, and ARIA wiring.
+---
+
+import { CodeBlock } from '../../../../src';
+import {
+  FieldHeroDemo,
+  FieldHintDemo,
+  FieldErrorDemo,
+  FieldCompositionDemo,
+} from '../../components/field-demos';
+
+<section class="gw-section">
+<div class="gw-width gw-prose">
+
+<h1>Field</h1>
+
+Field is the primary form API. It renders the visible label, the optional hint, the optional error, and wires every ARIA attribute the control needs to be accessible.
+
+<figure class="gw-card">
+<FieldHeroDemo />
+</figure>
+
+<h2>When to use Field</h2>
+
+Use Field for every text input, textarea, and select in Groundwork. The component owns the label and the description wiring; you supply the control as the render-prop child.
+
+Use Field when the answer needs a hint, an error, or both. Field renders the hint above the control, the error above the control, and links both to the input through `aria-describedby` automatically.
+
+<h2>When not to use Field</h2>
+
+Do not use Field for groups of related choices — radios or checkboxes that share one question. Those need a `<fieldset>` and a `<legend>`, not a single `<label>`. Reach for `RadioGroup` or `CheckboxGroup` instead; the two component families exist precisely because the accessibility shape of one input is different from the accessibility shape of a group.
+
+Do not render an `Input`, `Textarea`, or `Select` outside Field unless a visible label and description are already provided by surrounding markup — for example, an inline editing cell whose label is the column header. The standalone case is rare and always needs a deliberate accessible-name story.
+
+<h2>How it works</h2>
+
+Field takes an `id`, a `label`, optional `hint`, and optional `error`. It renders the label, the hint, the error, and calls its child as a function — passing the ARIA attributes the control needs. You spread those attributes onto whatever input you put inside.
+
+<CodeBlock client:load language="tsx">{`<Field id="email" label="Email address">
+  {({ inputProps }) => <Input {...inputProps} />}
+</Field>`}</CodeBlock>
+
+The render-prop shape exists because the control can be an `Input`, a `Textarea`, or a `Select`. Field doesn't pick for you, and it doesn't `cloneElement` anything — the control is a real React element rendered by your code with the wiring spread on it.
+
+<h3>Label</h3>
+
+The `label` prop is the visible label. Write it as the question you are asking the user — short, specific, in sentence case. `Email address` is a label; `Email` on its own is ambiguous; `Please enter your email address below` is a sentence pretending to be a label.
+
+The label is rendered as a `<label htmlFor={id}>`. Clicking the label focuses the control. The same string is also the screen-reader accessible name, supplied through `aria-labelledby` — that indirection exists because the choice-group module reuses the same wiring with a `<legend>` instead of a `<label>`.
+
+<h3>Hint text</h3>
+
+The optional `hint` prop is one short sentence of supplementary copy — the format the answer takes, an example, or the source the user can copy from.
+
+<figure class="gw-card">
+<FieldHintDemo />
+</figure>
+
+Hints are not for validation rules. "Must be at least 12 characters" is something the form should accept or reject after submission, not a list of rules the user reads before typing. Use the hint to help the user answer the question; use the error to recover from a failed answer.
+
+Hints render as `<span class="gw-hint">` between the label and the control, and are linked to the control through `aria-describedby`.
+
+<h3>Error copy</h3>
+
+The optional `error` prop is a structured `FieldError`: a `problem` string and a `fix` string.
+
+<CodeBlock client:load language="tsx">{`<Field
+  id="email"
+  label="Email address"
+  error={{
+    problem: 'The email address is missing a domain.',
+    fix: 'Enter an email address in the correct format, like name@example.com.',
+  }}
+>
+  {({ inputProps }) => <Input {...inputProps} type="email" />}
+</Field>`}</CodeBlock>
+
+The two strings are concatenated and rendered as `<span class="gw-error-message">` between the label and the control. The control's `aria-describedby` is extended to include the error id, and `aria-invalid="true"` is set on it. The `.gw-field--error` modifier draws the red left border that runs from the label down past the control.
+
+The shape is structured rather than a single string because the same data is rendered in two places. Field renders it inline. `ErrorSummary` renders the same string in its list at the top of the page. If the two phrasings drift, the user reads contradictory copy on the same screen. Keep error data in one place per field and pass it to both.
+
+<h3>Composition</h3>
+
+Field's render prop accepts any control that takes the standard ARIA attributes. The same Field works for an `Input`, a `Textarea`, or a `Select` — only the control inside the render function changes.
+
+<figure class="gw-card">
+<FieldCompositionDemo />
+</figure>
+
+Components other than the Groundwork ones can also be composed in. A third-party date picker, a masked input, or a custom combobox can sit inside Field as long as it accepts the ARIA props the render function provides — `id`, `aria-labelledby`, `aria-describedby`, and `aria-invalid`.
+
+<h3>Accessibility</h3>
+
+Field's job is the accessibility wiring. Every visible piece of information about the answer — the label, the hint, the error — is linked to the control programmatically, so screen readers announce the full context when the control is focused.
+
+The relationship is structural, not visual. A sighted user sees a heading-like label above the input; a screen-reader user hears the label name, then the hint, then the error if there is one, then the input type. Both routes are derived from the same `id`, so they cannot drift.
+
+You must give Field a unique, stable `id` on every render. The `id` is the input's HTML id, and it is also the suffix every derived id is built from (`{id}-label`, `{id}-hint`, `{id}-error`). Random ids regenerated on each render break the link between the `ErrorSummary` and the field it points to.
+
+<h2>Related</h2>
+
+- [Input](/components/input/) — the most common control to put inside Field.
+- [Textarea](/components/textarea/) — for long free-text answers.
+- [Select](/components/select/) — for short, fixed lists where the choices live in the layout already.
+- [RadioGroup](/components/radio-group/) and [CheckboxGroup](/components/checkbox-group/) — the right shape for groups of related choices instead of a single Field.
+- [ErrorSummary](/components/error-summary/) — pair with Field when a submission has more than one error.
+
+<h2>Background</h2>
+
+- [ADR-0001](/reference/adr/0001-no-shared-field-shell/) — why Field and the choice-group module don't share an extracted `<FieldShell>`. Records the structural variance that made the shared shell the wrong abstraction.
+- [Principles → Accessibility is structural, not aspirational](/reference/principles/#accessibility-is-structural) — Field exists because labels, hints, and errors need to be wired, not just laid out.
+- [WCAG 2.2 SC 1.3.1](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html) — Info and Relationships. Visible structural relationships must also be programmatically determinable.
+- [WCAG 2.2 SC 3.3.2](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html) — Labels or Instructions. Every input that needs information from the user gets one.
+
+See the [API reference for `<Field>`](/reference/api/Field/).
+
+</div>
+</section>

@@ -25,6 +25,7 @@ const componentContractCoverage = {
   Banner: true,
   Button: true,
   CheckboxGroup: true,
+  CodeBlock: true,
   ErrorSummary: true,
   Field: true,
   Input: true,
