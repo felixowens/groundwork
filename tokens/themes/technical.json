@@ -1,0 +1,69 @@
+{
+  "$type": "color",
+  "primitives": {
+    "neutral": {
+      "0": { "$value": "#FFFFFF" },
+      "50": { "$value": "#F8F8F6" },
+      "100": { "$value": "#F2F2EF" },
+      "200": { "$value": "#E4E4DE" },
+      "300": { "$value": "#C9C9C1" },
+      "400": { "$value": "#9A9A90" },
+      "500": { "$value": "#6E6E64" },
+      "600": { "$value": "#57574F" },
+      "700": { "$value": "#38382F" },
+      "800": { "$value": "#1F1F1A" },
+      "900": { "$value": "#161613" },
+      "950": { "$value": "#0E0E0C" }
+    },
+    "accent": {
+      "100": { "$value": "#FBE5DA" },
+      "200": { "$value": "#F0A982" },
+      "300": { "$value": "#E07B4A" },
+      "400": { "$value": "#D2541F" },
+      "500": { "$value": "#B5410C" },
+      "600": { "$value": "#93340A" }
+    },
+    "danger": {
+      "100": { "$value": "#FBE2E0" },
+      "200": { "$value": "#ECA6A2" },
+      "300": { "$value": "#DE6B63" },
+      "400": { "$value": "#C8302C" },
+      "500": { "$value": "#B01C20" },
+      "600": { "$value": "#8E1519" }
+    },
+    "positive": {
+      "100": { "$value": "#E4F1E7" },
+      "200": { "$value": "#A9D6B5" },
+      "300": { "$value": "#5BB07C" },
+      "400": { "$value": "#2C8A4E" },
+      "500": { "$value": "#1F7038" }
+    },
+    "caution": {
+      "100": { "$value": "#F8EFD8" },
+      "300": { "$value": "#D9A84E" },
+      "500": { "$value": "#8A5A0F" }
+    },
+    "focus": {
+      "400": { "$value": "#FFCC00" }
+    },
+    "radius": {
+      "$type": "dimension",
+      "sm": { "$value": "2px" },
+      "md": { "$value": "2px" }
+    },
+    "shadow": {
+      "sm": { "$value": "none" },
+      "md": { "$value": "none" },
+      "dark": {
+        "sm": { "$value": "none" },
+        "md": { "$value": "none" }
+      }
+    }
+  },
+  "leading": {
+    "normal": { "$type": "number", "$value": "1.5" }
+  },
+  "font": {
+    "display": { "$type": "fontFamily", "$value": "'Space Grotesk', system-ui, sans-serif" }
+  }
+}

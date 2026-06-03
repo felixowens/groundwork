@@ -1,0 +1,70 @@
+{
+  "$type": "color",
+  "primitives": {
+    "neutral": {
+      "0": { "$value": "#FFFFFF" },
+      "50": { "$value": "#F5F7F7" },
+      "100": { "$value": "#EDEFF0" },
+      "200": { "$value": "#E1E4E6" },
+      "300": { "$value": "#CCD1D4" },
+      "400": { "$value": "#98A0A6" },
+      "500": { "$value": "#6B747A" },
+      "600": { "$value": "#545C62" },
+      "700": { "$value": "#343B40" },
+      "800": { "$value": "#20262B" },
+      "900": { "$value": "#14181C" },
+      "950": { "$value": "#0E1114" }
+    },
+    "accent": {
+      "100": { "$value": "#D6F7EC" },
+      "200": { "$value": "#84E6C6" },
+      "300": { "$value": "#3DD9A8" },
+      "400": { "$value": "#16B589" },
+      "500": { "$value": "#0E7C66" },
+      "600": { "$value": "#0A5E4E" }
+    },
+    "danger": {
+      "100": { "$value": "#FDE7E7" },
+      "200": { "$value": "#F4ABAB" },
+      "300": { "$value": "#FF8A8A" },
+      "400": { "$value": "#DE3B3B" },
+      "500": { "$value": "#C42A2A" },
+      "600": { "$value": "#9E2020" }
+    },
+    "positive": {
+      "100": { "$value": "#E3F6EC" },
+      "200": { "$value": "#A9E6C2" },
+      "300": { "$value": "#4FD68C" },
+      "400": { "$value": "#2A9D5A" },
+      "500": { "$value": "#1E8048" }
+    },
+    "caution": {
+      "100": { "$value": "#FBEFD9" },
+      "300": { "$value": "#E8C56A" },
+      "500": { "$value": "#8A6212" }
+    },
+    "focus": {
+      "400": { "$value": "#FFD23D" }
+    },
+    "radius": {
+      "$type": "dimension",
+      "sm": { "$value": "9px" },
+      "md": { "$value": "14px" }
+    },
+    "shadow": {
+      "sm": { "$value": "0 1px 2px rgba(0, 0, 0, 0.08)" },
+      "md": { "$value": "0 8px 24px -10px rgba(0, 0, 0, 0.4)" },
+      "dark": {
+        "sm": { "$value": "0 1px 2px rgba(0, 0, 0, 0.4)" },
+        "md": { "$value": "0 10px 28px -10px rgba(0, 0, 0, 0.6)" }
+      }
+    }
+  },
+  "leading": {
+    "normal": { "$type": "number", "$value": "1.55" }
+  },
+  "font": {
+    "sans": { "$type": "fontFamily", "$value": "'Manrope', system-ui, sans-serif" },
+    "display": { "$type": "fontFamily", "$value": "'Manrope', system-ui, sans-serif" }
+  }
+}

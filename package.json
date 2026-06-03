@@ -17,7 +17,7 @@
     "tokens"
   ],
   "scripts": {
-    "build:tokens": "style-dictionary build --config style-dictionary.config.mjs",
+    "build:tokens": "node scripts/build-tokens.mjs",
     "build:css": "npm run build:tokens && node scripts/build-css.mjs",
     "check:css": "node scripts/check-css-architecture.mjs",
     "check:biome": "biome ci .",

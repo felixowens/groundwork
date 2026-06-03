@@ -1,3 +1,15 @@
+/* Headings use the display-font token. It defaults to the sans stack, so the
+   default theme is unchanged; brand themes may point it at a display face. */
+.gw-heading-xl,
+.gw-heading-l,
+.gw-heading-m,
+.gw-heading-s,
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
 .gw-heading-xl {
   font-size: var(--text-display);
   font-weight: 700;

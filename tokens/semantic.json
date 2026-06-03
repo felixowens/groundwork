@@ -40,6 +40,10 @@
       "$type": "fontFamily",
       "$value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
     },
+    "display": {
+      "$type": "fontFamily",
+      "$value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    },
     "mono": {
       "$type": "fontFamily",
       "$value": "'SF Mono', 'Fira Code', 'Fira Mono', monospace"
@@ -136,11 +140,11 @@
   },
   "action": {
     "$type": "color",
-    "$value": "{primitives.blue.500}"
+    "$value": "{primitives.accent.500}"
   },
   "action-hover": {
     "$type": "color",
-    "$value": "{primitives.blue.600}"
+    "$value": "{primitives.accent.600}"
   },
   "action-text": {
     "$type": "color",
@@ -148,11 +152,11 @@
   },
   "destructive": {
     "$type": "color",
-    "$value": "{primitives.red.500}"
+    "$value": "{primitives.danger.500}"
   },
   "destructive-hover": {
     "$type": "color",
-    "$value": "{primitives.red.600}"
+    "$value": "{primitives.danger.600}"
   },
   "destructive-text": {
     "$type": "color",
@@ -160,32 +164,32 @@
   },
   "success": {
     "$type": "color",
-    "$value": "{primitives.green.500}"
+    "$value": "{primitives.positive.500}"
   },
   "success-surface": {
     "$type": "color",
-    "$value": "{primitives.green.100}"
+    "$value": "{primitives.positive.100}"
   },
   "warning": {
     "$type": "color",
-    "$value": "{primitives.amber.500}"
+    "$value": "{primitives.caution.500}"
   },
   "warning-surface": {
     "$type": "color",
-    "$value": "{primitives.amber.100}"
+    "$value": "{primitives.caution.100}"
   },
   "error": {
     "$type": "color",
-    "$value": "{primitives.red.500}"
+    "$value": "{primitives.danger.500}"
   },
   "error-surface": {
     "$type": "color",
-    "$value": "{primitives.red.100}"
+    "$value": "{primitives.danger.100}"
   },
   "focus-ring": {
     "color": {
       "$type": "color",
-      "$value": "{primitives.yellow.400}"
+      "$value": "{primitives.focus.400}"
     },
     "width": {
       "$type": "dimension",
@@ -266,11 +270,11 @@
     },
     "action": {
       "$type": "color",
-      "$value": "{primitives.blue.300}"
+      "$value": "{primitives.accent.300}"
     },
     "action-hover": {
       "$type": "color",
-      "$value": "{primitives.blue.200}"
+      "$value": "{primitives.accent.200}"
     },
     "action-text": {
       "$type": "color",
@@ -278,11 +282,11 @@
     },
     "destructive": {
       "$type": "color",
-      "$value": "{primitives.red.300}"
+      "$value": "{primitives.danger.300}"
     },
     "destructive-hover": {
       "$type": "color",
-      "$value": "{primitives.red.200}"
+      "$value": "{primitives.danger.200}"
     },
     "destructive-text": {
       "$type": "color",
@@ -290,7 +294,7 @@
     },
     "success": {
       "$type": "color",
-      "$value": "{primitives.green.300}"
+      "$value": "{primitives.positive.300}"
     },
     "success-surface": {
       "$type": "color",
@@ -298,7 +302,7 @@
     },
     "warning": {
       "$type": "color",
-      "$value": "{primitives.amber.300}"
+      "$value": "{primitives.caution.300}"
     },
     "warning-surface": {
       "$type": "color",
@@ -306,7 +310,7 @@
     },
     "error": {
       "$type": "color",
-      "$value": "{primitives.red.300}"
+      "$value": "{primitives.danger.300}"
     },
     "error-surface": {
       "$type": "color",
