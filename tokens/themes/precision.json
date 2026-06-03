@@ -1,0 +1,70 @@
+{
+  "$type": "color",
+  "primitives": {
+    "neutral": {
+      "0": { "$value": "#FFFFFF" },
+      "50": { "$value": "#F7F7F9" },
+      "100": { "$value": "#EFEFF2" },
+      "200": { "$value": "#E4E4EA" },
+      "300": { "$value": "#D0D0D8" },
+      "400": { "$value": "#9A9AA3" },
+      "500": { "$value": "#6B6B75" },
+      "600": { "$value": "#56565F" },
+      "700": { "$value": "#3A3A42" },
+      "800": { "$value": "#26262C" },
+      "900": { "$value": "#17171B" },
+      "950": { "$value": "#0F0F12" }
+    },
+    "accent": {
+      "100": { "$value": "#E5E3FB" },
+      "200": { "$value": "#B7B1F2" },
+      "300": { "$value": "#948CEE" },
+      "400": { "$value": "#6A5FE8" },
+      "500": { "$value": "#4F46E5" },
+      "600": { "$value": "#4035C4" }
+    },
+    "danger": {
+      "100": { "$value": "#FDE7E7" },
+      "200": { "$value": "#F2ABAB" },
+      "300": { "$value": "#E57373" },
+      "400": { "$value": "#DC2626" },
+      "500": { "$value": "#C81E1E" },
+      "600": { "$value": "#A31515" }
+    },
+    "positive": {
+      "100": { "$value": "#E3F6EC" },
+      "200": { "$value": "#A9E0BE" },
+      "300": { "$value": "#5BC98A" },
+      "400": { "$value": "#2A9D5A" },
+      "500": { "$value": "#157F3C" }
+    },
+    "caution": {
+      "100": { "$value": "#FCEFD9" },
+      "300": { "$value": "#E8B45C" },
+      "500": { "$value": "#8A5A06" }
+    },
+    "focus": {
+      "400": { "$value": "#FACC15" }
+    },
+    "radius": {
+      "$type": "dimension",
+      "sm": { "$value": "5px" },
+      "md": { "$value": "9px" }
+    },
+    "shadow": {
+      "sm": { "$value": "none" },
+      "md": { "$value": "none" },
+      "dark": {
+        "sm": { "$value": "none" },
+        "md": { "$value": "none" }
+      }
+    }
+  },
+  "leading": {
+    "normal": { "$type": "number", "$value": "1.55" }
+  },
+  "font": {
+    "sans": { "$type": "fontFamily", "$value": "'Inter', system-ui, -apple-system, sans-serif" },
+    "display": { "$type": "fontFamily", "$value": "'Inter', system-ui, -apple-system, sans-serif" }
+  }
+}

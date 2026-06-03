@@ -1,0 +1,121 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+
+const brands = [
+  { id: '', name: 'Default', note: 'gov.uk-descended; system fonts, tight radii.' },
+  { id: 'warm-editorial', name: 'Warm editorial', note: 'Bone canvas, dusty rose, Fraunces serif.' },
+  { id: 'precision', name: 'Precision', note: 'Cool neutral, indigo, Inter, flat + tight.' },
+  { id: 'confident', name: 'Confident', note: 'Warm light, cobalt, Bricolage Grotesque.' },
+  { id: 'technical', name: 'Technical', note: 'Sharp 2px, burnt orange, Space Grotesk.' },
+  { id: 'solid', name: 'Solid', note: 'Ink borders, hard shadows, violet, Plus Jakarta.' },
+  { id: 'midnight', name: 'Midnight', note: 'Cool + mint; luminous in dark mode.' },
+];
+---
+
+<DocsLayout title="Themes" description="The same components, re-skinned by swapping token values — a test of the two-tier architecture.">
+  <div class="gw-prose">
+    <p class="gw-caption">Reference</p>
+    <h1>Brand themes</h1>
+    <p>
+      Every theme below is the <strong>same components and the same semantic token names</strong> — only the
+      private primitive <em>values</em> change. No component CSS is touched. Pick one from the <strong>Brand</strong>
+      control in the header and the whole site re-skins; light and dark follow your system
+      <code class="gw-code">prefers-color-scheme</code> per brand.
+    </p>
+    <p>
+      This page is the test of <a class="gw-link" href="/reference/adr/0007-multi-brand-theming-via-token-swaps/">the re-theming architecture</a>:
+      if the two-tier token system is sound, a brand is a small delta file and nothing else moves.
+    </p>
+  </div>
+
+  <div class="theme-gallery">
+    {
+      brands.map((brand) => (
+        <section class="theme-panel" data-gw-theme={brand.id || undefined}>
+          <header class="theme-panel__head">
+            <span class="theme-panel__name">{brand.name}</span>
+            <span class="theme-panel__swatches" aria-hidden="true">
+              <span style="background: var(--action)" />
+              <span style="background: var(--surface-sunken)" />
+              <span style="background: var(--ink)" />
+            </span>
+          </header>
+          <p class="theme-panel__note">{brand.note}</p>
+          <h3 class="gw-heading-s">The quick brown fox</h3>
+          <div class="gw-button-group">
+            <button type="button" class="gw-button">Save</button>
+            <button type="button" class="gw-button gw-button--secondary">Cancel</button>
+          </div>
+          <div class="gw-field">
+            <label class="gw-label" for={`demo-${brand.id || 'default'}`}>
+              Email address
+            </label>
+            <input class="gw-input" id={`demo-${brand.id || 'default'}`} type="email" value="jess@example.com" readonly />
+          </div>
+          <p class="theme-panel__foot">
+            <a class="gw-link" href="#">A themed link</a>
+            <span class="gw-tag gw-tag--action">Tag</span>
+          </p>
+        </section>
+      ))
+    }
+  </div>
+</DocsLayout>
+
+<style>
+  .theme-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: var(--space-6);
+    margin-top: var(--space-8);
+  }
+
+  .theme-panel {
+    background: var(--surface);
+    color: var(--ink);
+    border: var(--border-width-thin) solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-6);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .theme-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .theme-panel__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-subheading);
+  }
+
+  .theme-panel__swatches {
+    display: inline-flex;
+    gap: var(--space-1);
+  }
+
+  .theme-panel__swatches span {
+    width: 1rem;
+    height: 1rem;
+    border-radius: var(--radius-sm);
+    border: var(--border-width-thin) solid var(--border);
+  }
+
+  .theme-panel__note {
+    font-size: var(--text-caption);
+    color: var(--ink-secondary);
+    margin: 0;
+  }
+
+  .theme-panel__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0;
+  }
+</style>

@@ -15,6 +15,24 @@ const currentPath = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — Groundwork</title>
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // Apply the brand theme before first paint (no flash). Accepts ?gw-theme= for
+      // shareable/screenshot URLs, else the persisted choice. Light/dark stays driven
+      // by prefers-color-scheme, per brand.
+      (function () {
+        try {
+          var param = new URLSearchParams(window.location.search).get('gw-theme');
+          var theme = param !== null ? param : localStorage.getItem('gw-theme');
+          if (theme) document.documentElement.setAttribute('data-gw-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <a href="#main" class="gw-skip-link">Skip to main content</a>
@@ -22,6 +40,18 @@ const currentPath = Astro.url.pathname;
       <div class="docs-shell">
         <a class="docs-brand" href="/">Groundwork</a>
         <p class="gw-caption">Design System v0.2 PoC</p>
+        <div class="docs-theme-switch">
+          <label for="docs-theme" class="docs-theme-switch__label">Brand</label>
+          <select id="docs-theme" class="gw-select">
+            <option value="">Default</option>
+            <option value="warm-editorial">Warm editorial</option>
+            <option value="precision">Precision</option>
+            <option value="confident">Confident</option>
+            <option value="technical">Technical</option>
+            <option value="solid">Solid</option>
+            <option value="midnight">Midnight</option>
+          </select>
+        </div>
       </div>
     </header>
 
@@ -51,6 +81,27 @@ const currentPath = Astro.url.pathname;
         <slot />
       </main>
     </div>
+
+    <script>
+      const select = document.getElementById('docs-theme');
+      if (select instanceof HTMLSelectElement) {
+        select.value = document.documentElement.getAttribute('data-gw-theme') ?? '';
+        select.addEventListener('change', () => {
+          const root = document.documentElement;
+          if (select.value) {
+            root.setAttribute('data-gw-theme', select.value);
+            try {
+              localStorage.setItem('gw-theme', select.value);
+            } catch {}
+          } else {
+            root.removeAttribute('data-gw-theme');
+            try {
+              localStorage.removeItem('gw-theme');
+            } catch {}
+          }
+        });
+      }
+    </script>
   </body>
 </html>
 
@@ -94,6 +145,26 @@ const currentPath = Astro.url.pathname;
     font-size: var(--text-subheading);
     font-weight: 700;
     text-decoration: none;
+  }
+
+  .docs-theme-switch {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .docs-theme-switch__label {
+    font-size: var(--text-caption);
+    font-weight: 600;
+    color: var(--ink-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .docs-theme-switch .gw-select {
+    width: auto;
+    min-width: 11rem;
   }
 
   .docs-layout {

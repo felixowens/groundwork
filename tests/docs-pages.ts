@@ -11,7 +11,10 @@ function docPages(directory: string): string[] {
     const entryPath = join(directory, entry.name);
 
     if (entry.isDirectory()) {
-      return entry.name === 'test-fixtures' ? [] : docPages(entryPath);
+      // 'themes' is excluded from visual snapshots: it intentionally loads external
+      // brand webfonts, which makes its rendering environment-dependent (online vs
+      // offline CI). Brand rendering is verified manually instead. See ADR 0007.
+      return entry.name === 'test-fixtures' || entry.name === 'themes' ? [] : docPages(entryPath);
     }
 
     if (!entry.isFile()) {

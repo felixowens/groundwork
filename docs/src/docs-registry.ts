@@ -52,6 +52,7 @@ export const docsNavSections = [
       { href: '/styles/layout/', label: 'Layout' },
       { href: '/styles/borders/', label: 'Borders' },
       { href: '/styles/focus/', label: 'Focus' },
+      { href: '/themes/', label: 'Themes' },
     ],
   },
   {

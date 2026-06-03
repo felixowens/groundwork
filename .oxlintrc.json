@@ -28,6 +28,7 @@
     "docs/.astro",
     "**/*.astro",
     "meta/artifacts",
+    "prototypes",
     "src/styles/generated",
     "css/groundwork.css",
     "package-lock.json",
