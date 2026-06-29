@@ -3,7 +3,10 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
 const outputDirectory = '.logs/ui-review/latest';
-const baseUrl = 'http://127.0.0.1:4321';
+// Use the port from the environment when set, otherwise Astro's default; keep
+// this in sync with the Playwright config.
+const port = process.env.CONDUCTOR_PORT ?? '4321';
+const baseUrl = `http://127.0.0.1:${port}`;
 
 function delay(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -27,8 +30,16 @@ async function waitForServer(url, deadline = Date.now() + 30_000) {
   return waitForServer(url, deadline);
 }
 
+async function isServerUp(url) {
+  try {
+    return (await fetch(url)).ok;
+  } catch {
+    return false;
+  }
+}
+
 function startDocsServer() {
-  const child = spawn('npm', ['run', 'docs:dev', '--', '--host', '127.0.0.1'], {
+  const child = spawn('npm', ['run', 'docs:dev', '--', '--host', '127.0.0.1', '--port', port], {
     stdio: ['ignore', 'pipe', 'pipe'],
   });
 
@@ -164,7 +175,10 @@ function stackMetrics(page) {
   });
 }
 
-const server = startDocsServer();
+// Reuse a dev server already running on this port instead of starting — and
+// later killing — a second one.
+const reusingServer = await isServerUp(baseUrl);
+const server = reusingServer ? null : startDocsServer();
 
 try {
   await rm(outputDirectory, { recursive: true, force: true });
@@ -285,5 +299,5 @@ try {
     process.exitCode = 1;
   }
 } finally {
-  server.kill('SIGTERM');
+  server?.kill('SIGTERM');
 }
