@@ -951,6 +951,15 @@ h6 {
   font-size: var(--text-secondary);
 }
 
+.gw-table__caption {
+  caption-side: top;
+  text-align: left;
+  margin-bottom: var(--space-3);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .gw-table th {
   text-align: left;
   padding: var(--space-3) var(--space-4);
@@ -975,6 +984,16 @@ h6 {
 .gw-table th.gw-table__numeric {
   text-align: right;
   font-variant-numeric: tabular-nums;
+}
+
+.gw-table th.gw-table__row-header {
+  padding: var(--space-3) var(--space-4);
+  color: var(--ink);
+  font-size: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+  border-bottom: var(--border-width-thin) solid var(--border);
 }
 
 /* @gw-stack-root gw-card div */
