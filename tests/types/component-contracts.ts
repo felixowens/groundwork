@@ -32,6 +32,7 @@ const componentContractCoverage = {
   RadioGroup: true,
   Select: true,
   SummaryList: true,
+  Tag: true,
   Textarea: true,
 } satisfies Record<ExportedComponentName, true>;
 

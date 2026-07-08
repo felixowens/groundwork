@@ -24,6 +24,8 @@ export type {
   SummaryListRow,
 } from './components/SummaryList';
 export { SummaryList } from './components/SummaryList';
+export type { TagProps, TagVariant } from './components/Tag';
+export { Tag } from './components/Tag';
 export type { TextareaProps } from './components/Textarea';
 export { Textarea } from './components/Textarea';
 
