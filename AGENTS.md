@@ -44,6 +44,8 @@ Every new component needs:
 - Playwright accessibility coverage.
 - Playwright visual-regression coverage.
 
+Visual baselines are rendered only in the pinned `mcr.microsoft.com/playwright` container (via `npm run test:visual:docker[:update]` or CI), never on the host. Snapshot filenames omit the OS suffix, so a host `test:visual` run fails instead of writing a machine-specific baseline. See the README "Visual baselines" section.
+
 Colocated unit tests live in `src/**/__tests__/`. Use them for pure helpers, formatting logic, and runtime guard branches that do not need a browser. Keep Playwright tests for browser behavior, accessibility, user flows, and visual regression.
 
 When adding a public component root class to `src/styles/components.css`, add a `/* @gw-stack-root <class> <tag> */` annotation directly above the root rule so `tests/components/layout-primitives.spec.ts` includes it in spacing-invariance coverage. Do not annotate modifiers, internal elements, or repeated choice items.

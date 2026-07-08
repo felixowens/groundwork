@@ -1,0 +1,31 @@
+---
+import { TagDemo } from '../../components/TagDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { meta } from './_meta/tag';
+---
+
+<DocsLayout title={meta.label} description={meta.description}>
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1>Tag</h1>
+        <p>Use Tag for short status labels that annotate an item, such as a row in a table or a heading in a card.</p>
+        <h2>When to use</h2>
+        <p>Use Tag to show the state of something — a payment status, a workflow stage, a category. Every tag carries a visible text label, so the status reads clearly without relying on colour alone.</p>
+        <h2>When not to use</h2>
+        <p>Do not use Tag for page-level messages the user must act on; use Banner. Do not use it as a button or link, and do not pack sentences into it — a tag is a one- or two-word label.</p>
+      </div>
+
+      <section class="gw-card gw-stack">
+        <h2>Demo</h2>
+        <TagDemo />
+      </section>
+
+      <section class="gw-card gw-stack">
+        <h2>Accessibility notes</h2>
+        <p class="gw-body--sm">Tag requires a text label. The label is the tag's accessible name and its non-colour cue, so the meaning survives when colour is unavailable.</p>
+        <p class="gw-body--sm">Variants add supporting emphasis only. Choose the label so the status is unambiguous on its own — <code class="gw-code">Overdue</code> rather than a bare red tag.</p>
+      </section>
+    </div>
+  </section>
+</DocsLayout>

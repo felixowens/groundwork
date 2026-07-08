@@ -52,6 +52,19 @@ If Playwright browsers are not installed locally, install them explicitly before
 npx playwright install
 ```
 
+### Visual baselines
+
+Visual snapshots render differently across operating systems, so the baselines are pinned to a single canonical environment: the `mcr.microsoft.com/playwright` container. Do not run `npm run test:visual` directly on your host to compare against or update baselines — the snapshot filenames intentionally omit the OS suffix, so a host run fails loudly instead of minting a machine-specific baseline.
+
+Run the visual suite through the container instead (any OS with Docker):
+
+```bash
+npm run test:visual:docker         # verify against committed baselines
+npm run test:visual:docker:update  # regenerate baselines after an intended change
+```
+
+In CI, the **Visual regression** workflow verifies every PR in the same container. To accept an intended visual change without Docker locally, run the **Regenerate visual baselines** workflow (or push a commit whose message contains `[update-baselines]`), download the `visual-baselines` artifact, and commit it over `tests/visual/**-snapshots`.
+
 ## Usage
 
 ```tsx

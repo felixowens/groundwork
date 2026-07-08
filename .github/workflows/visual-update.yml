@@ -1,0 +1,37 @@
+name: Regenerate visual baselines
+
+# Renders fresh visual baselines in the pinned Playwright container and uploads
+# them as an artifact. A maintainer downloads the artifact, replaces
+# tests/visual/**-snapshots, and commits — so accepting a visual change stays an
+# explicit, reviewed act (and the commit keeps normal authorship).
+#
+# Trigger it either way:
+#   - workflow_dispatch (once this workflow exists on the default branch), or
+#   - push a commit whose message contains "[update-baselines]" (works on any
+#     branch, including before this lands on main).
+
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+
+jobs:
+  regenerate:
+    if: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[update-baselines]') }}
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
+      options: --ipc=host
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npx playwright test tests/visual --update-snapshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines
+          path: tests/visual/**/*-snapshots/**
+          retention-days: 7
+          if-no-files-found: error

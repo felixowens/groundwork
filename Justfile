@@ -60,6 +60,12 @@ test-flows:
 test-visual:
 	@npm run test:visual
 
+test-visual-docker:
+	@npm run test:visual:docker
+
+test-visual-docker-update:
+	@npm run test:visual:docker:update
+
 typecheck:
 	@npm run typecheck
 
