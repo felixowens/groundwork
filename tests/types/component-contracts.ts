@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react';
 import type * as PublicApi from '../../src';
 import type {
   BannerProps,
+  CardLinkProps,
   CheckboxGroupProps,
   InputProps,
   RadioGroupProps,
@@ -25,6 +26,7 @@ type ExportedComponentName = {
 const componentContractCoverage = {
   Banner: true,
   Button: true,
+  Card: true,
   CheckboxGroup: true,
   CodeBlock: true,
   ErrorSummary: true,
@@ -58,6 +60,7 @@ type TextareaRequiresAccessibleName = AssertTrue<
 type RadioGroupRequiresLegend = AssertTrue<HasKey<RadioGroupProps, 'legend'>>;
 type CheckboxGroupRequiresLegend = AssertTrue<HasKey<CheckboxGroupProps, 'legend'>>;
 type BannerRequiresTitle = AssertTrue<IsRequired<BannerProps, 'title'>>;
+type CardLinkRequiresHref = AssertTrue<IsRequired<CardLinkProps, 'href'>>;
 type SummaryListRequiresRows = AssertTrue<IsRequired<SummaryListProps, 'rows'>>;
 type TableRequiresCaption = AssertTrue<IsRequired<TableProps, 'caption'>>;
 type TableRequiresColumns = AssertTrue<IsRequired<TableProps, 'columns'>>;
@@ -76,6 +79,7 @@ export type ComponentContractAssertions =
   | RadioGroupRequiresLegend
   | CheckboxGroupRequiresLegend
   | BannerRequiresTitle
+  | CardLinkRequiresHref
   | SummaryListRequiresRows
   | SummaryListActionRequiresHiddenText
   | TableRequiresCaption

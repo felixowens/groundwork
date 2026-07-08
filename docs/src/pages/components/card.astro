@@ -1,0 +1,32 @@
+---
+import { CardDemo } from '../../components/CardDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { meta } from './_meta/card';
+---
+
+<DocsLayout title={meta.label} description={meta.description}>
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1>Card</h1>
+        <p>Use Card to group related content on a bordered surface — a dashboard tile, a summary panel, or a linkable record.</p>
+        <h2>When to use</h2>
+        <p>Use Card to give a self-contained block of content its own surface and elevation. Choose <code class="gw-code">raised</code> when a card should stand off the page, such as a highlighted metric. Pass <code class="gw-code">href</code> when the whole card links somewhere — it renders a real link, so it is focusable and announced correctly. Cards nested on a raised surface take <code class="gw-code">--surface-overlay</code> automatically, so card-on-card layouts keep their contrast.</p>
+        <h2>When not to use</h2>
+        <p>Do not use Card as a generic layout box — reach for the layout primitives (stack, cluster, grid) for spacing and arrangement. Do not put more than one primary Button in a single card; a card is one decision area. Do not fake a clickable card with an <code class="gw-code">onClick</code> on a plain card — pass <code class="gw-code">href</code> so the interaction is a real, keyboard-operable link.</p>
+      </div>
+
+      <section class="gw-card gw-stack">
+        <h2>Demo</h2>
+        <CardDemo />
+      </section>
+
+      <section class="gw-card gw-stack">
+        <h2>Accessibility notes</h2>
+        <p class="gw-body--sm">A plain card renders as a <code class="gw-code">&lt;div&gt;</code>. Passing <code class="gw-code">href</code> renders an <code class="gw-code">&lt;a&gt;</code> instead, so an interactive card is keyboard-focusable, exposed as a link, and gets the standard focus ring — never a click-trap <code class="gw-code">&lt;div&gt;</code>.</p>
+        <p class="gw-body--sm">A link card takes its accessible name from its content, so give it a clear heading. Because the whole card is a single link, do not nest other links or buttons inside it.</p>
+        <p class="gw-body--sm">Links that open in a new tab (<code class="gw-code">target="_blank"</code>) automatically get <code class="gw-code">rel="noopener noreferrer"</code>.</p>
+      </section>
+    </div>
+  </section>
+</DocsLayout>
