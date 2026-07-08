@@ -39,3 +39,5 @@ Every new component needs:
 - Documentation page with when to use, when not to use, examples, and accessibility notes.
 - Playwright accessibility coverage.
 - Playwright visual-regression coverage.
+
+Visual baselines render only in the pinned `mcr.microsoft.com/playwright` container (`npm run test:visual:docker[:update]` or CI), never on the host — snapshot filenames omit the OS suffix so a host run fails rather than writing a machine-specific baseline.
