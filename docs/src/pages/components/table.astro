@@ -1,0 +1,32 @@
+---
+import { TableDemo } from '../../components/TableDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { meta } from './_meta/table';
+---
+
+<DocsLayout title={meta.label} description={meta.description}>
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1>Table</h1>
+        <p>Use Table to present rows of related data that users need to scan or compare across columns, such as transactions, records, or a list of items with a shared shape.</p>
+        <h2>When to use</h2>
+        <p>Use Table when each row shares the same columns and users benefit from comparing values down a column — amounts, dates, statuses. Mark numeric columns so figures align on the right, and mark the column that names each row as a row header so screen readers can orient within the data.</p>
+        <h2>When not to use</h2>
+        <p>Do not use Table to show a single record's key facts — use SummaryList, which reads as key and value rather than a grid. Do not use Table for layout; it is for data whose rows and columns carry meaning. If a table would only ever have one row, the data is not tabular.</p>
+      </div>
+
+      <section class="gw-card gw-stack">
+        <h2>Demo</h2>
+        <TableDemo />
+      </section>
+
+      <section class="gw-card gw-stack">
+        <h2>Accessibility notes</h2>
+        <p class="gw-body--sm">Table requires a <code class="gw-code">caption</code>. It renders as a visible <code class="gw-code">&lt;caption&gt;</code> and is the table's accessible name, so every reader knows what the data represents.</p>
+        <p class="gw-body--sm">Column headers render as <code class="gw-code">&lt;th scope="col"&gt;</code>. A column marked <code class="gw-code">rowHeader</code> renders each of its cells as <code class="gw-code">&lt;th scope="row"&gt;</code>, associating the rest of the row with its label for assistive technology.</p>
+        <p class="gw-body--sm">Numeric alignment is presentational. Status and other meaning is carried by the cell content itself — for example a Tag with a visible label — never by column position or colour alone.</p>
+      </section>
+    </div>
+  </section>
+</DocsLayout>
