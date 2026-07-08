@@ -2,6 +2,8 @@ export type { BannerAnnouncement, BannerProps, BannerVariant } from './component
 export { Banner } from './components/Banner';
 export type { ButtonProps, ButtonVariant } from './components/Button';
 export { Button } from './components/Button';
+export type { CardContainerProps, CardElevation, CardLinkProps, CardProps } from './components/Card';
+export { Card } from './components/Card';
 export type { CheckboxGroupOption, CheckboxGroupProps } from './components/CheckboxGroup';
 export { CheckboxGroup } from './components/CheckboxGroup';
 export type { CodeBlockProps } from './components/CodeBlock';

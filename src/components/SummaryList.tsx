@@ -1,8 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, ReactNode, Ref } from 'react';
 import { assertNever } from '../lib/assert-never';
+import { safeLinkRel } from '../lib/safe-link-rel';
 import type { WithoutStyleOverrides } from './types';
-
-const REL_TOKEN_SEPARATOR = /\s+/u;
 
 interface SummaryListActionBase {
   /**
@@ -81,18 +80,6 @@ function actionContent(action: SummaryListAction): ReactNode {
       <span className="gw-visually-hidden"> {action.visuallyHiddenText}</span>
     </>
   );
-}
-
-function safeLinkRel(target: string | undefined, rel: string | undefined): string | undefined {
-  if (target !== '_blank') {
-    return rel;
-  }
-
-  const relTokens = new Set(rel?.split(REL_TOKEN_SEPARATOR).filter((token) => token.length > 0));
-  relTokens.add('noopener');
-  relTokens.add('noreferrer');
-
-  return Array.from(relTokens).join(' ');
 }
 
 function renderAction(action: SummaryListAction): ReactNode {
