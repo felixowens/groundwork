@@ -10,6 +10,7 @@ import type {
   SummaryListAction,
   SummaryListProps,
   TableProps,
+  TabsProps,
   TextareaProps,
 } from '../../src';
 
@@ -36,6 +37,7 @@ const componentContractCoverage = {
   Select: true,
   SummaryList: true,
   Table: true,
+  Tabs: true,
   Tag: true,
   Textarea: true,
 } satisfies Record<ExportedComponentName, true>;
@@ -65,6 +67,8 @@ type SummaryListRequiresRows = AssertTrue<IsRequired<SummaryListProps, 'rows'>>;
 type TableRequiresCaption = AssertTrue<IsRequired<TableProps, 'caption'>>;
 type TableRequiresColumns = AssertTrue<IsRequired<TableProps, 'columns'>>;
 type TableRequiresRows = AssertTrue<IsRequired<TableProps, 'rows'>>;
+type TabsRequiresLabel = AssertTrue<IsRequired<TabsProps, 'label'>>;
+type TabsRequiresItems = AssertTrue<IsRequired<TabsProps, 'items'>>;
 type SummaryListActionMissingHiddenText = Exclude<SummaryListAction, { visuallyHiddenText: string }>;
 type SummaryListActionRequiresHiddenText = AssertNever<SummaryListActionMissingHiddenText>;
 
@@ -84,4 +88,6 @@ export type ComponentContractAssertions =
   | SummaryListActionRequiresHiddenText
   | TableRequiresCaption
   | TableRequiresColumns
-  | TableRequiresRows;
+  | TableRequiresRows
+  | TabsRequiresLabel
+  | TabsRequiresItems;

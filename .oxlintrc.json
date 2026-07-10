@@ -41,6 +41,12 @@
       "rules": {
         "jsx-a11y/no-noninteractive-tabindex": "off"
       }
+    },
+    {
+      "files": ["src/components/Tabs.tsx"],
+      "rules": {
+        "jsx-a11y/interactive-supports-focus": "off"
+      }
     }
   ]
 }

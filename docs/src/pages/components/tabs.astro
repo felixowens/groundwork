@@ -1,0 +1,37 @@
+---
+import { TabsDemo } from '../../components/TabsDemo';
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import { meta } from './_meta/tabs';
+---
+
+<DocsLayout title={meta.label} description={meta.description}>
+  <section class="gw-section">
+    <div class="gw-width gw-stack--lg">
+      <div class="gw-prose">
+        <h1>Tabs</h1>
+        <p>Use Tabs to divide one view's content into sibling panels the user switches between — server <code class="gw-code">Overview</code> / <code class="gw-code">Config</code> / <code class="gw-code">Logs</code>, or the details of a single record split by topic.</p>
+        <h2>When to use</h2>
+        <p>Use Tabs when a set of related panels belong to the same context and the user only needs one at a time. Give the group a <code class="gw-code">label</code> that says what the tabs switch between — it is the tab list's accessible name. Provide the panels as <code class="gw-code">items</code>; the first is selected by default, or set <code class="gw-code">defaultTabId</code>. Reach for <code class="gw-code">selectedTabId</code> with <code class="gw-code">onTabChange</code> only when selection must be driven from your own state, such as reflecting the tab in the URL.</p>
+        <h2>When not to use</h2>
+        <p>Do not use Tabs for content the user should read in sequence, or compare side by side — tabs hide every panel but one. Do not use them for steps in a process; that is a flow with its own page per step. Do not put content a first-time or search-driven visitor must not miss inside a tab that starts hidden. If the panels are unrelated destinations rather than facets of one thing, that is navigation — use links.</p>
+      </div>
+
+      <section class="gw-card gw-stack">
+        <h2>Demo</h2>
+        <!-- Astro wraps a client:load island in a display:contents <astro-island>, which
+             margins can't target — so the .gw-stack heading gap collapses. Wrap the island
+             in a real block box that receives the adjacent-sibling margin. -->
+        <div>
+          <TabsDemo client:load />
+        </div>
+      </section>
+
+      <section class="gw-card gw-stack">
+        <h2>Accessibility notes</h2>
+        <p class="gw-body--sm">Tabs render the WAI-ARIA tabs pattern: a <code class="gw-code">role="tablist"</code> of <code class="gw-code">role="tab"</code> buttons, each wired by <code class="gw-code">aria-controls</code> and <code class="gw-code">aria-labelledby</code> to its <code class="gw-code">role="tabpanel"</code>. The required <code class="gw-code">label</code> becomes the tab list's accessible name, announced when a screen reader user enters the tabs.</p>
+        <p class="gw-body--sm">One tab holds keyboard focus at a time (roving <code class="gw-code">tabindex</code>). <kbd class="gw-code">←</kbd> and <kbd class="gw-code">→</kbd> move between tabs and wrap at the ends; <kbd class="gw-code">Home</kbd> and <kbd class="gw-code">End</kbd> jump to the first and last. Selection follows focus, so the matching panel reveals immediately and is one <kbd class="gw-code">Tab</kbd> press away.</p>
+        <p class="gw-body--sm">The colour change on the selected tab is backed by <code class="gw-code">aria-selected</code>, so the current tab is never signalled by colour alone.</p>
+      </section>
+    </div>
+  </section>
+</DocsLayout>
