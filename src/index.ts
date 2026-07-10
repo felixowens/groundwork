@@ -28,6 +28,8 @@ export type {
 export { SummaryList } from './components/SummaryList';
 export type { TableColumn, TableProps, TableRow } from './components/Table';
 export { Table } from './components/Table';
+export type { TabItem, TabsProps } from './components/Tabs';
+export { Tabs } from './components/Tabs';
 export type { TagProps, TagVariant } from './components/Tag';
 export { Tag } from './components/Tag';
 export type { TextareaProps } from './components/Textarea';
