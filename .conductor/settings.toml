@@ -1,0 +1,17 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+# Fresh worktrees have their own node_modules; install from the lockfile.
+setup = "npm ci"
+
+# Run = the review surface. Install deps if this workspace doesn't have them yet
+# (setup only runs at creation, so this self-heals older workspaces and cleared
+# node_modules), rebuild css/groundwork.css from THIS workspace's tokens (the
+# docs site imports the committed file, so without this you'd review stale
+# styling), then serve the docs/component explorer on the workspace's own port.
+# Open the URL Conductor shows to review the change live.
+run = "([ -d node_modules ] || npm ci) && npm run build:css && npm run docs:dev -- --host 127.0.0.1 --port $CONDUCTOR_PORT"
+
+# Each workspace binds its own CONDUCTOR_PORT and only writes workspace-local
+# files, so several review servers can run side by side.
+run_mode = "concurrent"
